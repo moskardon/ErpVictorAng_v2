@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e00cb9c88163438184a68a5c4930ace8" Name="Diagram1">
+        <EntityTypeShape EntityType="ErpCrisModel.Articulo" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ErpCrisModel.Cliente" Width="1.5" PointX="10.5" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ErpCrisModel.Descuento" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="ErpCrisModel.DescuentoCliente" Width="1.5" PointX="12.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ErpCrisModel.Division" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ErpCrisModel.Familia" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ErpCrisModel.Roles" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ErpCrisModel.SubFamilia" Width="1.5" PointX="8.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ErpCrisModel.TipoUnidad" Width="1.5" PointX="1.5" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="ErpCrisModel.Unidad" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ErpCrisModel.User" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ErpCrisModel.UserRol" Width="1.5" PointX="10.5" PointY="2.625" IsExpanded="true" />
+        <AssociationConnector Association="ErpCrisModel.FK_Articulo_Unidad" ManuallyRouted="false" />
+        <AssociationConnector Association="ErpCrisModel.FK_Descuento_Articulo" ManuallyRouted="false" />
+        <AssociationConnector Association="ErpCrisModel.FK_Cliente_Descuento" ManuallyRouted="false" />
+        <AssociationConnector Association="ErpCrisModel.FK_Cliente_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ErpCrisModel.FK_DescuentoCliente_Cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="ErpCrisModel.FK_Descuento_Division" ManuallyRouted="false" />
+        <AssociationConnector Association="ErpCrisModel.FK_Descuento_Familia" ManuallyRouted="false" />
+        <AssociationConnector Association="ErpCrisModel.FK_Descuento_SubFamilia" ManuallyRouted="false" />
+        <AssociationConnector Association="ErpCrisModel.FK_DescuentoCliente_Descuento" ManuallyRouted="false" />
+        <AssociationConnector Association="ErpCrisModel.FK_Familia_Familia" ManuallyRouted="false" />
+        <AssociationConnector Association="ErpCrisModel.FK_SubFamilia_Division" ManuallyRouted="false" />
+        <AssociationConnector Association="ErpCrisModel.FK_SubFamilia_Familia" ManuallyRouted="false" />
+        <AssociationConnector Association="ErpCrisModel.FK_UserRol_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="ErpCrisModel.FK_Unidad_TipoUnidad" ManuallyRouted="false" />
+        <AssociationConnector Association="ErpCrisModel.FK_UserRol_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

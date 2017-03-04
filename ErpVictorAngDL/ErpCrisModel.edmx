@@ -1,0 +1,958 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ErpCrisModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Articulo">
+          <Key>
+            <PropertyRef Name="IdArticulo" />
+          </Key>
+          <Property Name="IdArticulo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="250" />
+          <Property Name="Medida1" Type="smallint" />
+          <Property Name="Medida2" Type="smallint" />
+          <Property Name="IdUnidad" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="bigint" Nullable="false" />
+          <Property Name="IdDescuento" Type="bigint" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Apellido2" Type="nvarchar" MaxLength="50" />
+          <Property Name="FechaNacimiento" Type="date" />
+          <Property Name="Dni" Type="nvarchar" MaxLength="50" />
+          <Property Name="Cif" Type="nvarchar" MaxLength="50" />
+          <Property Name="NombreEmpresa" Type="nvarchar" MaxLength="50" />
+          <Property Name="DescripcionEmpresa" Type="nvarchar" MaxLength="250" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="250" />
+          <Property Name="NumTelefono1" Type="nvarchar" MaxLength="10" />
+          <Property Name="NumTelefono2" Type="nvarchar" MaxLength="10" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Saldo" Type="money" />
+          <Property Name="Moroso" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Descuento">
+          <Key>
+            <PropertyRef Name="IdDescuento" />
+          </Key>
+          <Property Name="IdDescuento" Type="bigint" Nullable="false" />
+          <Property Name="Valor" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdDivision" Type="bigint" />
+          <Property Name="IdFamilia" Type="bigint" />
+          <Property Name="IdSubFamilia" Type="bigint" />
+          <Property Name="IdArticulo" Type="bigint" />
+        </EntityType>
+        <EntityType Name="DescuentoCliente">
+          <Key>
+            <PropertyRef Name="IdDescuentoCliente" />
+          </Key>
+          <Property Name="IdDescuentoCliente" Type="bigint" Nullable="false" />
+          <Property Name="IdCliente" Type="bigint" Nullable="false" />
+          <Property Name="IdDescuento" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="IdDivision" />
+          </Key>
+          <Property Name="IdDivision" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Familia">
+          <Key>
+            <PropertyRef Name="IdFamilia" />
+          </Key>
+          <Property Name="IdFamilia" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
+          <Property Name="IdDivision" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="IdRol" />
+          </Key>
+          <Property Name="IdRol" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nobre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Desripcion" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubFamilia">
+          <Key>
+            <PropertyRef Name="IdSubFamilia" />
+          </Key>
+          <Property Name="IdSubFamilia" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="250" />
+          <Property Name="IdDivision" Type="bigint" Nullable="false" />
+          <Property Name="IdFamilia" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoUnidad">
+          <Key>
+            <PropertyRef Name="IdTipoUnidad" />
+          </Key>
+          <Property Name="IdTipoUnidad" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Unidad">
+          <Key>
+            <PropertyRef Name="IdUnidad" />
+          </Key>
+          <Property Name="IdUnidad" Type="bigint" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="250" />
+          <Property Name="NumeroMedida" Type="int" />
+          <Property Name="IdTipoUnidad" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="200" />
+          <Property Name="Salt" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="UserRol">
+          <Key>
+            <PropertyRef Name="IdUserRol" />
+          </Key>
+          <Property Name="IdUserRol" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="bigint" Nullable="false" />
+          <Property Name="IdRol" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Articulo_Unidad">
+          <End Role="Unidad" Type="Self.Unidad" Multiplicity="1" />
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad">
+              <PropertyRef Name="IdUnidad" />
+            </Principal>
+            <Dependent Role="Articulo">
+              <PropertyRef Name="IdUnidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_Descuento">
+          <End Role="Descuento" Type="Self.Descuento" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Descuento">
+              <PropertyRef Name="IdDescuento" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdDescuento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Descuento_Articulo">
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="0..1" />
+          <End Role="Descuento" Type="Self.Descuento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="IdArticulo" />
+            </Principal>
+            <Dependent Role="Descuento">
+              <PropertyRef Name="IdArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Descuento_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="0..1" />
+          <End Role="Descuento" Type="Self.Descuento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="IdDivision" />
+            </Principal>
+            <Dependent Role="Descuento">
+              <PropertyRef Name="IdDivision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Descuento_Familia">
+          <End Role="Familia" Type="Self.Familia" Multiplicity="0..1" />
+          <End Role="Descuento" Type="Self.Descuento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Familia">
+              <PropertyRef Name="IdFamilia" />
+            </Principal>
+            <Dependent Role="Descuento">
+              <PropertyRef Name="IdFamilia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Descuento_SubFamilia">
+          <End Role="SubFamilia" Type="Self.SubFamilia" Multiplicity="0..1" />
+          <End Role="Descuento" Type="Self.Descuento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubFamilia">
+              <PropertyRef Name="IdSubFamilia" />
+            </Principal>
+            <Dependent Role="Descuento">
+              <PropertyRef Name="IdSubFamilia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DescuentoCliente_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="DescuentoCliente" Type="Self.DescuentoCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="DescuentoCliente">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DescuentoCliente_Descuento">
+          <End Role="Descuento" Type="Self.Descuento" Multiplicity="1" />
+          <End Role="DescuentoCliente" Type="Self.DescuentoCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Descuento">
+              <PropertyRef Name="IdDescuento" />
+            </Principal>
+            <Dependent Role="DescuentoCliente">
+              <PropertyRef Name="IdDescuento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Familia_Familia">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="Familia" Type="Self.Familia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="IdDivision" />
+            </Principal>
+            <Dependent Role="Familia">
+              <PropertyRef Name="IdDivision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubFamilia_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="SubFamilia" Type="Self.SubFamilia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="IdDivision" />
+            </Principal>
+            <Dependent Role="SubFamilia">
+              <PropertyRef Name="IdDivision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubFamilia_Familia">
+          <End Role="Familia" Type="Self.Familia" Multiplicity="1" />
+          <End Role="SubFamilia" Type="Self.SubFamilia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Familia">
+              <PropertyRef Name="IdFamilia" />
+            </Principal>
+            <Dependent Role="SubFamilia">
+              <PropertyRef Name="IdFamilia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Unidad_TipoUnidad">
+          <End Role="TipoUnidad" Type="Self.TipoUnidad" Multiplicity="1" />
+          <End Role="Unidad" Type="Self.Unidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUnidad">
+              <PropertyRef Name="IdTipoUnidad" />
+            </Principal>
+            <Dependent Role="Unidad">
+              <PropertyRef Name="IdTipoUnidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRol_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="UserRol" Type="Self.UserRol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="UserRol">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRol_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserRol" Type="Self.UserRol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="UserRol">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ErpCrisModelStoreContainer">
+          <EntitySet Name="Articulo" EntityType="Self.Articulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Descuento" EntityType="Self.Descuento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DescuentoCliente" EntityType="Self.DescuentoCliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Division" EntityType="Self.Division" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Familia" EntityType="Self.Familia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubFamilia" EntityType="Self.SubFamilia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoUnidad" EntityType="Self.TipoUnidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unidad" EntityType="Self.Unidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRol" EntityType="Self.UserRol" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Articulo_Unidad" Association="Self.FK_Articulo_Unidad">
+            <End Role="Unidad" EntitySet="Unidad" />
+            <End Role="Articulo" EntitySet="Articulo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_Descuento" Association="Self.FK_Cliente_Descuento">
+            <End Role="Descuento" EntitySet="Descuento" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_User" Association="Self.FK_Cliente_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Descuento_Articulo" Association="Self.FK_Descuento_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="Descuento" EntitySet="Descuento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Descuento_Division" Association="Self.FK_Descuento_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Descuento" EntitySet="Descuento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Descuento_Familia" Association="Self.FK_Descuento_Familia">
+            <End Role="Familia" EntitySet="Familia" />
+            <End Role="Descuento" EntitySet="Descuento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Descuento_SubFamilia" Association="Self.FK_Descuento_SubFamilia">
+            <End Role="SubFamilia" EntitySet="SubFamilia" />
+            <End Role="Descuento" EntitySet="Descuento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DescuentoCliente_Cliente" Association="Self.FK_DescuentoCliente_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="DescuentoCliente" EntitySet="DescuentoCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DescuentoCliente_Descuento" Association="Self.FK_DescuentoCliente_Descuento">
+            <End Role="Descuento" EntitySet="Descuento" />
+            <End Role="DescuentoCliente" EntitySet="DescuentoCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Familia_Familia" Association="Self.FK_Familia_Familia">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Familia" EntitySet="Familia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubFamilia_Division" Association="Self.FK_SubFamilia_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="SubFamilia" EntitySet="SubFamilia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubFamilia_Familia" Association="Self.FK_SubFamilia_Familia">
+            <End Role="Familia" EntitySet="Familia" />
+            <End Role="SubFamilia" EntitySet="SubFamilia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Unidad_TipoUnidad" Association="Self.FK_Unidad_TipoUnidad">
+            <End Role="TipoUnidad" EntitySet="TipoUnidad" />
+            <End Role="Unidad" EntitySet="Unidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRol_Roles" Association="Self.FK_UserRol_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UserRol" EntitySet="UserRol" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRol_User" Association="Self.FK_UserRol_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserRol" EntitySet="UserRol" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ErpCrisModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Articulo">
+          <Key>
+            <PropertyRef Name="IdArticulo" />
+          </Key>
+          <Property Name="IdArticulo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Medida1" Type="Int16" />
+          <Property Name="Medida2" Type="Int16" />
+          <Property Name="IdUnidad" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Unidad" Relationship="Self.FK_Articulo_Unidad" FromRole="Articulo" ToRole="Unidad" />
+          <NavigationProperty Name="Descuento" Relationship="Self.FK_Descuento_Articulo" FromRole="Articulo" ToRole="Descuento" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int64" Nullable="false" />
+          <Property Name="IdDescuento" Type="Int64" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellido1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="Dni" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Cif" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NombreEmpresa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DescripcionEmpresa" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="NumTelefono1" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NumTelefono2" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Saldo" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Moroso" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Descuento" Relationship="Self.FK_Cliente_Descuento" FromRole="Cliente" ToRole="Descuento" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Cliente_User" FromRole="Cliente" ToRole="User" />
+          <NavigationProperty Name="DescuentoCliente" Relationship="Self.FK_DescuentoCliente_Cliente" FromRole="Cliente" ToRole="DescuentoCliente" />
+        </EntityType>
+        <EntityType Name="Descuento">
+          <Key>
+            <PropertyRef Name="IdDescuento" />
+          </Key>
+          <Property Name="IdDescuento" Type="Int64" Nullable="false" />
+          <Property Name="Valor" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdDivision" Type="Int64" />
+          <Property Name="IdFamilia" Type="Int64" />
+          <Property Name="IdSubFamilia" Type="Int64" />
+          <Property Name="IdArticulo" Type="Int64" />
+          <NavigationProperty Name="Articulo" Relationship="Self.FK_Descuento_Articulo" FromRole="Descuento" ToRole="Articulo" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Cliente_Descuento" FromRole="Descuento" ToRole="Cliente" />
+          <NavigationProperty Name="Division" Relationship="Self.FK_Descuento_Division" FromRole="Descuento" ToRole="Division" />
+          <NavigationProperty Name="Familia" Relationship="Self.FK_Descuento_Familia" FromRole="Descuento" ToRole="Familia" />
+          <NavigationProperty Name="SubFamilia" Relationship="Self.FK_Descuento_SubFamilia" FromRole="Descuento" ToRole="SubFamilia" />
+          <NavigationProperty Name="DescuentoCliente" Relationship="Self.FK_DescuentoCliente_Descuento" FromRole="Descuento" ToRole="DescuentoCliente" />
+        </EntityType>
+        <EntityType Name="DescuentoCliente">
+          <Key>
+            <PropertyRef Name="IdDescuentoCliente" />
+          </Key>
+          <Property Name="IdDescuentoCliente" Type="Int64" Nullable="false" />
+          <Property Name="IdCliente" Type="Int64" Nullable="false" />
+          <Property Name="IdDescuento" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_DescuentoCliente_Cliente" FromRole="DescuentoCliente" ToRole="Cliente" />
+          <NavigationProperty Name="Descuento" Relationship="Self.FK_DescuentoCliente_Descuento" FromRole="DescuentoCliente" ToRole="Descuento" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="IdDivision" />
+          </Key>
+          <Property Name="IdDivision" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Descuento" Relationship="Self.FK_Descuento_Division" FromRole="Division" ToRole="Descuento" />
+          <NavigationProperty Name="Familia" Relationship="Self.FK_Familia_Familia" FromRole="Division" ToRole="Familia" />
+          <NavigationProperty Name="SubFamilia" Relationship="Self.FK_SubFamilia_Division" FromRole="Division" ToRole="SubFamilia" />
+        </EntityType>
+        <EntityType Name="Familia">
+          <Key>
+            <PropertyRef Name="IdFamilia" />
+          </Key>
+          <Property Name="IdFamilia" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdDivision" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Descuento" Relationship="Self.FK_Descuento_Familia" FromRole="Familia" ToRole="Descuento" />
+          <NavigationProperty Name="Division" Relationship="Self.FK_Familia_Familia" FromRole="Familia" ToRole="Division" />
+          <NavigationProperty Name="SubFamilia" Relationship="Self.FK_SubFamilia_Familia" FromRole="Familia" ToRole="SubFamilia" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="IdRol" />
+          </Key>
+          <Property Name="IdRol" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nobre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Desripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="UserRol" Relationship="Self.FK_UserRol_Roles" FromRole="Roles" ToRole="UserRol" />
+        </EntityType>
+        <EntityType Name="SubFamilia">
+          <Key>
+            <PropertyRef Name="IdSubFamilia" />
+          </Key>
+          <Property Name="IdSubFamilia" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IdDivision" Type="Int64" Nullable="false" />
+          <Property Name="IdFamilia" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Descuento" Relationship="Self.FK_Descuento_SubFamilia" FromRole="SubFamilia" ToRole="Descuento" />
+          <NavigationProperty Name="Division" Relationship="Self.FK_SubFamilia_Division" FromRole="SubFamilia" ToRole="Division" />
+          <NavigationProperty Name="Familia" Relationship="Self.FK_SubFamilia_Familia" FromRole="SubFamilia" ToRole="Familia" />
+        </EntityType>
+        <EntityType Name="TipoUnidad">
+          <Key>
+            <PropertyRef Name="IdTipoUnidad" />
+          </Key>
+          <Property Name="IdTipoUnidad" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Unidad" Relationship="Self.FK_Unidad_TipoUnidad" FromRole="TipoUnidad" ToRole="Unidad" />
+        </EntityType>
+        <EntityType Name="Unidad">
+          <Key>
+            <PropertyRef Name="IdUnidad" />
+          </Key>
+          <Property Name="IdUnidad" Type="Int64" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="NumeroMedida" Type="Int32" />
+          <Property Name="IdTipoUnidad" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Articulo" Relationship="Self.FK_Articulo_Unidad" FromRole="Unidad" ToRole="Articulo" />
+          <NavigationProperty Name="TipoUnidad" Relationship="Self.FK_Unidad_TipoUnidad" FromRole="Unidad" ToRole="TipoUnidad" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Salt" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Cliente_User" FromRole="User" ToRole="Cliente" />
+          <NavigationProperty Name="UserRol" Relationship="Self.FK_UserRol_User" FromRole="User" ToRole="UserRol" />
+        </EntityType>
+        <EntityType Name="UserRol">
+          <Key>
+            <PropertyRef Name="IdUserRol" />
+          </Key>
+          <Property Name="IdUserRol" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="Int64" Nullable="false" />
+          <Property Name="IdRol" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_UserRol_Roles" FromRole="UserRol" ToRole="Roles" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserRol_User" FromRole="UserRol" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Articulo_Unidad">
+          <End Role="Unidad" Type="Self.Unidad" Multiplicity="1" />
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad">
+              <PropertyRef Name="IdUnidad" />
+            </Principal>
+            <Dependent Role="Articulo">
+              <PropertyRef Name="IdUnidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Descuento_Articulo">
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="0..1" />
+          <End Role="Descuento" Type="Self.Descuento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="IdArticulo" />
+            </Principal>
+            <Dependent Role="Descuento">
+              <PropertyRef Name="IdArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_Descuento">
+          <End Role="Descuento" Type="Self.Descuento" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Descuento">
+              <PropertyRef Name="IdDescuento" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdDescuento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DescuentoCliente_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="DescuentoCliente" Type="Self.DescuentoCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="DescuentoCliente">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Descuento_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="0..1" />
+          <End Role="Descuento" Type="Self.Descuento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="IdDivision" />
+            </Principal>
+            <Dependent Role="Descuento">
+              <PropertyRef Name="IdDivision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Descuento_Familia">
+          <End Role="Familia" Type="Self.Familia" Multiplicity="0..1" />
+          <End Role="Descuento" Type="Self.Descuento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Familia">
+              <PropertyRef Name="IdFamilia" />
+            </Principal>
+            <Dependent Role="Descuento">
+              <PropertyRef Name="IdFamilia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Descuento_SubFamilia">
+          <End Role="SubFamilia" Type="Self.SubFamilia" Multiplicity="0..1" />
+          <End Role="Descuento" Type="Self.Descuento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubFamilia">
+              <PropertyRef Name="IdSubFamilia" />
+            </Principal>
+            <Dependent Role="Descuento">
+              <PropertyRef Name="IdSubFamilia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DescuentoCliente_Descuento">
+          <End Role="Descuento" Type="Self.Descuento" Multiplicity="1" />
+          <End Role="DescuentoCliente" Type="Self.DescuentoCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Descuento">
+              <PropertyRef Name="IdDescuento" />
+            </Principal>
+            <Dependent Role="DescuentoCliente">
+              <PropertyRef Name="IdDescuento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Familia_Familia">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="Familia" Type="Self.Familia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="IdDivision" />
+            </Principal>
+            <Dependent Role="Familia">
+              <PropertyRef Name="IdDivision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubFamilia_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="SubFamilia" Type="Self.SubFamilia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="IdDivision" />
+            </Principal>
+            <Dependent Role="SubFamilia">
+              <PropertyRef Name="IdDivision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubFamilia_Familia">
+          <End Role="Familia" Type="Self.Familia" Multiplicity="1" />
+          <End Role="SubFamilia" Type="Self.SubFamilia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Familia">
+              <PropertyRef Name="IdFamilia" />
+            </Principal>
+            <Dependent Role="SubFamilia">
+              <PropertyRef Name="IdFamilia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRol_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="UserRol" Type="Self.UserRol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="UserRol">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Unidad_TipoUnidad">
+          <End Role="TipoUnidad" Type="Self.TipoUnidad" Multiplicity="1" />
+          <End Role="Unidad" Type="Self.Unidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUnidad">
+              <PropertyRef Name="IdTipoUnidad" />
+            </Principal>
+            <Dependent Role="Unidad">
+              <PropertyRef Name="IdTipoUnidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRol_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserRol" Type="Self.UserRol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="UserRol">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ErpCrisEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Articulo" EntityType="Self.Articulo" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Descuento" EntityType="Self.Descuento" />
+          <EntitySet Name="DescuentoCliente" EntityType="Self.DescuentoCliente" />
+          <EntitySet Name="Division" EntityType="Self.Division" />
+          <EntitySet Name="Familia" EntityType="Self.Familia" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="SubFamilia" EntityType="Self.SubFamilia" />
+          <EntitySet Name="TipoUnidad" EntityType="Self.TipoUnidad" />
+          <EntitySet Name="Unidad" EntityType="Self.Unidad" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="UserRol" EntityType="Self.UserRol" />
+          <AssociationSet Name="FK_Articulo_Unidad" Association="Self.FK_Articulo_Unidad">
+            <End Role="Unidad" EntitySet="Unidad" />
+            <End Role="Articulo" EntitySet="Articulo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Descuento_Articulo" Association="Self.FK_Descuento_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="Descuento" EntitySet="Descuento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_Descuento" Association="Self.FK_Cliente_Descuento">
+            <End Role="Descuento" EntitySet="Descuento" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_User" Association="Self.FK_Cliente_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DescuentoCliente_Cliente" Association="Self.FK_DescuentoCliente_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="DescuentoCliente" EntitySet="DescuentoCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Descuento_Division" Association="Self.FK_Descuento_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Descuento" EntitySet="Descuento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Descuento_Familia" Association="Self.FK_Descuento_Familia">
+            <End Role="Familia" EntitySet="Familia" />
+            <End Role="Descuento" EntitySet="Descuento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Descuento_SubFamilia" Association="Self.FK_Descuento_SubFamilia">
+            <End Role="SubFamilia" EntitySet="SubFamilia" />
+            <End Role="Descuento" EntitySet="Descuento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DescuentoCliente_Descuento" Association="Self.FK_DescuentoCliente_Descuento">
+            <End Role="Descuento" EntitySet="Descuento" />
+            <End Role="DescuentoCliente" EntitySet="DescuentoCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Familia_Familia" Association="Self.FK_Familia_Familia">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Familia" EntitySet="Familia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubFamilia_Division" Association="Self.FK_SubFamilia_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="SubFamilia" EntitySet="SubFamilia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubFamilia_Familia" Association="Self.FK_SubFamilia_Familia">
+            <End Role="Familia" EntitySet="Familia" />
+            <End Role="SubFamilia" EntitySet="SubFamilia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRol_Roles" Association="Self.FK_UserRol_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UserRol" EntitySet="UserRol" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Unidad_TipoUnidad" Association="Self.FK_Unidad_TipoUnidad">
+            <End Role="TipoUnidad" EntitySet="TipoUnidad" />
+            <End Role="Unidad" EntitySet="Unidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRol_User" Association="Self.FK_UserRol_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserRol" EntitySet="UserRol" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ErpCrisModelStoreContainer" CdmEntityContainer="ErpCrisEntities">
+          <EntitySetMapping Name="Articulo">
+            <EntityTypeMapping TypeName="ErpCrisModel.Articulo">
+              <MappingFragment StoreEntitySet="Articulo">
+                <ScalarProperty Name="IdArticulo" ColumnName="IdArticulo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Medida1" ColumnName="Medida1" />
+                <ScalarProperty Name="Medida2" ColumnName="Medida2" />
+                <ScalarProperty Name="IdUnidad" ColumnName="IdUnidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="ErpCrisModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdDescuento" ColumnName="IdDescuento" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+                <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Dni" ColumnName="Dni" />
+                <ScalarProperty Name="Cif" ColumnName="Cif" />
+                <ScalarProperty Name="NombreEmpresa" ColumnName="NombreEmpresa" />
+                <ScalarProperty Name="DescripcionEmpresa" ColumnName="DescripcionEmpresa" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="NumTelefono1" ColumnName="NumTelefono1" />
+                <ScalarProperty Name="NumTelefono2" ColumnName="NumTelefono2" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="Moroso" ColumnName="Moroso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Descuento">
+            <EntityTypeMapping TypeName="ErpCrisModel.Descuento">
+              <MappingFragment StoreEntitySet="Descuento">
+                <ScalarProperty Name="IdDescuento" ColumnName="IdDescuento" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="IdDivision" ColumnName="IdDivision" />
+                <ScalarProperty Name="IdFamilia" ColumnName="IdFamilia" />
+                <ScalarProperty Name="IdSubFamilia" ColumnName="IdSubFamilia" />
+                <ScalarProperty Name="IdArticulo" ColumnName="IdArticulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DescuentoCliente">
+            <EntityTypeMapping TypeName="ErpCrisModel.DescuentoCliente">
+              <MappingFragment StoreEntitySet="DescuentoCliente">
+                <ScalarProperty Name="IdDescuentoCliente" ColumnName="IdDescuentoCliente" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdDescuento" ColumnName="IdDescuento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Division">
+            <EntityTypeMapping TypeName="ErpCrisModel.Division">
+              <MappingFragment StoreEntitySet="Division">
+                <ScalarProperty Name="IdDivision" ColumnName="IdDivision" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Familia">
+            <EntityTypeMapping TypeName="ErpCrisModel.Familia">
+              <MappingFragment StoreEntitySet="Familia">
+                <ScalarProperty Name="IdFamilia" ColumnName="IdFamilia" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdDivision" ColumnName="IdDivision" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="ErpCrisModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="Nobre" ColumnName="Nobre" />
+                <ScalarProperty Name="Desripcion" ColumnName="Desripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubFamilia">
+            <EntityTypeMapping TypeName="ErpCrisModel.SubFamilia">
+              <MappingFragment StoreEntitySet="SubFamilia">
+                <ScalarProperty Name="IdSubFamilia" ColumnName="IdSubFamilia" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdDivision" ColumnName="IdDivision" />
+                <ScalarProperty Name="IdFamilia" ColumnName="IdFamilia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoUnidad">
+            <EntityTypeMapping TypeName="ErpCrisModel.TipoUnidad">
+              <MappingFragment StoreEntitySet="TipoUnidad">
+                <ScalarProperty Name="IdTipoUnidad" ColumnName="IdTipoUnidad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Unidad">
+            <EntityTypeMapping TypeName="ErpCrisModel.Unidad">
+              <MappingFragment StoreEntitySet="Unidad">
+                <ScalarProperty Name="IdUnidad" ColumnName="IdUnidad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="NumeroMedida" ColumnName="NumeroMedida" />
+                <ScalarProperty Name="IdTipoUnidad" ColumnName="IdTipoUnidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="ErpCrisModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRol">
+            <EntityTypeMapping TypeName="ErpCrisModel.UserRol">
+              <MappingFragment StoreEntitySet="UserRol">
+                <ScalarProperty Name="IdUserRol" ColumnName="IdUserRol" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

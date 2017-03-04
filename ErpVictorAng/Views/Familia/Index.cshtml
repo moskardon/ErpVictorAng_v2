@@ -1,0 +1,83 @@
+﻿<h2>Familias</h2>
+
+<div ng-app="erpApp" ng-controller="familiaController">
+    <div id="divWrapper" ng-show="dataLoaded" style="display:none">
+        <table id="tblDivisiones" class="table">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        División
+                    </th>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Descripción
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="familia in familias">
+                    <th scope="row">
+                        {{$index+1}}
+                    </th>
+                    <td>
+                        <span ng-show="familia.showEdit">{{familia.NombreDivision}}</span>
+                        <input ng-show="!familia.showEdit" type="text" ng-model="familia.IdDivision" class="form-control" />
+                    </td>
+                    <td>
+                        <span ng-show="familia.showEdit">{{familia.Nombre}}</span>
+                        <input ng-show="!familia.showEdit" type="text" ng-model="familia.Nombre" class="form-control" />
+                    </td>
+                    <td>
+                        <span ng-show="familia.showEdit">{{familia.Descripcion}}</span>
+                        <input ng-show="!familia.showEdit" type="text" ng-model="familia.Descripcion" class="form-control" />
+                    </td>
+                    <td>
+                        <span ng-show="familia.showEdit" ng-click="toggleEdit(familia,false)" class="glyphicon glyphicon-pencil"></span>
+                        <span ng-show="familia.showEdit" ng-click="showModalDialog(familia)" class="glyphicon glyphicon-remove"></span>
+                        <span ng-show="!familia.showEdit" ng-click="updateFamilia(familia)" class="glyphicon glyphicon-ok"></span>
+                        <span ng-show="!familia.showEdit" ng-click="toggleEdit(familia,true)" class="glyphicon glyphicon-share-alt"></span>
+                    </td>
+                </tr>
+                <tr ng-show="showAdd">
+                    <th>
+                        <span>#</span>
+                    </th>
+                    <td>
+                        <select class="form-control" name="singleSelect" id="singleSelect" ng-model="newIdDivision">
+                            <option value="">---Selecciona una Division---</option>
+                            <option ng-repeat="division in divisiones" value="{{division.IdDivision}}">{{division.Nombre}}</option>
+                        </select><br>
+                    </td>
+                    <td>
+                        <input id="newName" ng-show="showAdd" ng-model="newNombre" type="text" class="form-control" />
+                    </td>
+                    <td>
+                        <input id="newDesc" ng-show="showAdd" ng-model="newDescripcion" type="text" class="form-control" />
+                    </td>                    
+                    <td>
+                        <span ng-show="showAdd" ng-click="addFamilia()" class="glyphicon glyphicon-ok"></span>
+
+                        <span ng-show="showAdd" ng-click="showNew()" class="glyphicon glyphicon-share-alt"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button ng-click="showNew()">
+            Nueva Familia
+        </button>
+    </div>
+</div>
+
+@*@Scripts.Render("~/bundles/jquery-ui")*@
+@Scripts.Render("~/bundles/angular")
+@Scripts.Render("~/Scripts/app/erpApp.js")
+@Scripts.Render("~/Scripts/app/familia/familiaFactory.js")
+@Scripts.Render("~/Scripts/app/familia/familiaController.js")
+
+@Scripts.Render("~/Scripts/app/division/divisionFactory.js")
+@Scripts.Render("~/Scripts/app/division/divisionController.js")

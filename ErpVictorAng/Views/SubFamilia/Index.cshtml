@@ -1,0 +1,93 @@
+﻿<h2>Sub Familias</h2>
+
+<div ng-app="erpApp" ng-controller="subFamiliaController">
+    <div id="divWrapper" ng-show="dataLoaded" style="display:none">
+        <table id="tblDivisiones" class="table">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        División
+                    </th>
+                    <th>
+                        Familia
+                    </th>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Descripción
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="subFamilia in subFamilias">
+                    <th scope="row">
+                        {{$index+1}}
+                    </th>
+                    <td>
+                        <span ng-show="subFamilia.showEdit">{{subFamilia.IdDivision}}</span>
+                        <input ng-show="!subFamilia.showEdit" type="text" ng-model="subFamilia.IdDivision" class="form-control" />
+                    </td>
+                    <td>
+                        <span ng-show="subFamilia.showEdit">{{subFamilia.IdFamilia}}</span>
+                        <input ng-show="!subFamilia.showEdit" type="text" ng-model="subFamilia.IdFamilia" class="form-control" />
+                    </td>
+                    <td>
+                        <span ng-show="subFamilia.showEdit">{{subFamilia.Nombre}}</span>
+                        <input ng-show="!subFamilia.showEdit" type="text" ng-model="subFamilia.Nombre" class="form-control" />
+                    </td>
+                    <td>
+                        <span ng-show="subFamilia.showEdit">{{subFamilia.Descripcion}}</span>
+                        <input ng-show="!subFamilia.showEdit" type="text" ng-model="subFamilia.Descripcion" class="form-control" />
+                    </td>
+                    <td>
+                        <span ng-show="subFamilia.showEdit" ng-click="toggleEdit(familia,false)" class="glyphicon glyphicon-pencil"></span>
+                        <span ng-show="subFamilia.showEdit" ng-click="showModalDialog(familia)" class="glyphicon glyphicon-remove"></span>
+                        <span ng-show="!subFamilia.showEdit" ng-click="updateFamilia(familia)" class="glyphicon glyphicon-ok"></span>
+                        <span ng-show="!subFamilia.showEdit" ng-click="toggleEdit(familia,true)" class="glyphicon glyphicon-share-alt"></span>
+                    </td>
+                </tr>
+                <tr ng-show="showAdd">
+                    <th>
+                        <span>#</span>
+                    </th>
+                    <td>
+                        <input id="newName" ng-show="showAdd" ng-model="newNombre" type="text" class="form-control" />
+                    </td>
+                    <td>
+                        <input id="newDesc" ng-show="showAdd" ng-model="newDescripcion" type="text" class="form-control" />
+                    </td>
+                    <td>
+                        <select class="form-control" name="singleSelect" id="singleSelect" ng-model="newIdFamilia">
+                            <option value="">---Selecciona una Familia---</option> 
+                            <option ng-repeat="familia in familias" value="{{familia.IdFamilia}}">{{familia.Nombre}}</option>
+                        </select><br>
+                    </td>
+                    <td>
+                        <span ng-show="showAdd" ng-click="addSubFamilia()" class="glyphicon glyphicon-ok"></span>
+
+                        <span ng-show="showAdd" ng-click="showNew()" class="glyphicon glyphicon-share-alt"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button ng-click="showNew()">
+            Nueva Sub Familia
+        </button>
+    </div>
+</div>
+
+@*@Scripts.Render("~/bundles/jquery-ui")*@
+@Scripts.Render("~/bundles/angular")
+@Scripts.Render("~/Scripts/app/erpApp.js")
+@Scripts.Render("~/Scripts/app/subfamilia/subFamiliaFactory.js")
+@Scripts.Render("~/Scripts/app/subfamilia/subFamiliaController.js")
+
+@Scripts.Render("~/Scripts/app/familia/familiaFactory.js")
+@Scripts.Render("~/Scripts/app/familia/familiaController.js")
+
+@Scripts.Render("~/Scripts/app/division/divisionFactory.js")
+@Scripts.Render("~/Scripts/app/division/divisionController.js")
