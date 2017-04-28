@@ -18,7 +18,7 @@ namespace ErpVictorAngDL
         public long IdUser { get; set; }
         public long IdRol { get; set; }
     
-        public virtual Roles Roles { get; set; }
+        public virtual Rol Rol { get; set; }
         public virtual User User { get; set; }
     }
 }

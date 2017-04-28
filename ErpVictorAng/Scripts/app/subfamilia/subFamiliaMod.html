@@ -1,0 +1,58 @@
+﻿<div style="width: 100%;">
+    <!--Header-->
+    <!--<div class="modal-header">-->
+    <div class="panel-heading">
+        <!--<p class="modal-title">{{getTitle()}}</p>-->
+        {{getTitle()}}
+    </div>
+    <!--Body-->
+    <!--div class="modal-body">-->
+    <div class="panel-body">
+        <div>
+            <div>
+                <div style="float:left;">
+                    <label class="control-label" for="firstName">Nombre</label>
+                    <input type="text" class="form-control" ng-model="EditedSubFamilia.Nombre" name="Nombre" id="firstName" placeholder="Nombre"
+                           validate-on="blur" required required-message="'Nombre es requerido'">
+                </div>
+                <div style="float:right; width:60%">
+                    <label class="control-label" for="firstName">Descripción</label>
+                    <input type="text" class="form-control" ng-model="EditedSubFamilia.Descripcion" name="Descripcion" id="descripcion" placeholder="Descripción"
+                           validate-on="blur" required required-message="'Nombre es requerido'" style="width:100%;">
+                </div>
+            </div>
+            <div>
+                <div style="float:left; margin-top:25px;">
+                    <label class="control-label" for="firstName">División</label>
+                    <select class="form-control" ng-model="ddlDivisiones" id="selDivisiones"
+                            ng-options="division.Nombre for division in divisiones track by division.Nombre" ng-change="changedDivisionValue(ddlDivisiones)">
+                        <option value="">-- Selecciona una Division --</option>
+                    </select>
+                    <!--<input type="text" class="form-control" ng-model="EditedSubFamilia.Nombre" name="Nombre" id="firstName" placeholder="Nombre"
+                    validate-on="blur" required required-message="'Nombre es requerido'">-->
+                </div>
+                <div style="float:right; width:60%; margin-top:25px;">
+                    <label class="control-label" for="firstName">Familia</label>
+                    <select ng-disabled="EditedSubFamilia.IdDivision == null" class="form-control" ng-model="ddlFamilias"
+                            ng-options="familia.Nombre for familia in familias track by familia.Nombre" ng-change="changedFamiliaValue(ddlFamilias)">
+                        <option value="">-- Selecciona una Familia --</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--OK and Cancel buttons-->
+    <!--<div class="modal-footer">-->
+    <div class="panel-footer clearfix">
+        <button class="btn btn-success" ng-click="closeThisDialog(confirm())" style="width: 100px;">
+            <i class="glyphicon glyphicon-ok"></i>
+            Guardar
+        </button>
+        <button class="btn btn-danger" ng-click="closeThisDialog()" style="width: 100px;">
+            <i class="glyphicon glyphicon-remove"></i>
+            Cancelar
+        </button>
+    </div>
+</div>
+<!--Loading indicator-->
+<img src="Content/images/loading.gif" ng-show="dataLoading" class="center-block" title="Loading..." style="margin-top: 20px" />

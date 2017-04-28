@@ -1,0 +1,56 @@
+﻿<h2>Pedidos</h2>
+
+<div id="divWrapper" ng-show="dataLoaded" style="display:none">
+    <table id="tblPedidos" class="table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Numero de Pedido
+                </th>
+                <th>
+                    Cliente
+                </th>
+                <th>
+                    Presupuesto
+                </th>
+                <th>
+                    Fecha de Creación
+                </th>
+                <th>
+                    Observaciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="pedido in pedidos">
+                <th scope="row">
+                    {{$index+1}}
+                </th>
+                <td>
+                    <span ng-show="pedido.showEdit">{{pedido.NumeroPedido}}</span>
+                </td>
+                <td>
+                    <span ng-show="pedido.showEdit">{{pedido.IdCliente}}</span>
+                </td>                
+                <td>
+                    <span ng-show="pedido.showEdit">{{pedido.IdPresupuesto}}</span>
+                </td>
+                <td>
+                    <span ng-show="pedido.showEdit">{{pedido.FechaCreacion}}</span>
+                </td>
+                <td>
+                    <span ng-show="pedido.showEdit">{{pedido.Observaciones}}</span>
+                </td>
+                <td>
+                    <span ng-show="pedido.showEdit" ng-click="toggleEdit(pedido)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>
+                    <span ng-show="pedido.showEdit" ng-click="deletePedido(pedido)" class="btn glyphicon glyphicon-trash" title="Borrar"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button ng-click="showNew()">Nuevo Pedido</button>
+</div>
+<img src="Content/images/loading.gif" ng-show="dataLoading" class="center-block" title="Loading..." style="margin-top: 20px" />

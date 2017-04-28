@@ -11,6 +11,6 @@ namespace ErpVictorAng.Models
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public long IdDivision { get; set; }
-        public string NombreDivision { get; set; }
+        public string DivisionName { get; set; }
     }
 }

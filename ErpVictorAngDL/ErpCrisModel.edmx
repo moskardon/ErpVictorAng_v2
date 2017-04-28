@@ -5,6 +5,17 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="ErpCrisModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Albaran">
+          <Key>
+            <PropertyRef Name="IdAlbaran" />
+          </Key>
+          <Property Name="IdAlbaran" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPedido" Type="bigint" Nullable="false" />
+          <Property Name="IdCliente" Type="bigint" Nullable="false" />
+          <Property Name="FechCreacion" Type="date" Nullable="false" />
+          <Property Name="NumeroAlbaran" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Observaciones" Type="nvarchar" MaxLength="300" />
+        </EntityType>
         <EntityType Name="Articulo">
           <Key>
             <PropertyRef Name="IdArticulo" />
@@ -15,6 +26,8 @@
           <Property Name="Medida1" Type="smallint" />
           <Property Name="Medida2" Type="smallint" />
           <Property Name="IdUnidad" Type="bigint" Nullable="false" />
+          <Property Name="IdSubFamilia" Type="bigint" Nullable="false" />
+          <Property Name="PrecioBase" Type="money" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
@@ -42,12 +55,13 @@
           <Key>
             <PropertyRef Name="IdDescuento" />
           </Key>
-          <Property Name="IdDescuento" Type="bigint" Nullable="false" />
+          <Property Name="IdDescuento" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Valor" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="IdDivision" Type="bigint" />
           <Property Name="IdFamilia" Type="bigint" />
           <Property Name="IdSubFamilia" Type="bigint" />
           <Property Name="IdArticulo" Type="bigint" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="DescuentoCliente">
           <Key>
@@ -65,6 +79,27 @@
           <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Estado">
+          <Key>
+            <PropertyRef Name="IdEstado" />
+          </Key>
+          <Property Name="IdEstado" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
+          <Property Name="Entidad" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="IdFactura" />
+          </Key>
+          <Property Name="IdFactura" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPedido" Type="bigint" Nullable="false" />
+          <Property Name="IdAlbaran" Type="bigint" />
+          <Property Name="FechaCreacion" Type="date" Nullable="false" />
+          <Property Name="NumeroFactura" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Observaciones" Type="nvarchar" MaxLength="300" />
+          <Property Name="IdCliente" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="Familia">
           <Key>
             <PropertyRef Name="IdFamilia" />
@@ -74,13 +109,87 @@
           <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
           <Property Name="IdDivision" Type="bigint" Nullable="false" />
         </EntityType>
-        <EntityType Name="Roles">
+        <EntityType Name="LineaAlbaran">
+          <Key>
+            <PropertyRef Name="IdLineaAlbaran" />
+          </Key>
+          <Property Name="IdLineaAlbaran" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdAlbaran" Type="bigint" Nullable="false" />
+          <Property Name="Medida1" Type="smallint" />
+          <Property Name="Medida2" Type="smallint" />
+          <Property Name="Cantidad" Type="smallint" Nullable="false" />
+          <Property Name="IdArticulo" Type="bigint" Nullable="false" />
+          <Property Name="Precio" Type="money" />
+          <Property Name="Descuento" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="LineaFactura">
+          <Key>
+            <PropertyRef Name="IdLineaFactura" />
+          </Key>
+          <Property Name="IdLineaFactura" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdFactura" Type="bigint" Nullable="false" />
+          <Property Name="IdArticulo" Type="bigint" Nullable="false" />
+          <Property Name="Medida1" Type="smallint" />
+          <Property Name="Medida2" Type="smallint" />
+          <Property Name="Cantidad" Type="smallint" Nullable="false" />
+          <Property Name="Precio" Type="money" />
+          <Property Name="Descuento" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="LineaPedido">
+          <Key>
+            <PropertyRef Name="IdLineaPedido" />
+          </Key>
+          <Property Name="IdLineaPedido" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPedido" Type="bigint" Nullable="false" />
+          <Property Name="IdArticulo" Type="bigint" Nullable="false" />
+          <Property Name="Medida1" Type="smallint" />
+          <Property Name="Medida2" Type="smallint" />
+          <Property Name="Cantidad" Type="smallint" Nullable="false" />
+          <Property Name="Precio" Type="money" />
+          <Property Name="Descuento" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="LineaPresupuesto">
+          <Key>
+            <PropertyRef Name="IdLineaPresupuesto" />
+          </Key>
+          <Property Name="IdLineaPresupuesto" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPresupuesto" Type="bigint" Nullable="false" />
+          <Property Name="IdArticulo" Type="bigint" Nullable="false" />
+          <Property Name="Medida1" Type="smallint" />
+          <Property Name="Medida2" Type="smallint" />
+          <Property Name="Cantidad" Type="smallint" Nullable="false" />
+          <Property Name="Precio" Type="money" />
+          <Property Name="Descuento" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="IdPedido" />
+          </Key>
+          <Property Name="IdPedido" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCliente" Type="bigint" Nullable="false" />
+          <Property Name="IdPresupuesto" Type="bigint" />
+          <Property Name="FechaCreacion" Type="date" Nullable="false" />
+          <Property Name="NumeroPedido" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Observaciones" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Presupuesto">
+          <Key>
+            <PropertyRef Name="IdPresupuesto" />
+          </Key>
+          <Property Name="IdPresupuesto" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCliente" Type="bigint" Nullable="false" />
+          <Property Name="FechaCreacion" Type="date" Nullable="false" />
+          <Property Name="FechaAceptacion" Type="date" />
+          <Property Name="NumeroPresupuesto" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Observaciones" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Rol">
           <Key>
             <PropertyRef Name="IdRol" />
           </Key>
           <Property Name="IdRol" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nobre" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Desripcion" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Desripcion" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="SubFamilia">
           <Key>
@@ -104,7 +213,7 @@
           <Key>
             <PropertyRef Name="IdUnidad" />
           </Key>
-          <Property Name="IdUnidad" Type="bigint" Nullable="false" />
+          <Property Name="IdUnidad" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="250" />
           <Property Name="NumeroMedida" Type="int" />
@@ -116,8 +225,11 @@
           </Key>
           <Property Name="IdUsuario" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="200" />
-          <Property Name="Salt" Type="nvarchar" MaxLength="200" />
+          <Property Name="HashedPassword" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Salt" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="IsLocked" Type="bit" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRol">
           <Key>
@@ -127,6 +239,42 @@
           <Property Name="IdUser" Type="bigint" Nullable="false" />
           <Property Name="IdRol" Type="bigint" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Albaran_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Albaran" Type="Self.Albaran" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Albaran">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Albaran_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="Albaran" Type="Self.Albaran" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="IdPedido" />
+            </Principal>
+            <Dependent Role="Albaran">
+              <PropertyRef Name="IdPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Articulo_SubFamilia">
+          <End Role="SubFamilia" Type="Self.SubFamilia" Multiplicity="1" />
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubFamilia">
+              <PropertyRef Name="IdSubFamilia" />
+            </Principal>
+            <Dependent Role="Articulo">
+              <PropertyRef Name="IdSubFamilia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Articulo_Unidad">
           <End Role="Unidad" Type="Self.Unidad" Multiplicity="1" />
           <End Role="Articulo" Type="Self.Articulo" Multiplicity="*" />
@@ -235,6 +383,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Factura_Albaran">
+          <End Role="Albaran" Type="Self.Albaran" Multiplicity="0..1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albaran">
+              <PropertyRef Name="IdAlbaran" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdAlbaran" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="IdPedido" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Familia_Familia">
           <End Role="Division" Type="Self.Division" Multiplicity="1" />
           <End Role="Familia" Type="Self.Familia" Multiplicity="*" />
@@ -244,6 +428,138 @@
             </Principal>
             <Dependent Role="Familia">
               <PropertyRef Name="IdDivision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LineaAlbaran_Albaran">
+          <End Role="Albaran" Type="Self.Albaran" Multiplicity="1" />
+          <End Role="LineaAlbaran" Type="Self.LineaAlbaran" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albaran">
+              <PropertyRef Name="IdAlbaran" />
+            </Principal>
+            <Dependent Role="LineaAlbaran">
+              <PropertyRef Name="IdAlbaran" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LineaAlbaran_Articulo">
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="1" />
+          <End Role="LineaAlbaran" Type="Self.LineaAlbaran" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="IdArticulo" />
+            </Principal>
+            <Dependent Role="LineaAlbaran">
+              <PropertyRef Name="IdArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LineaFactura_Articulo">
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="1" />
+          <End Role="LineaFactura" Type="Self.LineaFactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="IdArticulo" />
+            </Principal>
+            <Dependent Role="LineaFactura">
+              <PropertyRef Name="IdArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LineaFactura_Factura">
+          <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
+          <End Role="LineaFactura" Type="Self.LineaFactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="IdFactura" />
+            </Principal>
+            <Dependent Role="LineaFactura">
+              <PropertyRef Name="IdFactura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LineaPedido_Articulo">
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="1" />
+          <End Role="LineaPedido" Type="Self.LineaPedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="IdArticulo" />
+            </Principal>
+            <Dependent Role="LineaPedido">
+              <PropertyRef Name="IdArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LineaPedido_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="LineaPedido" Type="Self.LineaPedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="IdPedido" />
+            </Principal>
+            <Dependent Role="LineaPedido">
+              <PropertyRef Name="IdPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LineaPresupuesto_Articulo">
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="1" />
+          <End Role="LineaPresupuesto" Type="Self.LineaPresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="IdArticulo" />
+            </Principal>
+            <Dependent Role="LineaPresupuesto">
+              <PropertyRef Name="IdArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LineaPresupuesto_Presupuesto">
+          <End Role="Presupuesto" Type="Self.Presupuesto" Multiplicity="1" />
+          <End Role="LineaPresupuesto" Type="Self.LineaPresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Presupuesto">
+              <PropertyRef Name="IdPresupuesto" />
+            </Principal>
+            <Dependent Role="LineaPresupuesto">
+              <PropertyRef Name="IdPresupuesto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Presupuesto">
+          <End Role="Presupuesto" Type="Self.Presupuesto" Multiplicity="0..1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Presupuesto">
+              <PropertyRef Name="IdPresupuesto" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="IdPresupuesto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Presupuesto_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Presupuesto" Type="Self.Presupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Presupuesto">
+              <PropertyRef Name="IdCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -283,11 +599,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserRol_Roles">
-          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+        <Association Name="FK_UserRol_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
           <End Role="UserRol" Type="Self.UserRol" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Roles">
+            <Principal Role="Rol">
               <PropertyRef Name="IdRol" />
             </Principal>
             <Dependent Role="UserRol">
@@ -308,18 +624,39 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ErpCrisModelStoreContainer">
+          <EntitySet Name="Albaran" EntityType="Self.Albaran" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Articulo" EntityType="Self.Articulo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Descuento" EntityType="Self.Descuento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DescuentoCliente" EntityType="Self.DescuentoCliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Division" EntityType="Self.Division" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estado" EntityType="Self.Estado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Familia" EntityType="Self.Familia" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LineaAlbaran" EntityType="Self.LineaAlbaran" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LineaFactura" EntityType="Self.LineaFactura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LineaPedido" EntityType="Self.LineaPedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LineaPresupuesto" EntityType="Self.LineaPresupuesto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Presupuesto" EntityType="Self.Presupuesto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubFamilia" EntityType="Self.SubFamilia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoUnidad" EntityType="Self.TipoUnidad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unidad" EntityType="Self.Unidad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRol" EntityType="Self.UserRol" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Albaran_Cliente" Association="Self.FK_Albaran_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Albaran" EntitySet="Albaran" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Albaran_Pedido" Association="Self.FK_Albaran_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="Albaran" EntitySet="Albaran" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Articulo_SubFamilia" Association="Self.FK_Articulo_SubFamilia">
+            <End Role="SubFamilia" EntitySet="SubFamilia" />
+            <End Role="Articulo" EntitySet="Articulo" />
+          </AssociationSet>
           <AssociationSet Name="FK_Articulo_Unidad" Association="Self.FK_Articulo_Unidad">
             <End Role="Unidad" EntitySet="Unidad" />
             <End Role="Articulo" EntitySet="Articulo" />
@@ -356,9 +693,65 @@
             <End Role="Descuento" EntitySet="Descuento" />
             <End Role="DescuentoCliente" EntitySet="DescuentoCliente" />
           </AssociationSet>
+          <AssociationSet Name="FK_Factura_Albaran" Association="Self.FK_Factura_Albaran">
+            <End Role="Albaran" EntitySet="Albaran" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Cliente" Association="Self.FK_Factura_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Pedido" Association="Self.FK_Factura_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
           <AssociationSet Name="FK_Familia_Familia" Association="Self.FK_Familia_Familia">
             <End Role="Division" EntitySet="Division" />
             <End Role="Familia" EntitySet="Familia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LineaAlbaran_Albaran" Association="Self.FK_LineaAlbaran_Albaran">
+            <End Role="Albaran" EntitySet="Albaran" />
+            <End Role="LineaAlbaran" EntitySet="LineaAlbaran" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LineaAlbaran_Articulo" Association="Self.FK_LineaAlbaran_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="LineaAlbaran" EntitySet="LineaAlbaran" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LineaFactura_Articulo" Association="Self.FK_LineaFactura_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="LineaFactura" EntitySet="LineaFactura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LineaFactura_Factura" Association="Self.FK_LineaFactura_Factura">
+            <End Role="Factura" EntitySet="Factura" />
+            <End Role="LineaFactura" EntitySet="LineaFactura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LineaPedido_Articulo" Association="Self.FK_LineaPedido_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="LineaPedido" EntitySet="LineaPedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LineaPedido_Pedido" Association="Self.FK_LineaPedido_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="LineaPedido" EntitySet="LineaPedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LineaPresupuesto_Articulo" Association="Self.FK_LineaPresupuesto_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="LineaPresupuesto" EntitySet="LineaPresupuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LineaPresupuesto_Presupuesto" Association="Self.FK_LineaPresupuesto_Presupuesto">
+            <End Role="Presupuesto" EntitySet="Presupuesto" />
+            <End Role="LineaPresupuesto" EntitySet="LineaPresupuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Cliente" Association="Self.FK_Pedido_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Presupuesto" Association="Self.FK_Pedido_Presupuesto">
+            <End Role="Presupuesto" EntitySet="Presupuesto" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Presupuesto_Cliente" Association="Self.FK_Presupuesto_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Presupuesto" EntitySet="Presupuesto" />
           </AssociationSet>
           <AssociationSet Name="FK_SubFamilia_Division" Association="Self.FK_SubFamilia_Division">
             <End Role="Division" EntitySet="Division" />
@@ -372,8 +765,8 @@
             <End Role="TipoUnidad" EntitySet="TipoUnidad" />
             <End Role="Unidad" EntitySet="Unidad" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserRol_Roles" Association="Self.FK_UserRol_Roles">
-            <End Role="Roles" EntitySet="Roles" />
+          <AssociationSet Name="FK_UserRol_Rol" Association="Self.FK_UserRol_Rol">
+            <End Role="Rol" EntitySet="Rol" />
             <End Role="UserRol" EntitySet="UserRol" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRol_User" Association="Self.FK_UserRol_User">
@@ -386,6 +779,21 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ErpCrisModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Albaran">
+          <Key>
+            <PropertyRef Name="IdAlbaran" />
+          </Key>
+          <Property Name="IdAlbaran" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPedido" Type="Int64" Nullable="false" />
+          <Property Name="IdCliente" Type="Int64" Nullable="false" />
+          <Property Name="FechCreacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NumeroAlbaran" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Observaciones" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Albaran_Cliente" FromRole="Albaran" ToRole="Cliente" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK_Albaran_Pedido" FromRole="Albaran" ToRole="Pedido" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Albaran" FromRole="Albaran" ToRole="Factura" />
+          <NavigationProperty Name="LineaAlbaran" Relationship="Self.FK_LineaAlbaran_Albaran" FromRole="Albaran" ToRole="LineaAlbaran" />
+        </EntityType>
         <EntityType Name="Articulo">
           <Key>
             <PropertyRef Name="IdArticulo" />
@@ -396,8 +804,15 @@
           <Property Name="Medida1" Type="Int16" />
           <Property Name="Medida2" Type="Int16" />
           <Property Name="IdUnidad" Type="Int64" Nullable="false" />
+          <Property Name="IdSubFamilia" Type="Int64" Nullable="false" />
+          <Property Name="PrecioBase" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="SubFamilia" Relationship="Self.FK_Articulo_SubFamilia" FromRole="Articulo" ToRole="SubFamilia" />
           <NavigationProperty Name="Unidad" Relationship="Self.FK_Articulo_Unidad" FromRole="Articulo" ToRole="Unidad" />
           <NavigationProperty Name="Descuento" Relationship="Self.FK_Descuento_Articulo" FromRole="Articulo" ToRole="Descuento" />
+          <NavigationProperty Name="LineaAlbaran" Relationship="Self.FK_LineaAlbaran_Articulo" FromRole="Articulo" ToRole="LineaAlbaran" />
+          <NavigationProperty Name="LineaFactura" Relationship="Self.FK_LineaFactura_Articulo" FromRole="Articulo" ToRole="LineaFactura" />
+          <NavigationProperty Name="LineaPedido" Relationship="Self.FK_LineaPedido_Articulo" FromRole="Articulo" ToRole="LineaPedido" />
+          <NavigationProperty Name="LineaPresupuesto" Relationship="Self.FK_LineaPresupuesto_Articulo" FromRole="Articulo" ToRole="LineaPresupuesto" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
@@ -420,20 +835,25 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Saldo" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Moroso" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Albaran" Relationship="Self.FK_Albaran_Cliente" FromRole="Cliente" ToRole="Albaran" />
           <NavigationProperty Name="Descuento" Relationship="Self.FK_Cliente_Descuento" FromRole="Cliente" ToRole="Descuento" />
           <NavigationProperty Name="User" Relationship="Self.FK_Cliente_User" FromRole="Cliente" ToRole="User" />
           <NavigationProperty Name="DescuentoCliente" Relationship="Self.FK_DescuentoCliente_Cliente" FromRole="Cliente" ToRole="DescuentoCliente" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Cliente" FromRole="Cliente" ToRole="Factura" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK_Pedido_Cliente" FromRole="Cliente" ToRole="Pedido" />
+          <NavigationProperty Name="Presupuesto" Relationship="Self.FK_Presupuesto_Cliente" FromRole="Cliente" ToRole="Presupuesto" />
         </EntityType>
         <EntityType Name="Descuento">
           <Key>
             <PropertyRef Name="IdDescuento" />
           </Key>
-          <Property Name="IdDescuento" Type="Int64" Nullable="false" />
+          <Property Name="IdDescuento" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Valor" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="IdDivision" Type="Int64" />
           <Property Name="IdFamilia" Type="Int64" />
           <Property Name="IdSubFamilia" Type="Int64" />
           <Property Name="IdArticulo" Type="Int64" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Articulo" Relationship="Self.FK_Descuento_Articulo" FromRole="Descuento" ToRole="Articulo" />
           <NavigationProperty Name="Cliente" Relationship="Self.FK_Cliente_Descuento" FromRole="Descuento" ToRole="Cliente" />
           <NavigationProperty Name="Division" Relationship="Self.FK_Descuento_Division" FromRole="Descuento" ToRole="Division" />
@@ -462,6 +882,31 @@
           <NavigationProperty Name="Familia" Relationship="Self.FK_Familia_Familia" FromRole="Division" ToRole="Familia" />
           <NavigationProperty Name="SubFamilia" Relationship="Self.FK_SubFamilia_Division" FromRole="Division" ToRole="SubFamilia" />
         </EntityType>
+        <EntityType Name="Estado">
+          <Key>
+            <PropertyRef Name="IdEstado" />
+          </Key>
+          <Property Name="IdEstado" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Entidad" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="IdFactura" />
+          </Key>
+          <Property Name="IdFactura" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPedido" Type="Int64" Nullable="false" />
+          <Property Name="IdAlbaran" Type="Int64" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NumeroFactura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Observaciones" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="IdCliente" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Albaran" Relationship="Self.FK_Factura_Albaran" FromRole="Factura" ToRole="Albaran" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Factura_Cliente" FromRole="Factura" ToRole="Cliente" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK_Factura_Pedido" FromRole="Factura" ToRole="Pedido" />
+          <NavigationProperty Name="LineaFactura" Relationship="Self.FK_LineaFactura_Factura" FromRole="Factura" ToRole="LineaFactura" />
+        </EntityType>
         <EntityType Name="Familia">
           <Key>
             <PropertyRef Name="IdFamilia" />
@@ -474,14 +919,104 @@
           <NavigationProperty Name="Division" Relationship="Self.FK_Familia_Familia" FromRole="Familia" ToRole="Division" />
           <NavigationProperty Name="SubFamilia" Relationship="Self.FK_SubFamilia_Familia" FromRole="Familia" ToRole="SubFamilia" />
         </EntityType>
-        <EntityType Name="Roles">
+        <EntityType Name="LineaAlbaran">
+          <Key>
+            <PropertyRef Name="IdLineaAlbaran" />
+          </Key>
+          <Property Name="IdLineaAlbaran" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAlbaran" Type="Int64" Nullable="false" />
+          <Property Name="Medida1" Type="Int16" />
+          <Property Name="Medida2" Type="Int16" />
+          <Property Name="Cantidad" Type="Int16" Nullable="false" />
+          <Property Name="IdArticulo" Type="Int64" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Descuento" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Albaran" Relationship="Self.FK_LineaAlbaran_Albaran" FromRole="LineaAlbaran" ToRole="Albaran" />
+          <NavigationProperty Name="Articulo" Relationship="Self.FK_LineaAlbaran_Articulo" FromRole="LineaAlbaran" ToRole="Articulo" />
+        </EntityType>
+        <EntityType Name="LineaFactura">
+          <Key>
+            <PropertyRef Name="IdLineaFactura" />
+          </Key>
+          <Property Name="IdLineaFactura" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdFactura" Type="Int64" Nullable="false" />
+          <Property Name="IdArticulo" Type="Int64" Nullable="false" />
+          <Property Name="Medida1" Type="Int16" />
+          <Property Name="Medida2" Type="Int16" />
+          <Property Name="Cantidad" Type="Int16" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Descuento" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Articulo" Relationship="Self.FK_LineaFactura_Articulo" FromRole="LineaFactura" ToRole="Articulo" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK_LineaFactura_Factura" FromRole="LineaFactura" ToRole="Factura" />
+        </EntityType>
+        <EntityType Name="LineaPedido">
+          <Key>
+            <PropertyRef Name="IdLineaPedido" />
+          </Key>
+          <Property Name="IdLineaPedido" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPedido" Type="Int64" Nullable="false" />
+          <Property Name="IdArticulo" Type="Int64" Nullable="false" />
+          <Property Name="Medida1" Type="Int16" />
+          <Property Name="Medida2" Type="Int16" />
+          <Property Name="Cantidad" Type="Int16" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Descuento" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Articulo" Relationship="Self.FK_LineaPedido_Articulo" FromRole="LineaPedido" ToRole="Articulo" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK_LineaPedido_Pedido" FromRole="LineaPedido" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="LineaPresupuesto">
+          <Key>
+            <PropertyRef Name="IdLineaPresupuesto" />
+          </Key>
+          <Property Name="IdLineaPresupuesto" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPresupuesto" Type="Int64" Nullable="false" />
+          <Property Name="IdArticulo" Type="Int64" Nullable="false" />
+          <Property Name="Medida1" Type="Int16" />
+          <Property Name="Medida2" Type="Int16" />
+          <Property Name="Cantidad" Type="Int16" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Descuento" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Articulo" Relationship="Self.FK_LineaPresupuesto_Articulo" FromRole="LineaPresupuesto" ToRole="Articulo" />
+          <NavigationProperty Name="Presupuesto" Relationship="Self.FK_LineaPresupuesto_Presupuesto" FromRole="LineaPresupuesto" ToRole="Presupuesto" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="IdPedido" />
+          </Key>
+          <Property Name="IdPedido" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCliente" Type="Int64" Nullable="false" />
+          <Property Name="IdPresupuesto" Type="Int64" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NumeroPedido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Observaciones" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Albaran" Relationship="Self.FK_Albaran_Pedido" FromRole="Pedido" ToRole="Albaran" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Pedido_Cliente" FromRole="Pedido" ToRole="Cliente" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Pedido" FromRole="Pedido" ToRole="Factura" />
+          <NavigationProperty Name="LineaPedido" Relationship="Self.FK_LineaPedido_Pedido" FromRole="Pedido" ToRole="LineaPedido" />
+          <NavigationProperty Name="Presupuesto" Relationship="Self.FK_Pedido_Presupuesto" FromRole="Pedido" ToRole="Presupuesto" />
+        </EntityType>
+        <EntityType Name="Presupuesto">
+          <Key>
+            <PropertyRef Name="IdPresupuesto" />
+          </Key>
+          <Property Name="IdPresupuesto" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCliente" Type="Int64" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaAceptacion" Type="DateTime" Precision="0" />
+          <Property Name="NumeroPresupuesto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Observaciones" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Presupuesto_Cliente" FromRole="Presupuesto" ToRole="Cliente" />
+          <NavigationProperty Name="LineaPresupuesto" Relationship="Self.FK_LineaPresupuesto_Presupuesto" FromRole="Presupuesto" ToRole="LineaPresupuesto" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK_Pedido_Presupuesto" FromRole="Presupuesto" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="Rol">
           <Key>
             <PropertyRef Name="IdRol" />
           </Key>
           <Property Name="IdRol" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nobre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Desripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="UserRol" Relationship="Self.FK_UserRol_Roles" FromRole="Roles" ToRole="UserRol" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Desripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserRol" Relationship="Self.FK_UserRol_Rol" FromRole="Rol" ToRole="UserRol" />
         </EntityType>
         <EntityType Name="SubFamilia">
           <Key>
@@ -492,6 +1027,7 @@
           <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="IdDivision" Type="Int64" Nullable="false" />
           <Property Name="IdFamilia" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Articulo" Relationship="Self.FK_Articulo_SubFamilia" FromRole="SubFamilia" ToRole="Articulo" />
           <NavigationProperty Name="Descuento" Relationship="Self.FK_Descuento_SubFamilia" FromRole="SubFamilia" ToRole="Descuento" />
           <NavigationProperty Name="Division" Relationship="Self.FK_SubFamilia_Division" FromRole="SubFamilia" ToRole="Division" />
           <NavigationProperty Name="Familia" Relationship="Self.FK_SubFamilia_Familia" FromRole="SubFamilia" ToRole="Familia" />
@@ -509,7 +1045,7 @@
           <Key>
             <PropertyRef Name="IdUnidad" />
           </Key>
-          <Property Name="IdUnidad" Type="Int64" Nullable="false" />
+          <Property Name="IdUnidad" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="NumeroMedida" Type="Int32" />
@@ -523,8 +1059,11 @@
           </Key>
           <Property Name="IdUsuario" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Salt" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="HashedPassword" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Salt" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsLocked" Type="Boolean" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Cliente" Relationship="Self.FK_Cliente_User" FromRole="User" ToRole="Cliente" />
           <NavigationProperty Name="UserRol" Relationship="Self.FK_UserRol_User" FromRole="User" ToRole="UserRol" />
         </EntityType>
@@ -535,9 +1074,69 @@
           <Property Name="IdUserRol" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdUser" Type="Int64" Nullable="false" />
           <Property Name="IdRol" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Roles" Relationship="Self.FK_UserRol_Roles" FromRole="UserRol" ToRole="Roles" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK_UserRol_Rol" FromRole="UserRol" ToRole="Rol" />
           <NavigationProperty Name="User" Relationship="Self.FK_UserRol_User" FromRole="UserRol" ToRole="User" />
         </EntityType>
+        <Association Name="FK_Albaran_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Albaran" Type="Self.Albaran" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Albaran">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Albaran_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="Albaran" Type="Self.Albaran" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="IdPedido" />
+            </Principal>
+            <Dependent Role="Albaran">
+              <PropertyRef Name="IdPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Albaran">
+          <End Role="Albaran" Type="Self.Albaran" Multiplicity="0..1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albaran">
+              <PropertyRef Name="IdAlbaran" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdAlbaran" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LineaAlbaran_Albaran">
+          <End Role="Albaran" Type="Self.Albaran" Multiplicity="1" />
+          <End Role="LineaAlbaran" Type="Self.LineaAlbaran" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albaran">
+              <PropertyRef Name="IdAlbaran" />
+            </Principal>
+            <Dependent Role="LineaAlbaran">
+              <PropertyRef Name="IdAlbaran" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Articulo_SubFamilia">
+          <End Role="SubFamilia" Type="Self.SubFamilia" Multiplicity="1" />
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubFamilia">
+              <PropertyRef Name="IdSubFamilia" />
+            </Principal>
+            <Dependent Role="Articulo">
+              <PropertyRef Name="IdSubFamilia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Articulo_Unidad">
           <End Role="Unidad" Type="Self.Unidad" Multiplicity="1" />
           <End Role="Articulo" Type="Self.Articulo" Multiplicity="*" />
@@ -558,6 +1157,54 @@
               <PropertyRef Name="IdArticulo" />
             </Principal>
             <Dependent Role="Descuento">
+              <PropertyRef Name="IdArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LineaAlbaran_Articulo">
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="1" />
+          <End Role="LineaAlbaran" Type="Self.LineaAlbaran" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="IdArticulo" />
+            </Principal>
+            <Dependent Role="LineaAlbaran">
+              <PropertyRef Name="IdArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LineaFactura_Articulo">
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="1" />
+          <End Role="LineaFactura" Type="Self.LineaFactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="IdArticulo" />
+            </Principal>
+            <Dependent Role="LineaFactura">
+              <PropertyRef Name="IdArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LineaPedido_Articulo">
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="1" />
+          <End Role="LineaPedido" Type="Self.LineaPedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="IdArticulo" />
+            </Principal>
+            <Dependent Role="LineaPedido">
+              <PropertyRef Name="IdArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LineaPresupuesto_Articulo">
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="1" />
+          <End Role="LineaPresupuesto" Type="Self.LineaPresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="IdArticulo" />
+            </Principal>
+            <Dependent Role="LineaPresupuesto">
               <PropertyRef Name="IdArticulo" />
             </Dependent>
           </ReferentialConstraint>
@@ -594,6 +1241,42 @@
               <PropertyRef Name="IdCliente" />
             </Principal>
             <Dependent Role="DescuentoCliente">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Presupuesto_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Presupuesto" Type="Self.Presupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Presupuesto">
               <PropertyRef Name="IdCliente" />
             </Dependent>
           </ReferentialConstraint>
@@ -670,6 +1353,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Factura_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="IdPedido" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LineaFactura_Factura">
+          <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
+          <End Role="LineaFactura" Type="Self.LineaFactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="IdFactura" />
+            </Principal>
+            <Dependent Role="LineaFactura">
+              <PropertyRef Name="IdFactura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SubFamilia_Familia">
           <End Role="Familia" Type="Self.Familia" Multiplicity="1" />
           <End Role="SubFamilia" Type="Self.SubFamilia" Multiplicity="*" />
@@ -682,11 +1389,47 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserRol_Roles">
-          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+        <Association Name="FK_LineaPedido_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="LineaPedido" Type="Self.LineaPedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="IdPedido" />
+            </Principal>
+            <Dependent Role="LineaPedido">
+              <PropertyRef Name="IdPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LineaPresupuesto_Presupuesto">
+          <End Role="Presupuesto" Type="Self.Presupuesto" Multiplicity="1" />
+          <End Role="LineaPresupuesto" Type="Self.LineaPresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Presupuesto">
+              <PropertyRef Name="IdPresupuesto" />
+            </Principal>
+            <Dependent Role="LineaPresupuesto">
+              <PropertyRef Name="IdPresupuesto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Presupuesto">
+          <End Role="Presupuesto" Type="Self.Presupuesto" Multiplicity="0..1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Presupuesto">
+              <PropertyRef Name="IdPresupuesto" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="IdPresupuesto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRol_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
           <End Role="UserRol" Type="Self.UserRol" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Roles">
+            <Principal Role="Rol">
               <PropertyRef Name="IdRol" />
             </Principal>
             <Dependent Role="UserRol">
@@ -719,18 +1462,47 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ErpCrisEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Albaran" EntityType="Self.Albaran" />
           <EntitySet Name="Articulo" EntityType="Self.Articulo" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" />
           <EntitySet Name="Descuento" EntityType="Self.Descuento" />
           <EntitySet Name="DescuentoCliente" EntityType="Self.DescuentoCliente" />
           <EntitySet Name="Division" EntityType="Self.Division" />
+          <EntitySet Name="Estado" EntityType="Self.Estado" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" />
           <EntitySet Name="Familia" EntityType="Self.Familia" />
-          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="LineaAlbaran" EntityType="Self.LineaAlbaran" />
+          <EntitySet Name="LineaFactura" EntityType="Self.LineaFactura" />
+          <EntitySet Name="LineaPedido" EntityType="Self.LineaPedido" />
+          <EntitySet Name="LineaPresupuesto" EntityType="Self.LineaPresupuesto" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" />
+          <EntitySet Name="Presupuesto" EntityType="Self.Presupuesto" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" />
           <EntitySet Name="SubFamilia" EntityType="Self.SubFamilia" />
           <EntitySet Name="TipoUnidad" EntityType="Self.TipoUnidad" />
           <EntitySet Name="Unidad" EntityType="Self.Unidad" />
           <EntitySet Name="User" EntityType="Self.User" />
           <EntitySet Name="UserRol" EntityType="Self.UserRol" />
+          <AssociationSet Name="FK_Albaran_Cliente" Association="Self.FK_Albaran_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Albaran" EntitySet="Albaran" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Albaran_Pedido" Association="Self.FK_Albaran_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="Albaran" EntitySet="Albaran" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Albaran" Association="Self.FK_Factura_Albaran">
+            <End Role="Albaran" EntitySet="Albaran" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LineaAlbaran_Albaran" Association="Self.FK_LineaAlbaran_Albaran">
+            <End Role="Albaran" EntitySet="Albaran" />
+            <End Role="LineaAlbaran" EntitySet="LineaAlbaran" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Articulo_SubFamilia" Association="Self.FK_Articulo_SubFamilia">
+            <End Role="SubFamilia" EntitySet="SubFamilia" />
+            <End Role="Articulo" EntitySet="Articulo" />
+          </AssociationSet>
           <AssociationSet Name="FK_Articulo_Unidad" Association="Self.FK_Articulo_Unidad">
             <End Role="Unidad" EntitySet="Unidad" />
             <End Role="Articulo" EntitySet="Articulo" />
@@ -738,6 +1510,22 @@
           <AssociationSet Name="FK_Descuento_Articulo" Association="Self.FK_Descuento_Articulo">
             <End Role="Articulo" EntitySet="Articulo" />
             <End Role="Descuento" EntitySet="Descuento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LineaAlbaran_Articulo" Association="Self.FK_LineaAlbaran_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="LineaAlbaran" EntitySet="LineaAlbaran" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LineaFactura_Articulo" Association="Self.FK_LineaFactura_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="LineaFactura" EntitySet="LineaFactura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LineaPedido_Articulo" Association="Self.FK_LineaPedido_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="LineaPedido" EntitySet="LineaPedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LineaPresupuesto_Articulo" Association="Self.FK_LineaPresupuesto_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="LineaPresupuesto" EntitySet="LineaPresupuesto" />
           </AssociationSet>
           <AssociationSet Name="FK_Cliente_Descuento" Association="Self.FK_Cliente_Descuento">
             <End Role="Descuento" EntitySet="Descuento" />
@@ -750,6 +1538,18 @@
           <AssociationSet Name="FK_DescuentoCliente_Cliente" Association="Self.FK_DescuentoCliente_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="DescuentoCliente" EntitySet="DescuentoCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Cliente" Association="Self.FK_Factura_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Cliente" Association="Self.FK_Pedido_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Presupuesto_Cliente" Association="Self.FK_Presupuesto_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Presupuesto" EntitySet="Presupuesto" />
           </AssociationSet>
           <AssociationSet Name="FK_Descuento_Division" Association="Self.FK_Descuento_Division">
             <End Role="Division" EntitySet="Division" />
@@ -775,12 +1575,32 @@
             <End Role="Division" EntitySet="Division" />
             <End Role="SubFamilia" EntitySet="SubFamilia" />
           </AssociationSet>
+          <AssociationSet Name="FK_Factura_Pedido" Association="Self.FK_Factura_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LineaFactura_Factura" Association="Self.FK_LineaFactura_Factura">
+            <End Role="Factura" EntitySet="Factura" />
+            <End Role="LineaFactura" EntitySet="LineaFactura" />
+          </AssociationSet>
           <AssociationSet Name="FK_SubFamilia_Familia" Association="Self.FK_SubFamilia_Familia">
             <End Role="Familia" EntitySet="Familia" />
             <End Role="SubFamilia" EntitySet="SubFamilia" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserRol_Roles" Association="Self.FK_UserRol_Roles">
-            <End Role="Roles" EntitySet="Roles" />
+          <AssociationSet Name="FK_LineaPedido_Pedido" Association="Self.FK_LineaPedido_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="LineaPedido" EntitySet="LineaPedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LineaPresupuesto_Presupuesto" Association="Self.FK_LineaPresupuesto_Presupuesto">
+            <End Role="Presupuesto" EntitySet="Presupuesto" />
+            <End Role="LineaPresupuesto" EntitySet="LineaPresupuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Presupuesto" Association="Self.FK_Pedido_Presupuesto">
+            <End Role="Presupuesto" EntitySet="Presupuesto" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRol_Rol" Association="Self.FK_UserRol_Rol">
+            <End Role="Rol" EntitySet="Rol" />
             <End Role="UserRol" EntitySet="UserRol" />
           </AssociationSet>
           <AssociationSet Name="FK_Unidad_TipoUnidad" Association="Self.FK_Unidad_TipoUnidad">
@@ -798,6 +1618,18 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ErpCrisModelStoreContainer" CdmEntityContainer="ErpCrisEntities">
+          <EntitySetMapping Name="Albaran">
+            <EntityTypeMapping TypeName="ErpCrisModel.Albaran">
+              <MappingFragment StoreEntitySet="Albaran">
+                <ScalarProperty Name="IdAlbaran" ColumnName="IdAlbaran" />
+                <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="FechCreacion" ColumnName="FechCreacion" />
+                <ScalarProperty Name="NumeroAlbaran" ColumnName="NumeroAlbaran" />
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Articulo">
             <EntityTypeMapping TypeName="ErpCrisModel.Articulo">
               <MappingFragment StoreEntitySet="Articulo">
@@ -807,6 +1639,8 @@
                 <ScalarProperty Name="Medida1" ColumnName="Medida1" />
                 <ScalarProperty Name="Medida2" ColumnName="Medida2" />
                 <ScalarProperty Name="IdUnidad" ColumnName="IdUnidad" />
+                <ScalarProperty Name="IdSubFamilia" ColumnName="IdSubFamilia" />
+                <ScalarProperty Name="PrecioBase" ColumnName="PrecioBase" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -842,6 +1676,7 @@
                 <ScalarProperty Name="IdFamilia" ColumnName="IdFamilia" />
                 <ScalarProperty Name="IdSubFamilia" ColumnName="IdSubFamilia" />
                 <ScalarProperty Name="IdArticulo" ColumnName="IdArticulo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -863,6 +1698,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Estado">
+            <EntityTypeMapping TypeName="ErpCrisModel.Estado">
+              <MappingFragment StoreEntitySet="Estado">
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Entidad" ColumnName="Entidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Factura">
+            <EntityTypeMapping TypeName="ErpCrisModel.Factura">
+              <MappingFragment StoreEntitySet="Factura">
+                <ScalarProperty Name="IdFactura" ColumnName="IdFactura" />
+                <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
+                <ScalarProperty Name="IdAlbaran" ColumnName="IdAlbaran" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Familia">
             <EntityTypeMapping TypeName="ErpCrisModel.Familia">
               <MappingFragment StoreEntitySet="Familia">
@@ -873,11 +1731,91 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="ErpCrisModel.Roles">
-              <MappingFragment StoreEntitySet="Roles">
+          <EntitySetMapping Name="LineaAlbaran">
+            <EntityTypeMapping TypeName="ErpCrisModel.LineaAlbaran">
+              <MappingFragment StoreEntitySet="LineaAlbaran">
+                <ScalarProperty Name="IdLineaAlbaran" ColumnName="IdLineaAlbaran" />
+                <ScalarProperty Name="IdAlbaran" ColumnName="IdAlbaran" />
+                <ScalarProperty Name="Medida1" ColumnName="Medida1" />
+                <ScalarProperty Name="Medida2" ColumnName="Medida2" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdArticulo" ColumnName="IdArticulo" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LineaFactura">
+            <EntityTypeMapping TypeName="ErpCrisModel.LineaFactura">
+              <MappingFragment StoreEntitySet="LineaFactura">
+                <ScalarProperty Name="IdLineaFactura" ColumnName="IdLineaFactura" />
+                <ScalarProperty Name="IdFactura" ColumnName="IdFactura" />
+                <ScalarProperty Name="IdArticulo" ColumnName="IdArticulo" />
+                <ScalarProperty Name="Medida1" ColumnName="Medida1" />
+                <ScalarProperty Name="Medida2" ColumnName="Medida2" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LineaPedido">
+            <EntityTypeMapping TypeName="ErpCrisModel.LineaPedido">
+              <MappingFragment StoreEntitySet="LineaPedido">
+                <ScalarProperty Name="IdLineaPedido" ColumnName="IdLineaPedido" />
+                <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
+                <ScalarProperty Name="IdArticulo" ColumnName="IdArticulo" />
+                <ScalarProperty Name="Medida1" ColumnName="Medida1" />
+                <ScalarProperty Name="Medida2" ColumnName="Medida2" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LineaPresupuesto">
+            <EntityTypeMapping TypeName="ErpCrisModel.LineaPresupuesto">
+              <MappingFragment StoreEntitySet="LineaPresupuesto">
+                <ScalarProperty Name="IdLineaPresupuesto" ColumnName="IdLineaPresupuesto" />
+                <ScalarProperty Name="IdPresupuesto" ColumnName="IdPresupuesto" />
+                <ScalarProperty Name="IdArticulo" ColumnName="IdArticulo" />
+                <ScalarProperty Name="Medida1" ColumnName="Medida1" />
+                <ScalarProperty Name="Medida2" ColumnName="Medida2" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedido">
+            <EntityTypeMapping TypeName="ErpCrisModel.Pedido">
+              <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdPresupuesto" ColumnName="IdPresupuesto" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="NumeroPedido" ColumnName="NumeroPedido" />
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Presupuesto">
+            <EntityTypeMapping TypeName="ErpCrisModel.Presupuesto">
+              <MappingFragment StoreEntitySet="Presupuesto">
+                <ScalarProperty Name="IdPresupuesto" ColumnName="IdPresupuesto" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaAceptacion" ColumnName="FechaAceptacion" />
+                <ScalarProperty Name="NumeroPresupuesto" ColumnName="NumeroPresupuesto" />
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="ErpCrisModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
-                <ScalarProperty Name="Nobre" ColumnName="Nobre" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Desripcion" ColumnName="Desripcion" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -918,8 +1856,11 @@
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="HashedPassword" ColumnName="HashedPassword" />
                 <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

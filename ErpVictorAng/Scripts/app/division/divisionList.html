@@ -1,0 +1,58 @@
+﻿<h2>Divisiones</h2>
+
+<div id="divWrapper" ng-show="dataLoaded" style="display:none">
+    <table id="tblDivisiones" class="table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Descripción
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="division in divisiones">
+                <th scope="row">
+                    {{$index+1}}
+                </th>
+                <td>
+                    <span ng-show="division.showEdit">{{division.Nombre}}</span>
+                    <input ng-show="!division.showEdit" type="text" ng-model="division.Nombre" class="form-control" validate-on="blur" required required-message="'Nombre is required'">
+                </td>
+                <td>
+                    <span ng-show="division.showEdit">{{division.Descripcion}}</span>
+                    <input ng-show="!division.showEdit" type="text" ng-model="division.Descripcion" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="division.showEdit" ng-click="toggleEdit(division)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>
+                    <span ng-show="division.showEdit" ng-click="deleteDivision(division)" class="btn glyphicon glyphicon-trash" title="Borrar"></span>
+                    <span ng-show="!division.showEdit" ng-click="updateDivision(division)" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                    <span ng-show="!division.showEdit" ng-click="toggleEdit(division)" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                </td>
+            </tr>
+            <tr ng-show="showAdd">
+                <th>
+                    <span>#</span>
+                </th>
+                <td>
+                    <input id="newName" ng-show="showAdd" type="text" ng-model="newNombre" class="form-control">
+                </td>
+                <td>
+                    <input id="newDesc" ng-show="showAdd" type="text" ng-model="newDescripcion" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="showAdd" ng-click="addDivision()" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                    <span ng-show="showAdd" ng-click="showNew()" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button ng-click="showNew()">Nueva División</button>
+</div>
+<!--Loading indicator-->
+<img src="Content/images/loading.gif" ng-show="dataLoading" class="center-block" title="Loading..." style="margin-top: 20px" />

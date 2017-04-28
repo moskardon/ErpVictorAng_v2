@@ -19,9 +19,8 @@ namespace ErpVictorAngDL
             : base("name=ErpCrisEntities")
         {
         }
-
         public ErpCrisEntities(string connectionString)
-            : base(connectionString)
+               : base(connectionString)
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -29,13 +28,22 @@ namespace ErpVictorAngDL
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Albaran> Albaran { get; set; }
         public virtual DbSet<Articulo> Articulo { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Descuento> Descuento { get; set; }
         public virtual DbSet<DescuentoCliente> DescuentoCliente { get; set; }
         public virtual DbSet<Division> Division { get; set; }
+        public virtual DbSet<Estado> Estado { get; set; }
+        public virtual DbSet<Factura> Factura { get; set; }
         public virtual DbSet<Familia> Familia { get; set; }
-        public virtual DbSet<Roles> Roles { get; set; }
+        public virtual DbSet<LineaAlbaran> LineaAlbaran { get; set; }
+        public virtual DbSet<LineaFactura> LineaFactura { get; set; }
+        public virtual DbSet<LineaPedido> LineaPedido { get; set; }
+        public virtual DbSet<LineaPresupuesto> LineaPresupuesto { get; set; }
+        public virtual DbSet<Pedido> Pedido { get; set; }
+        public virtual DbSet<Presupuesto> Presupuesto { get; set; }
+        public virtual DbSet<Rol> Rol { get; set; }
         public virtual DbSet<SubFamilia> SubFamilia { get; set; }
         public virtual DbSet<TipoUnidad> TipoUnidad { get; set; }
         public virtual DbSet<Unidad> Unidad { get; set; }

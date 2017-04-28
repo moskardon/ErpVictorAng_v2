@@ -1,0 +1,84 @@
+﻿<h2>Unidades</h2>
+
+<div id="divWrapper" ng-show="dataLoaded" style="display:none">
+    <table id="tblUnidades" class="table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Numero de Medida
+                </th>
+                <th>
+                    Tipo Unidad
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="unidad in unidades">
+                <th scope="row">
+                    {{$index+1}}
+                </th>
+                <td>
+                    <span ng-show="unidad.showEdit">{{unidad.Nombre}}</span>
+                    <input ng-show="!unidad.showEdit" type="text" ng-model="unidad.Nombre" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="unidad.showEdit">{{unidad.Descripcion}}</span>
+                    <input ng-show="!unidad.showEdit" type="text" ng-model="unidad.Descripcion" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="unidad.showEdit">{{unidad.NumeroMedida}}</span>
+                    <input ng-show="!unidad.showEdit" type="text" ng-model="unidad.NumeroMedida" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="unidad.showEdit">{{unidad.TipoUnidadName}}</span>
+                    <select ng-show="!unidad.showEdit" class="form-control" ng-model="ddlTipoUnidades"
+                            ng-options="tipoUnidad.Nombre for tipoUnidad in tipoUnidades track by tipoUnidad.Nombre" ng-change="changedValue(ddlTipoUnidades,unidad)">
+                        <option value="">-- Selecciona un Tipo de Unidad --</option>
+                    </select>
+                </td>
+                <td>
+                    <span ng-show="unidad.showEdit" ng-click="toggleEdit(unidad)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>
+                    <span ng-show="unidad.showEdit" ng-click="deleteUnidad(unidad)" class="btn glyphicon glyphicon-trash" title="Borrar"></span>
+                    <span ng-show="!unidad.showEdit" ng-click="updateUnidad(unidad)" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                    <span ng-show="!unidad.showEdit" ng-click="toggleEdit(unidad)" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                </td>
+            </tr>
+            <tr ng-show="showAdd">
+                <th>
+                    <span>#</span>
+                </th>
+                <td>
+                    <input id="newName" ng-show="showAdd" type="text" ng-model="newNombre" class="form-control">
+                </td>
+                <td>
+                    <input id="newDesc" ng-show="showAdd" type="text" ng-model="newDescripcion" class="form-control">
+                </td>
+                <td>
+                    <input id="newNumMed" ng-show="showAdd" type="text" ng-model="newNumeroMedida" class="form-control">
+                </td>
+                <td>
+                    <select class="form-control" name="singleSelect" id="singleSelect" ng-model="newIdTipoUnidad">
+                        <option value="">---Selecciona un Tipo de Unidad---</option>
+                        <option ng-repeat="tipoUnidad in tipoUnidades" value="{{tipoUnidad.IdTipoUnidad}}">{{tipoUnidad.Nombre}}</option>
+                    </select><br>
+                </td>
+                <td>
+                    <span ng-show="showAdd" ng-click="addUnidad()" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                    <span ng-show="showAdd" ng-click="showNew()" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button ng-click="showNew()">Nueva Unidad</button>
+</div>
+<!--Loading indicator-->
+<img src="Content/images/loading.gif" ng-show="dataLoading" class="center-block" title="Loading..." style="margin-top: 20px" />

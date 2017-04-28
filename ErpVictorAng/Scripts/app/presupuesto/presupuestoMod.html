@@ -1,0 +1,159 @@
+﻿<div style="width: 100%;">
+    <!--Header-->
+    <!--<div class="modal-header">-->
+    <div class="panel-heading">
+        <!--<p class="modal-title">{{getTitle()}}</p>-->
+        {{getTitle()}}
+    </div>
+
+    <div class="panel-body">
+        <!--<form role="form">-->
+        <div >
+            <div style="width:15%; float:left" >
+                <label class="control-label" for="firstName">Num. Pres.</label>
+                <input type="text" class="form-control" ng-model="WorkPresupuesto.NumeroPresupuesto" name="NumeroPres" id="firstName" placeholder="Numero Presupuesto"
+                       validate-on="blur" required required-message="'Numero de Presupuesto es requerido'">
+            </div>
+            <div style="width:20%; float:left">
+                <label class="control-label" for="firstName">Cliente</label>
+                <select class="form-control" ng-model="ddlClientes" id="selDescuentos"
+                        ng-options="cliente.Nombre for cliente in clientes track by cliente.Nombre" ng-change="changedClienteValue(ddlClientes)">
+                    <option value="">-- Selecciona un Cliente --</option>
+                </select>
+            </div>
+            <div class="form-group" style="width:20%; float:left">
+                <label class="control-label" for="firstName">Fecha Creacion</label>
+                <div class='input-group date' id='calendarioAlta'>
+                    <input type='date' class="form-control" ng-model="WorkPresupuesto.FechaCreacion" />
+                </div>
+            </div>
+            <div class="form-group" style="width:20%; float:left">
+                <label class="control-label" for="firstName">Fecha Aceptacion</label>
+                <div class='input-group date' id='calendarioAlta'>
+                    <input type='date' class="form-control" ng-model="WorkPresupuesto.FechaAceptacion" />
+                </div>
+            </div>
+            <div style="width:20%; float:left">
+                <label class="control-label" for="observaciones">Observaciones</label>
+                <input type="text" class="form-control" ng-model="WorkPresupuesto.Observaciones" name="Observaciones" id="obs" placeholder="Observaciones" validate-on="blur" >                
+            </div>
+            <div style="width:5%; float:left">
+                <label class="control-label" for="Validar">Validar</label>
+                <span ng-click="validar()" class="btn glyphicon glyphicon-ok" title="Validar"></span>
+            </div>
+        </div>
+    </div>
+    <!-- Lineas de presupuesto -->
+    <div ng-show="showAdd" >
+        <table id="tblLineasPresupuesto" class="table">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Artículo
+                    </th>
+                    <th>
+                        Cantidad
+                    </th>
+                    <th>
+                        Medida 1
+                    </th>
+                    <th>
+                        Medida 2
+                    </th>
+                    <th>
+                        Precio
+                    </th>
+                    <th>
+                        Descuento
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="lineaPresupuesto in lineasPresupuesto">
+                    <th scope="row">
+                        {{$index+1}}
+                    </th>
+                    <td>
+                        <span ng-show="lineaPresupuesto.showEdit">{{lineaPresupuesto.NombreArticulo}}</span>
+                        <select ng-show="!lineaPresupuesto.showEdit" class="form-control" ng-model="ddlArticulos"
+                                ng-options="articulo.Nombre for articulo in articulos track by articulo.Nombre" ng-change="changedArticuloValue(ddlArticulos,lineaPresupuesto)">
+                            <option value="">-- Selecciona un Articulo --</option>
+                        </select>
+                    </td>
+                    <td>
+                        <span ng-show="lineaPresupuesto.showEdit">{{lineaPresupuesto.Cantidad}}</span>
+                        <input ng-show="!lineaPresupuesto.showEdit" type="text" ng-model="lineaPresupuesto.Cantidad" class="form-control">
+                    </td>
+                    <td>
+                        <span ng-show="lineaPresupuesto.showEdit">{{lineaPresupuesto.Medida1}}</span>
+                        <input ng-show="!lineaPresupuesto.showEdit" type="text" ng-model="lineaPresupuesto.Medida1" class="form-control" maxlength="4">
+                    </td>
+                    <td>
+                        <span ng-show="lineaPresupuesto.showEdit">{{lineaPresupuesto.Medida2}}</span>
+                        <input ng-show="!lineaPresupuesto.showEdit" type="text" ng-model="lineaPresupuesto.Medida2" class="form-control" maxlength="4">
+                    </td>
+                    <td>
+                        <span ng-show="lineaPresupuesto.showEdit">{{lineaPresupuesto.Precio}}</span>
+                        <input ng-show="!lineaPresupuesto.showEdit" type="text" ng-model="lineaPresupuesto.Precio" class="form-control">
+                    </td>
+                    <td>
+                        <span ng-show="lineaPresupuesto.showEdit">{{lineaPresupuesto.Descuento}}</span>
+                        <input ng-show="!lineaPresupuesto.showEdit" type="text" ng-model="lineaPresupuesto.Descuento" class="form-control">
+                    </td>
+                    <td>
+                        <span ng-show="lineaPresupuesto.showEdit" ng-click="toggleEditLinea(lineaPresupuesto)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>
+                        <span ng-show="lineaPresupuesto.showEdit" ng-click="deleteLineaPresupuesto(lineaPresupuesto)" class="btn glyphicon glyphicon-trash" title="Borrar"></span>
+                        <span ng-show="!lineaPresupuesto.showEdit" ng-click="updateLineaPresupuesto(lineaPresupuesto)" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                        <span ng-show="!lineaPresupuesto.showEdit" ng-click="toggleEditLinea(lineaPresupuesto)" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                    </td>
+                </tr>
+                <tr ng-show="showAddLinea">
+                    <th>
+                        <span>#</span>
+                    </th>
+                    <td>
+                        <select class="form-control" ng-model="ddlArticulos" id="selDivisiones"
+                                ng-options="articulo.Nombre for articulo in articulos track by articulo.Nombre" ng-change="changedArticuloValue(ddlArticulos)">
+                            <option value="">-- Selecciona un Artículo --</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input id="newCantidad"  type="text" ng-model="newCantidad" class="form-control">
+                    </td>
+                    <td>
+                        <input id="newMe1"  type="text" ng-model="newMedida1" class="form-control" maxlength="4">
+                    </td>
+                    <td>
+                        <input id="newMe2" type="text" ng-model="newMedida2" class="form-control" maxlength="4">
+                    </td>
+                    <td>
+                        <input id="newPrecio"  type="text" ng-model="newPrecio" class="form-control">
+                    </td>
+                    <td>
+                        <input id="newDescuento"  type="text" ng-model="newDescuento" class="form-control">
+                    </td>
+                    <td>
+                        <span ng-show="showAddLinea" ng-click="addLineaPresupuesto()" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                        <span ng-show="showAddLinea" ng-click="showNewLinea()" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button ng-click="showNewLinea()">Nuevo Artículo</button>
+    </div>
+    <div class="panel-footer clearfix">
+        <!--<button class="btn btn-success" ng-click="closeThisDialog(confirm())" style="width: 100px;">
+            <i class="glyphicon glyphicon-ok"></i>
+            Guardar
+        </button>-->
+        <button class="btn btn-danger" ng-click="closeThisDialog()" style="width: 100px;">
+            <i class="glyphicon glyphicon-remove"></i>
+            Salir
+        </button>
+    </div>
+</div>
+<!--Loading indicator-->
+<img src="Content/images/loading.gif" ng-show="dataLoading" class="center-block" title="Loading..." style="margin-top: 20px" />

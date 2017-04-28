@@ -18,6 +18,10 @@ namespace ErpVictorAngDL
         public Articulo()
         {
             this.Descuento = new HashSet<Descuento>();
+            this.LineaAlbaran = new HashSet<LineaAlbaran>();
+            this.LineaFactura = new HashSet<LineaFactura>();
+            this.LineaPedido = new HashSet<LineaPedido>();
+            this.LineaPresupuesto = new HashSet<LineaPresupuesto>();
         }
     
         public long IdArticulo { get; set; }
@@ -26,9 +30,20 @@ namespace ErpVictorAngDL
         public Nullable<short> Medida1 { get; set; }
         public Nullable<short> Medida2 { get; set; }
         public long IdUnidad { get; set; }
+        public long IdSubFamilia { get; set; }
+        public Nullable<decimal> PrecioBase { get; set; }
     
+        public virtual SubFamilia SubFamilia { get; set; }
         public virtual Unidad Unidad { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Descuento> Descuento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LineaAlbaran> LineaAlbaran { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LineaFactura> LineaFactura { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LineaPedido> LineaPedido { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LineaPresupuesto> LineaPresupuesto { get; set; }
     }
 }

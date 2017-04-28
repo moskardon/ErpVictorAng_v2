@@ -22,10 +22,44 @@ namespace ErpVictorAng
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                         "~/Scripts/vendors/angular.min.js",
-                        "~/Scripts/vendors/angular-*",
+                        "~/Scripts/vendors/angular-cookies.min.js",
+                        "~/Scripts/vendors/angular-sanitize.min.js",
+                        "~/Scripts/vendors/angular-loader.min.js",
+                        "~/Scripts/vendors/angular-resource.min.js",
+                        "~/Scripts/vendors/angular-validator.min.js",
+                        "~/Scripts/vendors/angular-base64.min.js",
                         "~/Scripts/vendors/ngDialog.min.js",
-                        "~/Scripts/vendors/angular-ui/ui-router.min.js",
+                        //"~/Scripts/vendors/angular-ui/ui-router.min.js",
+                        //"~/Scripts/vendors/angular-ui/ui-bootstrap-tpls.min.js"));
+                        "~/Scripts/vendors/angular-ui/angular-ui-router.min.js",
+                        "~/Scripts/vendors/angular-ui/ui-bootstrap.min.js",
                         "~/Scripts/vendors/angular-ui/ui-bootstrap-tpls.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/app").Include(
+                "~/Scripts/app/erpApp.js",
+                "~/Scripts/app/services/notificationService.js",
+                "~/Scripts/app/services/apiService.js",
+                "~/Scripts/app/services/membershipService.js",
+                "~/Scripts/app/account/loginCtrl.js",
+                "~/Scripts/app/account/registerCtrl.js",
+                "~/Scripts/app/home/rootCtrl.js",
+                "~/Scripts/app/home/indexCtrl.js",
+                "~/Scripts/app/services/modalWindowFactory.js",
+                "~/Scripts/app/division/divisionController.js",
+                "~/Scripts/app/familia/familiaModController.js",
+                "~/Scripts/app/familia/familiaController.js",
+                "~/Scripts/app/subfamilia/subFamiliaModCtrl.js",
+                "~/Scripts/app/subfamilia/subFamiliaController.js",
+                "~/Scripts/app/tipoUnidad/tipoUnidadController.js",
+                "~/Scripts/app/unidad/unidadController.js",
+                "~/Scripts/app/articulo/articuloController.js",
+                "~/Scripts/app/descuento/descuentoController.js",
+                "~/Scripts/app/cliente/clienteModCtrl.js",
+                "~/Scripts/app/cliente/clienteController.js",
+                "~/Scripts/app/presupuesto/presupuestoModCtrl.js",
+                "~/Scripts/app/presupuesto/presupuestoController.js",
+                "~/Scripts/app/pedido/pedidoModCtrl.js",
+                "~/Scripts/app/pedido/pedidoController.js"));
 
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -42,6 +76,7 @@ namespace ErpVictorAng
                       "~/Content/site.css",
                       "~/Content/toastr.min.css",
                       "~/Content/ngDialog.min.css",
+                      "~/Content/ngDialog-custom-width.css",
                       "~/Content/ngDialog-theme-plain.min.css",
                       "~/Content/ngDialog-theme-default.min.css"));
         }

@@ -12,5 +12,7 @@ namespace ErpVictorAng.Models
         public string Descripcion { get; set; }
         public long IdFamilia { get; set; }
         public long IdDivision { get; set; }
+        public string DivisionName { get; set; }
+        public string FamiliaName { get; set; }
     }
 }

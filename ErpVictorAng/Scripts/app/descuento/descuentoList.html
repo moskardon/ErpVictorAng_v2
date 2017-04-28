@@ -1,0 +1,112 @@
+﻿<h2>Descuentos</h2>
+
+<div id="divWrapper" ng-show="dataLoaded" style="display:none">
+    <table id="tblDescuentos" class="table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Valor
+                </th>
+                <th>
+                    Division
+                </th>
+                <th>
+                    Familia
+                </th>
+                <th>
+                    Sub Familia
+                </th>
+                <th>
+                    Articulo
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="descuento in descuentos">
+                <th scope="row">
+                    {{$index+1}}
+                </th>
+                <td>
+                    <span ng-show="descuento.showEdit">{{descuento.Valor}}</span>
+                    <input ng-show="!descuento.showEdit" type="text" ng-model="descuento.Valor" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="descuento.showEdit">{{descuento.DivisionName}}</span>
+                    <select ng-show="!descuento.showEdit" class="form-control" ng-model="ddlDivisiones"
+                            ng-options="division.Nombre for division in divisiones track by division.Nombre" ng-change="changedValue(ddlDivisiones,descuento)">
+                        <option value="">-- Selecciona una Division --</option>
+                    </select>
+                </td>
+                <td>
+                    <span ng-show="descuento.showEdit">{{descuento.FamiliaName}}</span>
+                    <select ng-show="!descuento.showEdit" class="form-control" ng-model="ddlFamilias"
+                            ng-options="familia.Nombre for familia in familias track by familia.Nombre" ng-change="changedValue(ddlFamilias,descuento)">
+                        <option value="">-- Selecciona una Familia --</option>
+                    </select>
+                </td>
+                <td>
+                    <span ng-show="descuento.showEdit">{{descuento.SubFamiliaName}}</span>
+                    <select ng-show="!descuento.showEdit" class="form-control" ng-model="ddlSubFamilias"
+                            ng-options="subFamilia.Nombre for subFamilia in subFamilias track by subFamilia.Nombre" ng-change="changedValue(ddlSubFamilias,descuento)">
+                        <option value="">-- Selecciona una Sub Familia --</option>
+                    </select>
+                </td>
+                <td>
+                    <span ng-show="descuento.showEdit">{{descuento.ArticuloName}}</span>
+                    <select ng-show="!descuento.showEdit" class="form-control" ng-model="ddlArticulos"
+                            ng-options="articulo.Nombre for articulo in articulos track by articulo.Nombre" ng-change="changedValue(ddlArticulos,descuento)">
+                        <option value="">-- Selecciona un Articulo --</option>
+                    </select>
+                </td>
+                <td>
+                    <span ng-show="descuento.showEdit" ng-click="toggleEdit(descuento)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>
+                    <span ng-show="descuento.showEdit" ng-click="deleteDescuento(descuento)" class="btn glyphicon glyphicon-trash" title="Borrar"></span>
+                    <span ng-show="!descuento.showEdit" ng-click="updateDescuento(descuento)" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                    <span ng-show="!descuento.showEdit" ng-click="toggleEdit(descuento)" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                </td>
+            </tr>
+            <tr ng-show="showAdd">
+                <th>
+                    <span>#</span>
+                </th>
+                <td>
+                    <input id="newName" ng-show="showAdd" type="text" ng-model="newValor" class="form-control">
+                </td>
+                <td>
+                    <select class="form-control" name="singleSelect" id="singleSelect" ng-model="newIdDivision">
+                        <option value="">---Selecciona una Division---</option>
+                        <option ng-repeat="division in divisiones" value="{{division.IdDivision}}">{{division.Nombre}}</option>
+                    </select><br>
+                </td>
+                <td>
+                    <select class="form-control" name="singleSelect" id="singleSelect" ng-model="newIdFamilia">
+                        <option value="">---Selecciona una Familia---</option>
+                        <option ng-repeat="familia in familias" value="{{familia.IdFamilia}}">{{familia.Nombre}}</option>
+                    </select><br>
+                </td>
+                <td>
+                    <select class="form-control" name="singleSelect" id="singleSelect" ng-model="newIdSubFamilia">
+                        <option value="">---Selecciona una Sub Familia---</option>
+                        <option ng-repeat="subFamilia in subFamilias" value="{{subFamilia.IdSubFamilia}}">{{subFamilia.Nombre}}</option>
+                    </select><br>
+                </td>
+                <td>
+                    <select class="form-control" name="singleSelect" id="singleSelect" ng-model="newIdArticulo">
+                        <option value="">---Selecciona un Articulo---</option>
+                        <option ng-repeat="articulo in articulos" value="{{articulo.IdArticulo}}">{{articulo.Nombre}}</option>
+                    </select><br>
+                </td>
+                <td>
+                    <span ng-show="showAdd" ng-click="addDescuento()" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                    <span ng-show="showAdd" ng-click="showNew()" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button ng-click="showNew()">Nuevo Descuento</button>
+</div>
+<!--Loading indicator-->
+<img src="Content/images/loading.gif" ng-show="dataLoading" class="center-block" title="Loading..." style="margin-top: 20px" />

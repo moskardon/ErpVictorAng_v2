@@ -1,0 +1,9 @@
+﻿<div class="ngdialog-message">
+    <h2 class="confirmation-title"><i class="fa fa-exclamation-triangle orange"></i> Confirmar Borrado</h2>
+    <br><span>Se borrará la División: {{division.Nombre}} </span>
+    <div class="ngdialog-buttons">
+        <br>
+        <button type="button" class="ngdialog-button" ng-click="confirm(' {{division.IdDivision}}  ')">Aceptar</button>
+        <button type="button" class="ngdialog-button" ng-click="closeThisDialog()">Cancelar</button>
+    </div>
+</div>

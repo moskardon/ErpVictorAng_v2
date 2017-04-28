@@ -1,22 +1,101 @@
-﻿<div class="jumbotron">
-    <h1>Mantenimiento</h1>
-    <p class="lead">Mantenimiento de tablas.</p>
-    <p><a href="https://angular.io/" class="btn btn-primary btn-lg">No me des &raquo;</a></p>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Prueba 1</h2>
-        <p>Me gustan las pastillas, rojas, verdes y amarillas...</p>
-        <p><a class="btn btn-default" href="https://www.google.es/search?q=pastillas&oq=pastillas&aqs=chrome..69i57j0l5.1260j0j7&sourceid=chrome&ie=UTF-8">VER MAS &raquo;</a></p>
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html ng-app="erpApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<body ng-controller="rootCtrl">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Proyecto ERP", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, null)</li>
+                    @*<li><a ui-sref="divisiones">Divisiones</a></li>
+                    <li><a ui-sref="familias">Familias</a></li>*@
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Cliente<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a ui-sref="presupuesto">Presupuesto</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Comercial<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a ui-sref="descuento">Descuentos</a></li>
+                            <li><a ui-sref="cliente">Clientes</a></li>
+                            <li><a ui-sref="presupuesto">Presupuesto</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Mantenimiento<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a ui-sref="divisiones">Divisiones</a></li>
+                            <li><a ui-sref="familias">Familias</a></li>
+                            <li><a ui-sref="subFamilias">Sub Familias</a></li>
+                            <li class="divider"></li>                            
+                            <li><a ui-sref="tipoUnidad">Tipos de Unidad</a></li>
+                            <li><a ui-sref="unidad">Unidades</a></li>
+                            <li class="divider"></li> 
+                            <li><a ui-sref="articulo">Artículos</a></li>
+                            <li><a ui-sref="descuento">Descuentos</a></li>
+                            <li class="divider"></li> 
+                            <li><a ui-sref="cliente">Clientes</a></li>
+                            <li><a ui-sref="presupuesto">Presupuesto</a></li>
+                            <li><a ui-sref="pedido">Pedido</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Contabilidad<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a ui-sref="facturas">Facturacion</a></li>
+                        </ul>
+                    </li>
+                    <li><button type="button" class="btn btn-danger btn-sm" ng-click="logout();" ng-if="userData.isUserLoggedIn">Logout</button></li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Prueba 2</h2>
-        <p>Piedra, papel, tijera, lagarto Spock</p>
-        <p><a class="btn btn-default" href="https://www.google.es/#q=piedra+papel+tijera+lagarto+spock">Learn more &raquo;</a></p>
+    <div class="container body-content">
+        <div ui-view="main">
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Proyecto ERP</p>
+        </footer>
     </div>
-    <div class="col-md-4">
-        <h2>Prueba 3</h2>
-        <p>:D</p>
-        <p><a class="btn btn-default" href="https://www.youtube.com/watch?v=UcRtFYAz2Yo&t">DANCE!!! &raquo;</a></p>
-    </div>
-</div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/toastr")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/app")
+
+
+
+</body>
+</html>

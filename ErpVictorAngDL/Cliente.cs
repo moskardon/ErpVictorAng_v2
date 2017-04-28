@@ -17,7 +17,11 @@ namespace ErpVictorAngDL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cliente()
         {
+            this.Albaran = new HashSet<Albaran>();
             this.DescuentoCliente = new HashSet<DescuentoCliente>();
+            this.Factura = new HashSet<Factura>();
+            this.Pedido = new HashSet<Pedido>();
+            this.Presupuesto = new HashSet<Presupuesto>();
         }
     
         public long IdCliente { get; set; }
@@ -38,9 +42,17 @@ namespace ErpVictorAngDL
         public Nullable<decimal> Saldo { get; set; }
         public bool Moroso { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Albaran> Albaran { get; set; }
         public virtual Descuento Descuento { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DescuentoCliente> DescuentoCliente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Factura> Factura { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pedido> Pedido { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Presupuesto> Presupuesto { get; set; }
     }
 }

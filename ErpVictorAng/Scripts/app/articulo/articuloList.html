@@ -1,0 +1,120 @@
+﻿<h2>Articulos</h2>
+
+<div id="divWrapper" ng-show="dataLoaded" style="display:none">
+    <table id="tblArticulos" class="table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Medida 1
+                </th>
+                <th>
+                    Medida 2
+                </th>
+                <th>
+                    Unidad
+                </th>
+                <th>
+                    Sub Familia
+                </th>
+                <th>
+                    Precio Base
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="articulo in articulos">
+                <th scope="row">
+                    {{$index+1}}
+                </th>
+                <td>
+                    <span ng-show="articulo.showEdit">{{articulo.Nombre}}</span>
+                    <input ng-show="!articulo.showEdit" type="text" ng-model="articulo.Nombre" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="articulo.showEdit">{{articulo.Descripcion}}</span>
+                    <input ng-show="!articulo.showEdit" type="text" ng-model="articulo.Descripcion" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="articulo.showEdit">{{articulo.Medida1}}</span>
+                    <input ng-show="!articulo.showEdit" type="text" ng-model="articulo.Medida1" class="form-control" maxlength="4">
+                </td>
+                <td>
+                    <span ng-show="articulo.showEdit">{{articulo.Medida2}}</span>
+                    <input ng-show="!articulo.showEdit" type="text" ng-model="articulo.Medida2" class="form-control" maxlength="4">
+                </td>
+                <td>
+                    <span ng-show="articulo.showEdit">{{articulo.UnidadName}}</span>
+                    <select ng-show="!articulo.showEdit" class="form-control" ng-model="ddlUnidades"
+                            ng-options="unidad.Nombre for unidad in unidades track by unidad.Nombre" ng-change="changedUnidadValue(ddlUnidades,articulo)">
+                        <option value="">-- Selecciona una Unidad --</option>
+                    </select>
+                </td>
+                <td>
+                    <span ng-show="articulo.showEdit">{{articulo.SubFamiliaName}}</span>
+                    <select ng-show="!articulo.showEdit" class="form-control" ng-model="ddlSubFamilias"
+                            ng-options="subFamilia.Nombre for subFamilia in subFamilias track by subFamilia.Nombre" ng-change="changedSubFamiliaValue(ddlSubFamilias,articulo)">
+                        <option value="">-- Selecciona una Sub Familia--</option>
+                    </select>
+                </td>
+                <td>
+                    <span ng-show="articulo.showEdit">{{articulo.PrecioBase}}</span>
+                    <input ng-show="!articulo.showEdit" type="text" ng-model="articulo.PrecioBase" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="articulo.showEdit" ng-click="toggleEdit(articulo)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>
+                    <span ng-show="articulo.showEdit" ng-click="deleteArticulo(articulo)" class="btn glyphicon glyphicon-trash" title="Borrar"></span>
+                    <span ng-show="!articulo.showEdit" ng-click="updateArticulo(articulo)" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                    <span ng-show="!articulo.showEdit" ng-click="toggleEdit(articulo)" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                </td>
+            </tr>
+            <tr ng-show="showAdd">
+                <th>
+                    <span>#</span>
+                </th>
+                <td>
+                    <input id="newName" ng-show="showAdd" type="text" ng-model="newNombre" class="form-control">
+                </td>
+                <td>
+                    <input id="newDesc" ng-show="showAdd" type="text" ng-model="newDescripcion" class="form-control">
+                </td>
+                <td>
+                    <input id="newMe1" ng-show="showAdd" type="text" ng-model="newMedida1" class="form-control" maxlength="4">
+                </td>
+                <td>
+                    <input id="newMe2" ng-show="showAdd" type="text" ng-model="newMedida2" class="form-control" maxlength="4">
+                </td>
+                <td>
+                    <select class="form-control" name="singleSelect" id="singleSelect" ng-model="newIdUnidad">
+                        <option value="">---Selecciona una Unidad---</option>
+                        <option ng-repeat="unidad in unidades" value="{{unidad.IdUnidad}}">{{unidad.Nombre}}</option>
+                    </select><br>
+                </td>
+                <td>
+                    <select class="form-control" name="singleSelect" id="singleSelect" ng-model="newIdSubFamilia">
+                        <option value="">---Selecciona una Sub Familia---</option>
+                        <option ng-repeat="subFamilia in subFamilias" value="{{subFamilia.IdSubFamilia}}">{{subFamilia.Nombre}}</option>
+                    </select><br>
+                </td>
+                <td>
+                    <input id="newPre" ng-show="showAdd" type="text" ng-model="newPrecio" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="showAdd" ng-click="addArticulo()" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                    <span ng-show="showAdd" ng-click="showNew()" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button ng-click="showNew()">Nuevo Artículo</button>
+</div>
+<!--Loading indicator-->
+<img src="Content/images/loading.gif" ng-show="dataLoading" class="center-block" title="Loading..." style="margin-top: 20px" />

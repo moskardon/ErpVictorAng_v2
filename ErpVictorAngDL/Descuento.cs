@@ -27,6 +27,7 @@ namespace ErpVictorAngDL
         public Nullable<long> IdFamilia { get; set; }
         public Nullable<long> IdSubFamilia { get; set; }
         public Nullable<long> IdArticulo { get; set; }
+        public string Nombre { get; set; }
     
         public virtual Articulo Articulo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

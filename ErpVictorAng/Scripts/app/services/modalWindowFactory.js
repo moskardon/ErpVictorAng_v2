@@ -12,7 +12,7 @@
 
         return modal;
 
-        // Show a modal window with the specified title and msg
+        // muestra una ventana modal con el titulo y mensage especificado
         function show(title, msg, size, confirmCallback, cancelCallback) {
             var modalInstance = $uibModal.open({
                 templateUrl: 'Scripts/app/templates/modalWindowView.html',
@@ -45,12 +45,12 @@
         };
 
 
-        // Internal controller used by the modal window
+        //Controlador interno usado por el modal window
         function _modalWindowController($scope, $uibModalInstance, title, body) {
             $scope.title = "";
             $scope.body = "";
 
-            // If specified, fill window title and message with parameters
+            //Si se especifica, rellena el titulo y el mensage con parametros
             if (title) {
                 $scope.title = title;
             }

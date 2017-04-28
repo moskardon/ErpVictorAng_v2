@@ -1,0 +1,177 @@
+﻿<div style="width: 100%;">
+    <!--Header-->
+    <!--<div class="modal-header">-->
+    <div class="panel-heading">
+        <!--<p class="modal-title">{{getTitle()}}</p>-->
+        {{getTitle()}}
+    </div>
+    <!--Body-->
+    <!--div class="modal-body">-->
+    <div class="panel-body">
+        <div>            
+            <div style="width:15%; float:left;">
+                <label class="control-label" for="numPed">Numero de Pedido</label>
+                <input type="text" class="form-control" ng-model="WorkPedido.NumeroPedido" name="numPed" id="numeroPedido" placeholder="Numero de Pedido"
+                        validate-on="blur" required required-message="'Nunermo es requerido'">
+            </div>
+            <div style="width:20%; float:left;">
+                <label class="control-label" for="clientes">Clientes</label>
+                <select class="form-control" ng-model="ddlClientes" id="selDescuentos"
+                        ng-options="cliente.Nombre for cliente in clientes track by cliente.Nombre" ng-change="changedClienteValue(ddlClientes)">
+                    <option value="">-- Selecciona un Cliente --</option>
+                </select>
+            </div>
+            <div style="width:20%; float:left;">
+                <label class="control-label" for="clientes">Presupuestos</label>
+                <select class="form-control" ng-model="ddlPresupuestos" id="selDescuentos"
+                        ng-options="presupuesto.NumeroPresupuesto for presupuesto in presupuestos track by presupuesto.NumeroPresupuesto" ng-change="changedPresupuestoValue(ddlPresupuestos)">
+                    <option value="">-- Selecciona un Presupuesto --</option>
+                </select>
+            </div>
+            <div style="width:20%; float:left;" class="form-group">
+                <label class="control-label" for="firstName">Fecha Creación</label>
+                <div class='input-group date' id='calendarioCreacion'>
+                    <input type='date' class="form-control" ng-model="WorkPedido.FechaCreacion" />
+                </div>
+            </div>
+            <div style="width:20%; float:left;">
+                <label class="control-label" for="observaciones">Observaciones</label>
+                <input type="text" class="form-control" ng-model="WorkPedido.Observaciones" name="observaciones" id="observaciones" placeholder="Observaciones" validate-on="blur" >
+            </div>
+            <div style="width:5%; float:left">
+                <label class="control-label" for="Validar">Validar</label>
+                <span ng-click="validar()" class="btn glyphicon glyphicon-ok" title="Validar"></span>
+            </div>            
+            <!--<div>
+                <div style="float:left; margin-top:25px;">
+                    <label class="control-label" for="firstName">División</label>
+                    <select class="form-control" ng-model="ddlDivisiones" id="selDivisiones"
+                            ng-options="division.Nombre for division in divisiones track by division.Nombre" ng-change="changedDivisionValue(ddlDivisiones)">
+                        <option value="">-- Selecciona una Division --</option>
+                    </select>
+                </div>
+                <div style="float:right; width:60%; margin-top:25px;">
+                    <label class="control-label" for="firstName">Familia</label>
+                    <select ng-disabled="EditedSubFamilia.IdDivision == null" class="form-control" ng-model="ddlFamilias"
+                            ng-options="familia.Nombre for familia in familias track by familia.Nombre" ng-change="changedFamiliaValue(ddlFamilias)">
+                        <option value="">-- Selecciona una Familia --</option>
+                    </select>
+                </div>
+            </div>-->
+        </div>
+    </div>
+    <div ng-show="showAdd">
+        <table id="tblLineasPedido" class="table">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Artículo
+                    </th>
+                    <th>
+                        Cantidad
+                    </th>
+                    <th>
+                        Medida 1
+                    </th>
+                    <th>
+                        Medida 2
+                    </th>
+                    <th>
+                        Precio
+                    </th>
+                    <th>
+                        Descuento
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="lineaPedido in lineasPedido">
+                    <th scope="row">
+                        {{$index+1}}
+                    </th>
+                    <td>
+                        <span ng-show="lineaPedido.showEdit">{{lineaPedido.NombreArticulo}}</span>
+                        <select ng-show="!lineaPedido.showEdit" class="form-control" ng-model="ddlArticulos"
+                                ng-options="articulo.Nombre for articulo in articulos track by articulo.Nombre" ng-change="changedArticuloValue(ddlArticulos,lineaPedido)">
+                            <option value="">-- Selecciona un Articulo --</option>
+                        </select>
+                    </td>
+                    <td>
+                        <span ng-show="lineaPedido.showEdit">{{lineaPedido.Cantidad}}</span>
+                        <input ng-show="!lineaPedido.showEdit" type="text" ng-model="lineaPedido.Cantidad" class="form-control">
+                    </td>
+                    <td>
+                        <span ng-show="lineaPedido.showEdit">{{lineaPedido.Medida1}}</span>
+                        <input ng-show="!lineaPedido.showEdit" type="text" ng-model="lineaPedido.Medida1" class="form-control" maxlength="4">
+                    </td>
+                    <td>
+                        <span ng-show="lineaPedido.showEdit">{{lineaPedido.Medida2}}</span>
+                        <input ng-show="!lineaPedido.showEdit" type="text" ng-model="lineaPedido.Medida2" class="form-control" maxlength="4">
+                    </td>
+                    <td>
+                        <span ng-show="lineaPedido.showEdit">{{lineaPedido.Precio}}</span>
+                        <input ng-show="!lineaPedido.showEdit" type="text" ng-model="lineaPedido.Precio" class="form-control">
+                    </td>
+                    <td>
+                        <span ng-show="lineaPedido.showEdit">{{lineaPedido.Descuento}}</span>
+                        <input ng-show="!lineaPedido.showEdit" type="text" ng-model="lineaPedido.Descuento" class="form-control">
+                    </td>
+                    <td>
+                        <span ng-show="lineaPedido.showEdit" ng-click="toggleEditLinea(lineaPedido)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>
+                        <span ng-show="lineaPedido.showEdit" ng-click="deleteLineaPedido(lineaPedido)" class="btn glyphicon glyphicon-trash" title="Borrar"></span>
+                        <span ng-show="!lineaPedido.showEdit" ng-click="updateLineaPedido(lineaPedido)" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                        <span ng-show="!lineaPedido.showEdit" ng-click="toggleEditLinea(lineaPedido)" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                    </td>
+                </tr>
+                <tr ng-show="showAddLinea">
+                    <th>
+                        <span>#</span>
+                    </th>
+                    <td>
+                        <select class="form-control" ng-model="ddlArticulos" id="selDivisiones"
+                                ng-options="articulo.Nombre for articulo in articulos track by articulo.Nombre" ng-change="changedArticuloValue(ddlArticulos)">
+                            <option value="">-- Selecciona un Artículo --</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input id="newCantidad" type="text" ng-model="newCantidad" class="form-control">
+                    </td>
+                    <td>
+                        <input id="newMe1" type="text" ng-model="newMedida1" class="form-control" maxlength="4">
+                    </td>
+                    <td>
+                        <input id="newMe2" type="text" ng-model="newMedida2" class="form-control" maxlength="4">
+                    </td>
+                    <td>
+                        <input id="newPrecio" type="text" ng-model="newPrecio" class="form-control">
+                    </td>
+                    <td>
+                        <input id="newDescuento" type="text" ng-model="newDescuento" class="form-control">
+                    </td>
+                    <td>
+                        <span ng-show="showAddLinea" ng-click="addLineaPedido()" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                        <span ng-show="showAddLinea" ng-click="showNewLinea()" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button ng-click="showNewLinea()">Nuevo Artículo</button>
+    </div>
+    <!--OK and Cancel buttons-->
+    <!--<div class="modal-footer">-->
+    <div class="panel-footer clearfix">
+        <!--<button class="btn btn-success" ng-click="closeThisDialog(confirm())" style="width: 100px;">
+            <i class="glyphicon glyphicon-ok"></i>
+            Guardar
+        </button>-->
+        <button class="btn btn-danger" ng-click="closeThisDialog()" style="width: 100px;">
+            <i class="glyphicon glyphicon-remove"></i>
+            Salir
+        </button>
+    </div>
+</div>
+<!--Loading indicator-->
+<img src="Content/images/loading.gif" ng-show="dataLoading" class="center-block" title="Loading..." style="margin-top: 20px" />

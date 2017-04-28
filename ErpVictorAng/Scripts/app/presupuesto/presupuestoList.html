@@ -1,0 +1,52 @@
+﻿<h2>Presupuestos</h2>
+
+<div id="divWrapper" ng-show="dataLoaded" style="display:none">
+    <table id="tblPresupuestos" class="table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Numero Presupuesto
+                </th>
+                <th>
+                    Nombre Cliente
+                </th>
+                <th>
+                    Fecha Creacion
+                </th>
+                <th>
+                    Fecha Aceptacion
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="presupuesto in presupuestos">
+                <th scope="row">
+                    {{$index+1}}
+                </th>
+                <td>
+                    <span ng-show="presupuesto.showEdit">{{presupuesto.NumeroPresupuesto}}</span>
+                </td>
+                <td>
+                    <span ng-show="presupuesto.showEdit">{{presupuesto.NombreCliente}}</span>
+                </td>
+                <td>
+                    <span ng-show="presupuesto.showEdit">{{presupuesto.FechaCreacion}}</span>                    
+                </td>
+                <td>
+                    <span ng-show="presupuesto.showEdit">{{presupuesto.FechaAceptacion}}</span>
+                </td>
+                <td>
+                    <span ng-show="presupuesto.showEdit" ng-click="toggleEdit(presupuesto)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>
+                    <!--<span ng-show="subFamilia.showEdit" ng-click="openEditDialog(subFamilia)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>-->
+                    <span ng-show="presupuesto.showEdit" ng-click="deletePresupuesto(presupuesto)" class="btn glyphicon glyphicon-trash" title="Borrar"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button ng-click="showNew()">Nuevo Presupuesto</button>
+</div>
+<!--Loading indicator-->
+<img src="Content/images/loading.gif" ng-show="dataLoading" class="center-block" title="Loading..." style="margin-top: 20px" />

@@ -17,6 +17,7 @@ namespace ErpVictorAngDL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SubFamilia()
         {
+            this.Articulo = new HashSet<Articulo>();
             this.Descuento = new HashSet<Descuento>();
         }
     
@@ -26,6 +27,8 @@ namespace ErpVictorAngDL
         public long IdDivision { get; set; }
         public long IdFamilia { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Articulo> Articulo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Descuento> Descuento { get; set; }
         public virtual Division Division { get; set; }

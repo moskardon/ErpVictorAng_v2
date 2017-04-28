@@ -1,0 +1,76 @@
+﻿<h2>Usuarios</h2>
+
+<div ng-controller="userController" >
+    <div id="divWrapper" ng-show="dataLoaded" style="display:none">
+        <table id="tblUsers" class="table">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Password
+                    </th>
+                    <th>
+                        Salt
+                    </th>
+                    <th>
+                        Locked
+                    </th>
+                    <th>
+                        Fecha Creacion
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in users">
+                    <th scope="row">
+                        {{$index+1}}
+                    </th>
+                    <td>
+                        <span ng-show="user.showEdit">{{user.Nombre}}</span>
+                        <input ng-show="!user.showEdit" type="text" ng-model="user.Nombre" class="form-control">
+                    </td>
+                    <td>
+                        <span ng-show="user.showEdit">{{user.HashedPassword}}</span>
+                        <input ng-show="!user.showEdit" type="text" ng-model="user.HashedPassword" class="form-control">
+                    </td>
+                    <td>
+                        <span ng-show="user.showEdit">{{user.Locked}}</span>
+                        <input ng-show="!user.showEdit" type="text" ng-model="user.Locked" class="form-control">
+                    </td>
+                    <td>
+                        <span ng-show="user.showEdit" ng-click="toggleEdit(user)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>
+                        <span ng-show="user.showEdit" ng-click="deleteUser(user)" class="btn glyphicon glyphicon-trash" title="Borrar"></span>
+                        <span ng-show="!user.showEdit" ng-click="updateUser(user)" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                        <span ng-show="!user.showEdit" ng-click="toggleEdit(user)" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                    </td>
+                </tr>
+                <tr ng-show="showAdd">
+                    <th>
+                        <span>#</span>
+                    </th>
+                    <td>
+                        <input id="newName" ng-show="showAdd" type="text" ng-model="newNombre" class="form-control" placeholder="Nombre">                        
+                    </td>
+                    <td>
+                        <input id="newDesc" ng-show="showAdd" type="text" ng-model="newHashedPassword" class="form-control"  placeholder="Password">
+                    </td>
+                    <td>
+                        <input id="newName" ng-show="showAdd" type="text" ng-model="newSalt" class="form-control"  placeholder="Salt">
+                    </td>
+                    <td>
+                        <span ng-show="showAdd" ng-click="addUser()" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                        <span ng-show="showAdd" ng-click="showNew()" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button ng-click="showNew()">Nuevo Usuario</button>
+    </div>
+    <!--Loading indicator-->
+    <img src="Content/images/loading.gif" ng-show="dataLoading" class="center-block" title="Loading..." style="margin-top: 20px" />
+</div>

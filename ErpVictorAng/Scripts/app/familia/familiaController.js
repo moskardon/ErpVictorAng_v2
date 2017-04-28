@@ -2,178 +2,219 @@
     'use strict';
     var controllerId = 'familiaController';
 
-    erpApp.controller(controllerId, ['$scope', 'ngDialog', 'familiaFactory', familiaController]);
+    erpApp.controller(controllerId, ['apiService', '$scope', 'ngDialog', 'modalWindowFactory', 'notificationService', familiaController]);
 
-    function familiaController($scope, ngDialog, familiaFactory) {
+    function familiaController(apiService, $scope, ngDialog, modalWindowFactory, notificationService) {
+
         $scope.familias = [];
         $scope.divisiones = [];
+        $scope.ddlDivisiones = null;
         $scope.showEdit = false;
         $scope.showAdd = false;
         $scope.newNombre = '';
         $scope.newDesripcion = '';
-        $scope.newIdDivision = '';
-        $scope.newNombreDivision = '';
-        $scope.newFamilia = { Nombre: $scope.newNombre, Descripcion: $scope.newDesripcion, IdDivision: $scope.newIdDivision, NombreDivision: $scope.newNombreDivision };
+        $scope.newIdDivision = null;
+        $scope.newFamilia = { Nombre: $scope.newNombre, Descripcion: $scope.newDesripcion, IdDivision: $scope.newIdDivision };
+
+        $scope.dataLoading = true;
         $scope.dataLoaded = false;
+        $scope.getAll = getAll;
+        $scope.toggleEdit = toggleEdit;
+        $scope.showNew = showNew;
+        $scope.updateFamilia = updateFamilia;
+        $scope.addFamilia = addFamilia;
+        $scope.deleteFamilia = deleteFamilia;
 
+        var url = '/api/familia/';
 
-        function changeIdDivisionToName() {
-            for(var i=0;i<$scope.familias.length;i++)
-            {
-                for(var x=0;x<$scope.divisiones.length;x++)
-                {
-                    if ($scope.familias[i].IdDivision == $scope.divisiones[x].IdDivision)
-                    {
-                        $scope.familias[i].NombreDivision = $scope.divisiones[x].Nombre;
-                        //alert($scope.divisiones[x].Nombre);
-                    }
-                }
-            }
+        //****Gestión Divisiones*****
+
+        //getAllCompleted
+        function getAllDivisionesCompleted(result) {
+            //alert(JSON.stringify(result.data));
+            $scope.dataLoading = false;
+            $scope.divisiones = result.data;
         };
 
+        //getAllFailed
+        function getAllDivisionesFailed(response) {
+            $scope.dataLoading = false;
+            notificationService.displayError("Error: " + response.data);
+            //alert(response.data)
+        };
+
+        //fillDivisiones
         function fillDivisiones() {
-            familiaFactory.fillDivisiones().then(function (data) {
-                //alert(data);
-                //JSON.stringify(data.data);
-                $scope.divisiones = data.data;
-                //angular.forEach($scope.divisiones, function (obj) {
-                //    obj["showEdit"] = true;
-                //})
-                //$scope.dataLoaded = true;
-                //$('#divWrapper').css('display', 'block');
-                changeIdDivisionToName();
-            }).then(function (error) {
-                if (error != undefined) {
-                    alert("Fill Divisiones ERROR: " + error);
-                    //$scope.Clientes = error;
-                }
-            });
+            $scope.dataLoading = true;
+            apiService.get('api/division/' + 'GetAll', null, getAllDivisionesCompleted, getAllDivisionesFailed);
+        };
+
+        //getDivision
+        function getDivision(division) {
+            return division.IdDivision === $scope.ddlDivisiones;
+        };
+
+        //setDivisionSelected
+        function setDivisionSelected(idDivision) {
+            $scope.ddlDivisiones = idDivision;
+            var divSelect = $scope.divisiones.find(getDivision);
+            $scope.ddlDivisiones = divSelect;
+        };
+
+        //****Gestión Divisiones*****
+
+        //initialize
+        function initialize() {
+            if ($scope.dataLoaded) {
+                angular.forEach($scope.familias, function (obj) {
+                    obj["showEdit"] = true;
+                });
+                $('#divWrapper').css('display', 'block');
+            };
+            fillDivisiones();
+        };
+        
+        //getAllCompleted
+        function getAllCompleted(result) {
+            $scope.dataLoading = false;
+            $scope.familias = result.data;
+            $scope.dataLoaded = true;
+            initialize();
+        };
+
+        //getAllFailed
+        function getAllFailed(response) {
+            $scope.dataLoading = false;
+            $scope.dataLoaded = false;
+            notificationService.displayError("Error: " + response.data);
+            //alert(response.data)
         };
 
         //getAll
         function getAll() {
-            familiaFactory.getFamilias().then(function (data) {
-                //alert(data);
-                //JSON.stringify(data.data);
-                $scope.familias = data.data;
-                angular.forEach($scope.familias, function (obj) {
-                    obj["showEdit"] = true;
-                })
-                $scope.dataLoaded = true;
-                $('#divWrapper').css('display', 'block');
-                //relleno las divisiones
-                fillDivisiones();
-            }).then(function (error) {
-                if (error != undefined) {
-                    alert("Get All ERROR: " + error);
-                    //$scope.Clientes = error;
-                }
-            });
+            $scope.dataLoading = true;
+            apiService.get(url + 'GetAll', null, getAllCompleted, getAllFailed);
         };
-        //changeIdDivisionToName();
-        getAll();
 
-        //function fillDivisiones() {
-        //    familiaFactory.fillDivisiones().then(function (data) {
-        //        //alert(data);
-        //        //JSON.stringify(data.data);
-        //        $scope.divisiones = data.data;
-        //        //angular.forEach($scope.divisiones, function (obj) {
-        //        //    obj["showEdit"] = true;
-        //        //})
-        //        //$scope.dataLoaded = true;
-        //        //$('#divWrapper').css('display', 'block');
+        ////getAll
+        //function getAll() {
+        //    familiaFactory.getFamilias().then(function (data) {
+        //        $scope.dataLoading = false;
+        //        $scope.familias = data.data;
+        //        $scope.dataLoaded = true;
+        //        initialize();
         //    }).then(function (error) {
         //        if (error != undefined) {
-        //            alert("Fill Divisiones ERROR: " + error);
-        //            //$scope.Clientes = error;
+        //            $scope.dataLoading = false;
+        //            $scope.dataLoaded = false;
+        //            notificationService.displayError('Error: ' + error.data);
+        //            $scope.Clientes = error;
         //        }
         //    });
         //};
 
-        $scope.toggleEdit = function (familia, refresh) {
-            familia.showEdit = familia.showEdit ? false : true;
-            if (refresh) {
-                getAll();
-            }
+        getAll();
+
+        //toggleEdit
+        function toggleEdit(familia) {
+            setDivisionSelected(familia.IdDivision);
+            angular.forEach($scope.familias, function (obj) {
+                if (obj["IdFamilia"] !== familia.IdFamilia && obj["showEdit"] == false) {
+                    obj["showEdit"] = true;
+                }
+            });
+            //alert("showEdit: " + familia.showEdit)
+            familia.showEdit = !familia.showEdit;
         };
 
-        $scope.showNew = function () {
+        //showNew
+        function showNew() {
             $scope.newNombre = '';
             $scope.newDescripcion = '';
+            $scope.newIdDivision = null;
             $scope.showAdd = $scope.showAdd ? false : true;
+            
+            angular.forEach($scope.familias, function (obj) {
+                obj["showEdit"] = true;
+            });
         };
 
         //updateFamilia
-        $scope.updateFamilia = function (familia) {
-            familiaFactory.updateFamilia(familia).then(function (data) {
-                familia.showEdit = familia.showEdit ? false : true;
-                getAll();
-            }).then(function (error) {
-                if (error != undefined) {
-                    alert("Update ERROR: " + error);
-                    //$scope.Clientes = error;
-                }
-            });
+        function updateFamilia(familia) {
+            $scope.dataLoading = true;
+            apiService.put(url + 'Update', familia, updateFamiliaCompleted, updateFamiliaFailed);
         };
 
-        //Add
-        $scope.addFamilia = function () {
-            $scope.showAdd = false;
+        //updateFamiliaCompleted
+        function updateFamiliaCompleted(familia) {
+            $scope.dataLoading = false;
+            familia.showEdit = !familia.showEdit;
+            notificationService.displaySuccess('Familia actualizada.');
+            getAll();
+        };
+
+        //updateFamiliaFailed
+        function updateFamiliaFailed(response) {
+            $scope.dataLoading = false;
+            notificationService.displayError("Error: " + response.data);
+        };
+
+        //addFamilia
+        function addFamilia() {
+            $scope.dataLoading = true;
             $scope.newFamilia.Nombre = $scope.newNombre;
             $scope.newFamilia.Descripcion = $scope.newDescripcion;
             $scope.newFamilia.IdDivision = $scope.newIdDivision;
-            $scope.newFamilia.NombreDivision = $scope.newNombreDivision;
-            //alert(JSON.stringify($scope.newFamilia));
-            familiaFactory.addFamilia($scope.newFamilia).then(function (data) {
-                getAll();
-            }).then(function (error) {
-                if (error != undefined) {
-                    alert("Add ERROR: " + error);
-                    //$scope.Clientes = error;
-                }
-            });
+            apiService.post(url + 'Add', $scope.newFamilia, addFamiliaCompleted, addFamiliaFailed);
         };
 
-        ////Delete
-        //$scope.deleteDivision = function (division) {
-        //    //showModalDialog();
-        //    divisionFactory.deleteDivision(division).then(function (data) {
-        //        getAll();
-        //    }).then(function (error) {
-        //        if (error != undefined) {
-        //            alert("Update ERROR: " + error);
-        //            $scope.Clientes = error;
-        //        }                
-        //    });
-        //};
-
-        //Delete
-        $scope.showModalDialog = function showModalDialog(familia, idModal) {
-            ngDialog.openConfirm({
-                scope: $scope,
-                template: '<div class="ngdialog-message">' +
-                              '  <h2 class="confirmation-title"><i class="fa fa-exclamation-triangle orange"></i> Confirmar Borrado</h2>' +
-                              '  <br><span>Se borrará la Familia: ' + familia.Nombre + '</span>' +
-                              '    <div class="ngdialog-buttons"><br>' +
-                              '      <button type="button" class="ngdialog-button" ng-click="confirm(' + familia.IdFamilia + ')">Aceptar</button>' +
-                              '      <button type="button" class="ngdialog-button" ng-click="closeThisDialog()">Cancelar</button>' +
-                              '    </div>' +
-                              '</div>',
-                plain: true
-            }).then(function (confirm) {
-                //alert('IdFamilia: ' + failia.IdFamilia + 'IdFamilia: ' + confirm);
-                familiaFactory.deleteFamilia(familia).then(function (data) {
-                    getAll();
-                }).then(function (error) {
-                    if (error != undefined) {
-                        alert("Update Modal ERROR: " + error);
-                        $scope.Clientes = error;
-                    }
-                });
-            }, function (reject) {
-                //alert('Rejected')
-            });
+        //addFamiliaCompleted
+        function addFamiliaCompleted(familia) {
+            //alert("addDivisionCompleted");
+            $scope.dataLoading = false;
+            $scope.showAdd = false;
+            notificationService.displaySuccess('Familia creada.');
+            getAll();
         };
+
+        //addFamiliaFailed
+        function addFamiliaFailed(response) {
+            $scope.dataLoading = false;
+            notificationService.displayError("Error: " + response.data);
+        };
+
+
+        //deleteFamilia
+        function deleteFamilia(familia) {
+            var deleteItem = function () {
+                $scope.dataLoading = true;
+                apiService.eliminar(url + 'Delete?id=' + familia.IdFamilia, familia.IdFamilia, deleteFamiliaCompleted, deleteFamiliaFailed);
+            };
+
+            var title = "Se eliminará la Familia: '" + familia.Nombre + "'";
+            var msg = "¿Confirma eliminación de esta Familia?";
+            modalWindowFactory.show(title, msg, 'xl', deleteItem);
+        };
+
+        //deleteFamiliaCompleted
+        function deleteFamiliaCompleted(familia) {
+            //alert(JSON.stringify(familia));
+            $scope.dataLoading = false;
+            notificationService.displaySuccess('Familia eliminada.');
+            getAll();
+        };
+
+        //deleteFamiliaFailed
+        function deleteFamiliaFailed(response) {
+            $scope.dataLoading = false;
+            notificationService.displayError("Error: " + response.data);
+        };
+        
+      
+        //Sincroniza valor del SelectList 
+        $scope.changedValue = function changedValue(item, familia) {
+            //alert(item.Nombre + " - " + item.IdDivision + " ->Fam.IdDiv: " + familia.IdDivision);
+            familia.IdDivision = item.IdDivision;
+        }
     }
 })();

@@ -1,0 +1,58 @@
+﻿<h2>Tipos de Unidad</h2>
+
+<div id="divWrapper" ng-show="dataLoaded" style="display:none">
+    <table id="tblTipoUnidades" class="table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Descripción
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="tipoUnidad in tipoUnidades">
+                <th scope="row">
+                    {{$index+1}}
+                </th>
+                <td>
+                    <span ng-show="tipoUnidad.showEdit">{{tipoUnidad.Nombre}}</span>
+                    <input ng-show="!tipoUnidad.showEdit" type="text" ng-model="tipoUnidad.Nombre" class="form-control" validate-on="blur" required required-message="'Nombre is required'">
+                </td>
+                <td>
+                    <span ng-show="tipoUnidad.showEdit">{{tipoUnidad.Descripcion}}</span>
+                    <input ng-show="!tipoUnidad.showEdit" type="text" ng-model="tipoUnidad.Descripcion" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="tipoUnidad.showEdit" ng-click="toggleEdit(tipoUnidad)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>
+                    <span ng-show="tipoUnidad.showEdit" ng-click="deleteTipoUnidad(tipoUnidad)" class="btn glyphicon glyphicon-trash" title="Borrar"></span>
+                    <span ng-show="!tipoUnidad.showEdit" ng-click="updateTipoUnidad(tipoUnidad)" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                    <span ng-show="!tipoUnidad.showEdit" ng-click="toggleEdit(tipoUnidad)" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                </td>
+            </tr>
+            <tr ng-show="showAdd">
+                <th>
+                    <span>#</span>
+                </th>
+                <td>
+                    <input id="newName" ng-show="showAdd" type="text" ng-model="newNombre" class="form-control">
+                </td>
+                <td>
+                    <input id="newDesc" ng-show="showAdd" type="text" ng-model="newDescripcion" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="showAdd" ng-click="addTipoUnidad()" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                    <span ng-show="showAdd" ng-click="showNew()" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button ng-click="showNew()">Nuevo Tipo de Unidad</button>
+</div>
+<!--Loading indicator-->
+<img src="Content/images/loading.gif" ng-show="dataLoading" class="center-block" title="Loading..." style="margin-top: 20px" />

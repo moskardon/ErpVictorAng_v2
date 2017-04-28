@@ -1,0 +1,74 @@
+﻿<h2>Familias</h2>
+
+<div id="divWrapper" ng-show="dataLoaded" style="display:none">
+    <table id="tblFamilias" class="table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    División
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="familia in familias">
+                <th scope="row">
+                    {{$index+1}}
+                </th>
+                <td>
+                    <span ng-show="familia.showEdit">{{familia.Nombre}}</span>
+                    <input ng-show="!familia.showEdit" type="text" ng-model="familia.Nombre" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="familia.showEdit">{{familia.Descripcion}}</span>
+                    <input ng-show="!familia.showEdit" type="text" ng-model="familia.Descripcion" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="familia.showEdit">{{familia.DivisionName}}</span>
+                    <select ng-show="!familia.showEdit" class="form-control" ng-model="ddlDivisiones"
+                            ng-options="division.Nombre for division in divisiones track by division.Nombre" ng-change="changedValue(ddlDivisiones,familia)">
+                        <option value="">-- Selecciona una Division --</option>
+                    </select>
+                </td>
+                <td>
+                    <span ng-show="familia.showEdit" ng-click="toggleEdit(familia)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>
+                    <span ng-show="familia.showEdit" ng-click="deleteFamilia(familia)" class="btn glyphicon glyphicon-trash" title="Borrar"></span>
+                    <span ng-show="!familia.showEdit" ng-click="updateFamilia(familia)" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                    <span ng-show="!familia.showEdit" ng-click="toggleEdit(familia)" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                </td>
+            </tr>
+            <tr ng-show="showAdd">
+                <th>
+                    <span>#</span>
+                </th>
+                <td>
+                    <input id="newName" ng-show="showAdd" type="text" ng-model="newNombre" class="form-control">
+                </td>
+                <td>
+                    <input id="newDesc" ng-show="showAdd" type="text" ng-model="newDescripcion" class="form-control">
+                </td>
+                <td>
+                    <select class="form-control" name="singleSelect" id="singleSelect" ng-model="newIdDivision">
+                        <option value="">---Selecciona una Division---</option>
+                        <option ng-repeat="division in divisiones" value="{{division.IdDivision}}">{{division.Nombre}}</option>
+                    </select><br>
+                </td>
+                <td>
+                    <span ng-show="showAdd" ng-click="addFamilia()" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                    <span ng-show="showAdd" ng-click="showNew()" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button ng-click="showNew()">Nueva Familia</button>
+</div>
+<!--Loading indicator-->
+<img src="Content/images/loading.gif" ng-show="dataLoading" class="center-block" title="Loading..." style="margin-top: 20px" />

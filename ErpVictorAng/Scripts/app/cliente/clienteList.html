@@ -1,0 +1,46 @@
+﻿<h2>Clientes</h2>
+
+<div id="divWrapper" ng-show="dataLoaded" style="display:none">
+    <table id="tblClientes" class="table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Descuento
+                </th>
+                <th>
+                    Usuario
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="cliente in clientes">
+                <th scope="row">
+                    {{$index+1}}
+                </th>
+                <td>
+                    <span ng-show="cliente.showEdit">{{cliente.Nombre}}</span>
+                </td>
+                <td>
+                    <span ng-show="cliente.showEdit">{{cliente.IdDescuento}}</span>
+                </td>
+                <td>
+                    <span ng-show="cliente.showEdit">{{cliente.IdUsuario}}</span>
+                </td>
+                <td>
+                    <span ng-show="cliente.showEdit" ng-click="toggleEdit(cliente)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>
+                    <!--<span ng-show="subFamilia.showEdit" ng-click="openEditDialog(subFamilia)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>-->
+                    <span ng-show="cliente.showEdit" ng-click="deleteCliente(cliente)" class="btn glyphicon glyphicon-trash" title="Borrar"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button ng-click="showNew()">Nuevo Cliente</button>
+</div>
+<!--Loading indicator-->
+<img src="Content/images/loading.gif" ng-show="dataLoading" class="center-block" title="Loading..." style="margin-top: 20px" />
