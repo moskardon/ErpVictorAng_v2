@@ -235,6 +235,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\DatePickerModal.css" />
     <Content Include="Content\images\loading.gif" />
     <Content Include="Content\images\Loading_icon.gif" />
     <Content Include="Content\myth\ngDialog-theme-default.css" />
@@ -1100,6 +1101,7 @@
     <Content Include="Scripts\vendors\angular-ui\angular-ui-router.min.js" />
     <Content Include="Scripts\vendors\angular-validator.js" />
     <Content Include="Scripts\vendors\angular-validator.min.js" />
+    <Content Include="Scripts\vendors\DatePickerModal.js" />
     <Content Include="Scripts\vendors\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\vendors\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\vendors\angular-animate.js" />

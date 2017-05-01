@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace ErpVictorAng.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Adtivo")]
     [RoutePrefix("api/Unidad")]
     public class UnidadController : APIControllerBase
     {

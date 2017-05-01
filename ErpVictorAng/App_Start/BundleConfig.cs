@@ -33,7 +33,8 @@ namespace ErpVictorAng
                         //"~/Scripts/vendors/angular-ui/ui-bootstrap-tpls.min.js"));
                         "~/Scripts/vendors/angular-ui/angular-ui-router.min.js",
                         "~/Scripts/vendors/angular-ui/ui-bootstrap.min.js",
-                        "~/Scripts/vendors/angular-ui/ui-bootstrap-tpls.min.js"));
+                        "~/Scripts/vendors/angular-ui/ui-bootstrap-tpls.min.js",
+                        "~/Scripts/vendors/DatePickerModal.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                 "~/Scripts/app/erpApp.js",
@@ -78,7 +79,8 @@ namespace ErpVictorAng
                       "~/Content/ngDialog.min.css",
                       "~/Content/ngDialog-custom-width.css",
                       "~/Content/ngDialog-theme-plain.min.css",
-                      "~/Content/ngDialog-theme-default.min.css"));
+                      "~/Content/ngDialog-theme-default.min.css",
+                      "~/Content/DatePickerModal.css"));
         }
     }
 }

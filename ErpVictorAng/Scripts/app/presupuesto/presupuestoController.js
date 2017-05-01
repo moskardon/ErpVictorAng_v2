@@ -23,7 +23,7 @@
 
         //apiServiceFailed
         function apiServiceFailed(reponse) {
-            console.log(resonse.data)
+            //console.log(resonse.data)
             $scope.dataLoading = false;
             $scope.dataLoaded = false;
             notificationService.displayError('Error: ' + response.data);
@@ -36,7 +36,7 @@
         };
         //getAllPresupuestosCompleted
         function getAllPresupuestosCompleted(result) {
-            console.log(JSON.stringify(result))
+            //console.log(JSON.stringify(result))
             $scope.dataLoading = false;
             $scope.dataLoaded = true;
             $scope.presupuestos = result.data;

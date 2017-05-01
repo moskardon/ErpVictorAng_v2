@@ -37,13 +37,15 @@
         $scope.showNewLinea = showNewLinea;
         $scope.addLineaPresupuesto = addLineaPresupuesto;
         $scope.changedArticuloValue = changedArticuloValue;
+        $scope.changedArticuloValueEdit = changedArticuloValueEdit;
         $scope.toggleEditLinea = toggleEditLinea;
         $scope.deleteLineaPresupuesto = deleteLineaPresupuesto;
         $scope.updateLineaPresupuesto = updateLineaPresupuesto;
+        $scope.openDatePicker = openDatePicker;
         
         //apiServiceFailed
         function apiServiceFailed(response) {
-            console.log(response.data)
+            //console.log(response.data)
             $scope.dataLoading = false;
             $scope.dataLoaded = false;
             notificationService.displayError('Error: ' + response.data);
@@ -321,7 +323,7 @@
         function addPresupuestoCompleted(presupuesto) {
             notificationService.displaySuccess('Presupuesto creado.');
             //alert("add presupuesto completed " + JSON.stringify(presupuesto));
-            console.log(presupuesto.data.NumeroPresupuesto);
+            //console.log(presupuesto.data.NumeroPresupuesto);
             GetPresupuestoByNumber($scope.WorkPresupuesto.NumeroPresupuesto);
             $scope.dataLoading = false;
         }
@@ -355,8 +357,7 @@
 
         }
 
-
-
+       
         //Sincroniza valor del SelectList de clientes
         function changedClienteValue(item) {
             $scope.WorkPresupuesto.IdCliente = item.IdCliente;
@@ -370,11 +371,30 @@
         
         //Sincroniza valor del SelectList 
         function changedArticuloValue(item) {
-            //alert(item.Nombre + " - " + item.IdDivision + " ->Fam.IdDiv: " + familia.IdDivision);
             $scope.newIdArticulo = item.IdArticulo;
             
+            $scope.newPrecio = item.PrecioBase;
             //TODO: elaborar un metodo que recibe el id del cliente y  dl articulo busca el descuento asociado al cliente y lo devuelve
         }
+        
+        function changedArticuloValueEdit(item, linea) {            
+            linea.Precio = item.PrecioBase;//setArticuloPrecio(item.IdArticulo);
+        }
+
+        function openDatePicker($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            $timeout(function () {
+                $scope.datepicker.opened = true;
+            });
+
+            $timeout(function () {
+                $('ul[datepicker-popup-wrap]').css('z-index', '10000');
+            }, 100);
+
+
+        };
 
     }
 })();

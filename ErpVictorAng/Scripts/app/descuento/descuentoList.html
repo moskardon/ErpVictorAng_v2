@@ -31,7 +31,7 @@
                 </th>
                 <td>
                     <span ng-show="descuento.showEdit">{{descuento.Valor}}</span>
-                    <input ng-show="!descuento.showEdit" type="text" ng-model="descuento.Valor" class="form-control">
+                    <input typeof="number" ng-show="!descuento.showEdit" type="number" ng-model="descuento.Valor" class="form-control">
                 </td>
                 <td>
                     <span ng-show="descuento.showEdit">{{descuento.DivisionName}}</span>
@@ -73,7 +73,7 @@
                     <span>#</span>
                 </th>
                 <td>
-                    <input id="newName" ng-show="showAdd" type="text" ng-model="newValor" class="form-control">
+                    <input id="newName" ng-show="showAdd" type="number" ng-model="newValor" class="form-control">
                 </td>
                 <td>
                     <select class="form-control" name="singleSelect" id="singleSelect" ng-model="newIdDivision">

@@ -273,13 +273,13 @@
         function addDescuento() {
             $scope.dataLoading = true;
             $scope.newDescuento.Valor = $scope.newValor;
-            alert($scope.newValor);
+            //alert($scope.newValor);
             //$scope.newDescuento.Descripcion = $scope.newDescripcion;
             $scope.newDescuento.IdDivision = $scope.newIdDivision;
             $scope.newDescuento.IdFamilia = $scope.newIdFamilia;
             $scope.newDescuento.IdSubFamilia = $scope.newIdSubFamilia;
             $scope.newDescuento.IdArticulo = $scope.newIdArticulo;
-            alert($scope.newDescuento.Valor + " - " + $scope.newDescuento.IdDivision + " - " + $scope.newDescuento.IdFamilia + " - " + $scope.newDescuento.IdSubFamilia + " - " + $scope.newDescuento.IdArticulo);
+            //alert($scope.newDescuento.Valor + " - " + $scope.newDescuento.IdDivision + " - " + $scope.newDescuento.IdFamilia + " - " + $scope.newDescuento.IdSubFamilia + " - " + $scope.newDescuento.IdArticulo);
             apiService.post(url + 'Add', $scope.newDescuento, addDescuentoCompleted, addDescuentoFailed);
         };
 

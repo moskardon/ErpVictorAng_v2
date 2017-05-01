@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace ErpVictorAng.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Cliente,Com,Adtivo")]
     [RoutePrefix("api/Presupuesto")]
     public class PresupuestoController : APIControllerBase
     {
@@ -27,6 +27,7 @@ namespace ErpVictorAng.Controllers
                 presupuestoVM.IdCliente = pres.IdCliente;
                 presupuestoVM.NombreCliente = pres.Cliente.Nombre;
                 presupuestoVM.FechaCreacion = pres.FechaCreacion;
+                presupuestoVM.FechaCreacionString = pres.FechaCreacion.ToString("dd/MM/yyyy");
                 presupuestoVM.FechaAceptacion = pres.FechaAceptacion;
                 presupuestoVM.NumeroPresupuesto = pres.NumeroPresupuesto;
                 presupuestoVM.Observaciones = pres.Observaciones;
@@ -174,6 +175,7 @@ namespace ErpVictorAng.Controllers
                     }
                     else
                     {
+                        DeleteLineasPresupuestoById(id);
                         Presupuesto presupuesto = _DBErpCris.Presupuesto.Single(c => c.IdPresupuesto == id);
                         _DBErpCris.Presupuesto.Remove(presupuesto);
                         _DBErpCris.SaveChanges();
@@ -191,7 +193,25 @@ namespace ErpVictorAng.Controllers
             }
             //return response;
         }
+        
 
+        private void DeleteLineasPresupuestoById(long idPresupuesto)
+        {
+            var lineas = _DBErpCris.LineaPresupuesto.Where(f => f.IdPresupuesto == idPresupuesto);
+            
+            List<LineaPresupuestoViewModel> lstLineas = new List<LineaPresupuestoViewModel>();
+            foreach (LineaPresupuesto lin in lineas)
+            {
+                DeleteLineaPresupuesto(lin.IdLineaPresupuesto);
+            }
+        }
+
+        private void DeleteLineaPresupuesto(long idLinea)
+        {
+            LineaPresupuesto lineaPresupuesto = _DBErpCris.LineaPresupuesto.Single(c => c.IdLineaPresupuesto == idLinea);
+            _DBErpCris.LineaPresupuesto.Remove(lineaPresupuesto);
+            //_DBErpCris.SaveChanges();
+        }
         private void PresupuestoMapper(PresupuestoViewModel source, ref Presupuesto destino)
         {
             destino.IdCliente = source.IdCliente;

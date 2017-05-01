@@ -14,10 +14,6 @@ namespace ErpVictorAng.Infraestructura.Core
     public abstract class APIControllerBase : ApiController
     {
         protected ErpCrisEntities _DBErpCris;
-        //public APIControllerBase()
-        //{
-        //    _DBErpCris = new ErpCrisEntities(ConfigurationManager.ConnectionStrings["ErpCrisEntities"].ConnectionString);
-        //}
 
         public APIControllerBase()
         {

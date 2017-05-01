@@ -12,6 +12,7 @@ using System.Web.Http;
 namespace ErpVictorAng.Controllers
 {
     //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Cliente,Com,Adtivo")]
     [RoutePrefix("api/Cliente")]
     public class ClienteController : APIControllerBase
     {
@@ -25,7 +26,9 @@ namespace ErpVictorAng.Controllers
                 ClienteViewModel clienteVM = new ClienteViewModel();
                 clienteVM.IdCliente = cli.IdCliente;
                 clienteVM.IdUsuario = cli.IdUsuario;
+                clienteVM.NombreUsuario = cli.User.Nombre;
                 clienteVM.IdDescuento = cli.IdDescuento;
+                clienteVM.Descuento = cli.Descuento.Valor;
                 clienteVM.Nombre = cli.Nombre;
                 clienteVM.Apellido1 = cli.Apellido1;
                 clienteVM.Apellido2 = cli.Apellido2;
@@ -74,6 +77,7 @@ namespace ErpVictorAng.Controllers
             return clienteVm;
         }
 
+        [Authorize(Roles = "Admin,Com,Adtivo")]
         [Route("Update")]
         [HttpPut]
         public HttpResponseMessage Update(HttpRequestMessage request, ClienteViewModel cliente)
@@ -104,6 +108,7 @@ namespace ErpVictorAng.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin,Com,Adtivo")]
         [Route("Add")]
         [HttpPost]
         public HttpResponseMessage Add(HttpRequestMessage request, ClienteViewModel cliente)
@@ -130,6 +135,7 @@ namespace ErpVictorAng.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin,Com,Adtivo")]
         [Route("Delete")]
         public HttpResponseMessage Delete(HttpRequestMessage request, long id)
         {

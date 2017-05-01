@@ -9,7 +9,9 @@ namespace ErpVictorAng.Models
     {
         public long IdCliente { get; set; }
         public long IdUsuario { get; set; }
+        public string NombreUsuario { get; set; }
         public long IdDescuento { get; set; }
+        public decimal Descuento { get; set; }
         public string Nombre { get; set; }
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }

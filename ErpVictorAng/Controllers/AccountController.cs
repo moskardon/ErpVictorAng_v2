@@ -65,7 +65,7 @@ namespace ErpVictorAng.Controllers
                 else
                 {
                     //usuarios dados de alta como administradores por defecto
-                    User _user = _membershipService.CreateUser(user.Username, user.Email, user.Password, new int[] { 1 });
+                    User _user = _membershipService.CreateUser(user.Username, user.Email, user.Password, new int[] { 2 });
 
                     if (_user != null)
                     {

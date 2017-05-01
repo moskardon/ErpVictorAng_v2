@@ -115,6 +115,7 @@
             var dialog = ngDialog.open({
                 template: 'Scripts/app/cliente/clienteMod.html',
                 controller: 'clienteModCtrl',
+                width: '90%',
                 closeByDocument: true,
                 className: 'ngdialog-theme-default custom-width',
                 scope: $scope

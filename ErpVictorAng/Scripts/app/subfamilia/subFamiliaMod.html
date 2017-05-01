@@ -10,19 +10,19 @@
     <div class="panel-body">
         <div>
             <div>
-                <div style="float:left;">
+                <div ">
                     <label class="control-label" for="firstName">Nombre</label>
                     <input type="text" class="form-control" ng-model="EditedSubFamilia.Nombre" name="Nombre" id="firstName" placeholder="Nombre"
                            validate-on="blur" required required-message="'Nombre es requerido'">
                 </div>
-                <div style="float:right; width:60%">
+                <div  ">
                     <label class="control-label" for="firstName">Descripción</label>
                     <input type="text" class="form-control" ng-model="EditedSubFamilia.Descripcion" name="Descripcion" id="descripcion" placeholder="Descripción"
                            validate-on="blur" required required-message="'Nombre es requerido'" style="width:100%;">
                 </div>
             </div>
             <div>
-                <div style="float:left; margin-top:25px;">
+                <div  margin-top:25px;">
                     <label class="control-label" for="firstName">División</label>
                     <select class="form-control" ng-model="ddlDivisiones" id="selDivisiones"
                             ng-options="division.Nombre for division in divisiones track by division.Nombre" ng-change="changedDivisionValue(ddlDivisiones)">
@@ -31,7 +31,7 @@
                     <!--<input type="text" class="form-control" ng-model="EditedSubFamilia.Nombre" name="Nombre" id="firstName" placeholder="Nombre"
                     validate-on="blur" required required-message="'Nombre es requerido'">-->
                 </div>
-                <div style="float:right; width:60%; margin-top:25px;">
+                <div  margin-top:25px;">
                     <label class="control-label" for="firstName">Familia</label>
                     <select ng-disabled="EditedSubFamilia.IdDivision == null" class="form-control" ng-model="ddlFamilias"
                             ng-options="familia.Nombre for familia in familias track by familia.Nombre" ng-change="changedFamiliaValue(ddlFamilias)">

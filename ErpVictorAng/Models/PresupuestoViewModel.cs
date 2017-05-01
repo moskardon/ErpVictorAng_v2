@@ -10,6 +10,7 @@ namespace ErpVictorAng.Models
         public long IdPresupuesto { get; set; }
         public long IdCliente { get; set; }
         public System.DateTime FechaCreacion { get; set; }
+        public string FechaCreacionString { get; set; }
         public Nullable<System.DateTime> FechaAceptacion { get; set; }
         public string NumeroPresupuesto { get; set; }
         public string Observaciones { get; set; }

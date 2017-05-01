@@ -45,11 +45,11 @@
                 </td>
                 <td>
                     <span ng-show="articulo.showEdit">{{articulo.Medida1}}</span>
-                    <input ng-show="!articulo.showEdit" type="text" ng-model="articulo.Medida1" class="form-control" maxlength="4">
+                    <input ng-show="!articulo.showEdit" type="number" ng-model="articulo.Medida1" class="form-control" maxlength="4">
                 </td>
                 <td>
                     <span ng-show="articulo.showEdit">{{articulo.Medida2}}</span>
-                    <input ng-show="!articulo.showEdit" type="text" ng-model="articulo.Medida2" class="form-control" maxlength="4">
+                    <input ng-show="!articulo.showEdit" type="number" ng-model="articulo.Medida2" class="form-control" maxlength="4">
                 </td>
                 <td>
                     <span ng-show="articulo.showEdit">{{articulo.UnidadName}}</span>
@@ -67,7 +67,7 @@
                 </td>
                 <td>
                     <span ng-show="articulo.showEdit">{{articulo.PrecioBase}}</span>
-                    <input ng-show="!articulo.showEdit" type="text" ng-model="articulo.PrecioBase" class="form-control">
+                    <input ng-show="!articulo.showEdit" type="number" ng-model="articulo.PrecioBase" class="form-control">
                 </td>
                 <td>
                     <span ng-show="articulo.showEdit" ng-click="toggleEdit(articulo)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>
@@ -87,10 +87,10 @@
                     <input id="newDesc" ng-show="showAdd" type="text" ng-model="newDescripcion" class="form-control">
                 </td>
                 <td>
-                    <input id="newMe1" ng-show="showAdd" type="text" ng-model="newMedida1" class="form-control" maxlength="4">
+                    <input id="newMe1" ng-show="showAdd" type="number" ng-model="newMedida1" class="form-control" maxlength="4">
                 </td>
                 <td>
-                    <input id="newMe2" ng-show="showAdd" type="text" ng-model="newMedida2" class="form-control" maxlength="4">
+                    <input id="newMe2" ng-show="showAdd" type="number" ng-model="newMedida2" class="form-control" maxlength="4">
                 </td>
                 <td>
                     <select class="form-control" name="singleSelect" id="singleSelect" ng-model="newIdUnidad">
@@ -105,7 +105,7 @@
                     </select><br>
                 </td>
                 <td>
-                    <input id="newPre" ng-show="showAdd" type="text" ng-model="newPrecio" class="form-control">
+                    <input id="newPre" ng-show="showAdd" type="number" ng-model="newPrecio" class="form-control">
                 </td>
                 <td>
                     <span ng-show="showAdd" ng-click="addArticulo()" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>

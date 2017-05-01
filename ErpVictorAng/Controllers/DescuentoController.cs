@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace ErpVictorAng.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin,Com,Adtivo")]
     [RoutePrefix("api/Descuento")]
     public class DescuentoController : APIControllerBase
     {

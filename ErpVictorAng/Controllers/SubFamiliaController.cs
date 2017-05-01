@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace ErpVictorAng.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Com,Adtivo")]
     [RoutePrefix("api/SubFamilia")]
     public class SubFamiliaController : APIControllerBase
     {
@@ -36,6 +36,7 @@ namespace ErpVictorAng.Controllers
             return lstSubFam.AsEnumerable();
         }
 
+        [Authorize(Roles = "Admin, Adtivo")]
         //modifico de [Route("GetFamiliaById")] --> [Route("GetSubFamiliaById")]
         [Route("GetSubFamiliaById")]
         //modifico de public SubFamiliaViewModel GetFamiliaById(long id) --> public SubFamiliaViewModel GetSubFamiliaById(long id)
@@ -53,6 +54,7 @@ namespace ErpVictorAng.Controllers
             return subFamiliaVm;
         }
 
+        [Authorize(Roles = "Admin, Adtivo")]
         [Route("Update")]
         [HttpPut]
         public HttpResponseMessage Update(HttpRequestMessage request, SubFamiliaViewModel subFamilia)
@@ -83,6 +85,7 @@ namespace ErpVictorAng.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin, Adtivo")]
         [Route("Add")]
         [HttpPost]
         public HttpResponseMessage Add(HttpRequestMessage request, SubFamiliaViewModel subFamilia)
@@ -109,6 +112,7 @@ namespace ErpVictorAng.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin, Adtivo")]
         [Route("Delete")]
         public HttpResponseMessage Delete(HttpRequestMessage request, long id)
         {

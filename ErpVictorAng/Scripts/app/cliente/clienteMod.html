@@ -7,76 +7,89 @@
     </div>
     <div class="panel-body">
         <!--<form role="form">-->
-        <div>
-
-
-            <div>
-                <label class="control-label" for="firstName">Nombre</label>
-                <input type="text" class="form-control" ng-model="WorkCliente.Nombre" name="Nombre" id="firstName" placeholder="Nombre"
-                       validate-on="blur" required required-message="'Nombre es requerido'">
-            </div>
-            <div class="form-group">
-            <label class="control-label" for="firstName">Apellido 1</label>
-            <input type="text" class="form-control" ng-model="WorkCliente.Apellido1" name="Apellido1" id="lastName1" placeholder="Apellido1"
-                   validate-on="blur">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="firstName">Apellido 2</label>
-                <input type="text" class="form-control" ng-model="WorkCliente.Apellido2" name="Apellido2" id="lastName2" placeholder="Apellido2"
-                       validate-on="blur">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="firstName">Fecha Alta</label>
-                <!--<input type="text" class="form-control" ng-model="WorkCliente.FechaNacimiento" name="FechaNacimiento" id="fechNac" placeholder="FechaNacimiento"
-                       validate-on="blur">-->
-                <div class='input-group date' id='calendarioAlta' >
-                    <input type='date' class="form-control" ng-model="WorkCliente.FechaNacimiento"/>                    
-                </div>               
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="firstName">Dni</label>
-                <input type="text" class="form-control" ng-model="WorkCliente.Dni" name="Dni" id="dni" placeholder="Dni" validate-on="blur">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="firstName">Cif</label>
-                <input type="text" class="form-control" ng-model="WorkCliente.Cif" name="Cif" id="cif" placeholder="Cif" validate-on="blur">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="firstName">Nombre de Empresa</label>
-                <input type="text" class="form-control" ng-model="WorkCliente.NombreEmpresa" name="NombreEmpresa" id="nomEmp" placeholder="NombreEmpresa" validate-on="blur">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="firstName">Descripcion Empresa</label>
-                <input type="text" class="form-control" ng-model="WorkCliente.DescripcionEmpresa" name="DescripcionEmpresa" id="descEmp" placeholder="DescripcionEmpresa" validate-on="blur">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="firstName">Direccion</label>
-                <input type="text" class="form-control" ng-model="WorkCliente.Direccion" name="Direccion" id="dir" placeholder="Direccion" validate-on="blur">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="firstName">Telefono 1</label>
-                <input type="text" class="form-control" ng-model="WorkCliente.NumTelefono1" name="NumTelefono1" id="telf1" placeholder="NumTelefono1" validate-on="blur">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="firstName">Telefono 2</label>
-                <input type="text" class="form-control" ng-model="WorkCliente.NumTelefono2" name="NumTelefono2" id="telf2" placeholder="NumTelefono2" validate-on="blur">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="firstName">Email</label>
-                <input type="text" class="form-control" ng-model="WorkCliente.Email" name="Email" id="email" placeholder="Email" validate-on="blur">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="firstName">Saldo</label>
-                <input type="text" class="form-control" ng-model="WorkCliente.Saldo" name="Saldo" id="saldo" placeholder="Saldo" validate-on="blur" >
-            </div>
-            <div>
-                <label class="control-label" for="firstName">Descuento</label>
-                <select class="form-control" ng-model="ddlDescuentos" id="selDescuentos"
-                        ng-options="descuento.Valor for descuento in descuentos track by descuento.Valor" ng-change="changedDescuentoValue(ddlDescuentos)">
-                    <option value="">-- Selecciona un Descuento --</option>
-                </select>
-            </div>
-        </div>
+        <!--<div>-->
+            <form id="panel-body" name="altaCliente" role="form" data-toggle="validator">
+                <div style="width:30%; float:left" >
+                    <div>
+                        <label class="control-label" for="firstName">Nombre</label>
+                        <input type="text" class="form-control" ng-model="WorkCliente.Nombre" name="Nombre" id="firstName" placeholder="Nombre"
+                               validate-on="blur" required required-message="'Nombre es requerido'">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="firstName">Apellido 1</label>
+                        <input type="text" class="form-control" ng-model="WorkCliente.Apellido1" name="Apellido1" id="lastName1" placeholder="Apellido1"
+                               validate-on="blur">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="firstName">Apellido 2</label>
+                        <input type="text" class="form-control" ng-model="WorkCliente.Apellido2" name="Apellido2" id="lastName2" placeholder="Apellido2"
+                               validate-on="blur">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="firstName">Fecha Alta</label>
+                        <!--<input type="text" class="form-control" ng-model="WorkCliente.FechaNacimiento" name="FechaNacimiento" id="fechNac" placeholder="FechaNacimiento"
+        validate-on="blur">-->
+                        <div class='input-group date' id='calendarioAlta'>
+                            <input type='date' class="form-control" ng-model="WorkCliente.FechaNacimiento" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="firstName">Dni</label>
+                        <input type="text" class="form-control" ng-model="WorkCliente.Dni" name="Dni" id="dni" placeholder="Dni" validate-on="blur">
+                    </div>                   
+                </div>
+                <div style="width:30%; float:left">
+                    <div class="form-group">
+                        <label class="control-label" for="firstName">Cif</label>
+                        <input type="text" class="form-control" ng-model="WorkCliente.Cif" name="Cif" id="cif" placeholder="Cif" validate-on="blur">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="firstName">Nombre de Empresa</label>
+                        <input type="text" class="form-control" ng-model="WorkCliente.NombreEmpresa" name="NombreEmpresa" id="nomEmp" placeholder="NombreEmpresa" validate-on="blur">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="firstName">Descripcion Empresa</label>
+                        <input type="text" class="form-control" ng-model="WorkCliente.DescripcionEmpresa" name="DescripcionEmpresa" id="descEmp" placeholder="DescripcionEmpresa" validate-on="blur">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="firstName">Direccion</label>
+                        <input type="text" class="form-control" ng-model="WorkCliente.Direccion" name="Direccion" id="dir" placeholder="Direccion" validate-on="blur">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="firstName">Telefono 1</label>
+                        <input type="text" class="form-control" ng-model="WorkCliente.NumTelefono1" name="NumTelefono1" id="telf1" placeholder="NumTelefono1" validate-on="blur">
+                    </div>                    
+                </div>
+                <div style="width:30%; float:left">
+                    <div class="form-group">
+                        <label class="control-label" for="firstName">Telefono 2</label>
+                        <input type="text" class="form-control" ng-model="WorkCliente.NumTelefono2" name="NumTelefono2" id="telf2" placeholder="NumTelefono2" validate-on="blur">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="firstName">Email</label>
+                        <input type="email" class="form-control" ng-model="WorkCliente.Email" name="Email" id="email" placeholder="Email" validate-on="blur" data-error="Formato incorrecto de email" required>
+                        <!--<span ng-show="altaCliente.Email.$valid">Formato de correo no valido</span>-->
+                        <span class="error" ng-show="altaCliente.Email.$error.required">
+                            Requerido!
+                        </span>
+                        <span class="error" ng-show="altaCliente.Email.$error.email">
+                            Email no valido!
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="firstName">Saldo</label>
+                        <input type="text" class="form-control" ng-model="WorkCliente.Saldo" name="Saldo" id="saldo" placeholder="Saldo" validate-on="blur">
+                    </div>
+                    <div>
+                        <label class="control-label" for="firstName">Descuento</label>
+                        <select class="form-control" ng-model="ddlDescuentos" id="selDescuentos"
+                                ng-options="descuento.Valor for descuento in descuentos track by descuento.Valor" ng-change="changedDescuentoValue(ddlDescuentos)">
+                            <option value="">-- Selecciona un Descuento --</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        <!--</div>-->
             <!--<button type="submit" class="btn btn-default">Enviar</button>-->
         <!--</form>-->
     </div>

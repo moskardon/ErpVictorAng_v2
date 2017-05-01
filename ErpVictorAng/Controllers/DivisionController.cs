@@ -11,11 +11,13 @@ using System.Web.Http;
 
 namespace ErpVictorAng.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin,Com,Adtivo")]
+    //[Authorize(Roles = "Admin, Adtivo")]
     [RoutePrefix("api/Division")]
     public class DivisionController : APIControllerBase
     {
 
+        //[Authorize(Roles = "Com")]
         //Get api/Divisiones
         [Route("GetAll")]
         public IEnumerable<DivisionViewModel> GetAll()
@@ -47,6 +49,7 @@ namespace ErpVictorAng.Controllers
 
         }
 
+        [Authorize(Roles = "Admin, Adtivo")]
         [Route("Update")]
         [HttpPut]
         public HttpResponseMessage Update(HttpRequestMessage request, DivisionViewModel division)
@@ -77,6 +80,7 @@ namespace ErpVictorAng.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin, Adtivo")]
         [Route("Add")]
         [HttpPost]
         public HttpResponseMessage Add(HttpRequestMessage request, DivisionViewModel division)
@@ -108,7 +112,9 @@ namespace ErpVictorAng.Controllers
          * 
          * 
          */
-         [Route("Delete")]
+
+        [Authorize(Roles = "Admin, Adtivo")]
+        [Route("Delete")]
         public HttpResponseMessage Delete(HttpRequestMessage request, long id)
         {
             HttpResponseMessage response = null;

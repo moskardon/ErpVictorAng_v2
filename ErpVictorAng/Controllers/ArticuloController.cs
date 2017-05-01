@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace ErpVictorAng.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin,Cliente,Com,Adtivo")]
     [RoutePrefix("api/Articulo")]
     public class ArticuloController : APIControllerBase
     {
@@ -57,6 +57,7 @@ namespace ErpVictorAng.Controllers
 
         }
 
+        [Authorize(Roles = "Admin, Adtivo")]
         [Route("Update")]
         [HttpPut]
         public HttpResponseMessage Update(HttpRequestMessage request, ArticuloViewModel articulo)
@@ -87,6 +88,7 @@ namespace ErpVictorAng.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin, Adtivo")]
         [Route("Add")]
         [HttpPost]
         public HttpResponseMessage Add(HttpRequestMessage request, ArticuloViewModel articulo)
@@ -118,6 +120,7 @@ namespace ErpVictorAng.Controllers
          * 
          * 
          */
+        [Authorize(Roles = "Admin, Adtivo")]
         [Route("Delete")]
         public HttpResponseMessage Delete(HttpRequestMessage request, long id)
         {

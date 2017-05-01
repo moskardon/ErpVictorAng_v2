@@ -43,4 +43,15 @@ textarea {
           color: #fff;
           background-color: #4E7CA0;
         }
-   
+
+/*    quitar los botones a los campos numericos   */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+

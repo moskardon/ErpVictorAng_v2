@@ -11,7 +11,7 @@
         <div>            
             <div style="width:15%; float:left;">
                 <label class="control-label" for="numPed">Numero de Pedido</label>
-                <input type="text" class="form-control" ng-model="WorkPedido.NumeroPedido" name="numPed" id="numeroPedido" placeholder="Numero de Pedido"
+                <input type="number" class="form-control" ng-model="WorkPedido.NumeroPedido" name="numPed" id="numeroPedido" placeholder="Numero de Pedido"
                         validate-on="blur" required required-message="'Nunermo es requerido'">
             </div>
             <div style="width:20%; float:left;">
@@ -101,23 +101,23 @@
                     </td>
                     <td>
                         <span ng-show="lineaPedido.showEdit">{{lineaPedido.Cantidad}}</span>
-                        <input ng-show="!lineaPedido.showEdit" type="text" ng-model="lineaPedido.Cantidad" class="form-control">
+                        <input ng-show="!lineaPedido.showEdit" type="number" ng-model="lineaPedido.Cantidad" class="form-control">
                     </td>
                     <td>
                         <span ng-show="lineaPedido.showEdit">{{lineaPedido.Medida1}}</span>
-                        <input ng-show="!lineaPedido.showEdit" type="text" ng-model="lineaPedido.Medida1" class="form-control" maxlength="4">
+                        <input ng-show="!lineaPedido.showEdit" type="number" ng-model="lineaPedido.Medida1" class="form-control" maxlength="4">
                     </td>
                     <td>
                         <span ng-show="lineaPedido.showEdit">{{lineaPedido.Medida2}}</span>
-                        <input ng-show="!lineaPedido.showEdit" type="text" ng-model="lineaPedido.Medida2" class="form-control" maxlength="4">
+                        <input ng-show="!lineaPedido.showEdit" type="number" ng-model="lineaPedido.Medida2" class="form-control" maxlength="4">
                     </td>
                     <td>
                         <span ng-show="lineaPedido.showEdit">{{lineaPedido.Precio}}</span>
-                        <input ng-show="!lineaPedido.showEdit" type="text" ng-model="lineaPedido.Precio" class="form-control">
+                        <input ng-show="!lineaPedido.showEdit" type="number" ng-model="lineaPedido.Precio" class="form-control">
                     </td>
                     <td>
                         <span ng-show="lineaPedido.showEdit">{{lineaPedido.Descuento}}</span>
-                        <input ng-show="!lineaPedido.showEdit" type="text" ng-model="lineaPedido.Descuento" class="form-control">
+                        <input ng-show="!lineaPedido.showEdit" type="number" ng-model="lineaPedido.Descuento" class="form-control">
                     </td>
                     <td>
                         <span ng-show="lineaPedido.showEdit" ng-click="toggleEditLinea(lineaPedido)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>
@@ -137,19 +137,19 @@
                         </select>
                     </td>
                     <td>
-                        <input id="newCantidad" type="text" ng-model="newCantidad" class="form-control">
+                        <input id="newCantidad" type="number" ng-model="newCantidad" class="form-control">
                     </td>
                     <td>
-                        <input id="newMe1" type="text" ng-model="newMedida1" class="form-control" maxlength="4">
+                        <input id="newMe1" type="number" ng-model="newMedida1" class="form-control" maxlength="4">
                     </td>
                     <td>
-                        <input id="newMe2" type="text" ng-model="newMedida2" class="form-control" maxlength="4">
+                        <input id="newMe2" type="number" ng-model="newMedida2" class="form-control" maxlength="4">
                     </td>
                     <td>
-                        <input id="newPrecio" type="text" ng-model="newPrecio" class="form-control">
+                        <input id="newPrecio" type="number" ng-model="newPrecio" class="form-control">
                     </td>
                     <td>
-                        <input id="newDescuento" type="text" ng-model="newDescuento" class="form-control">
+                        <input id="newDescuento" type="number" ng-model="newDescuento" class="form-control">
                     </td>
                     <td>
                         <span ng-show="showAddLinea" ng-click="addLineaPedido()" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>

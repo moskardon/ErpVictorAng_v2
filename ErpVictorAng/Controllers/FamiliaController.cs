@@ -11,11 +11,10 @@ using System.Web.Http;
 
 namespace ErpVictorAng.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Com,Adtivo")]
     [RoutePrefix("api/Familia")]
     public class FamiliaController : APIControllerBase
     {
-        
         [Route("GetAll")]
         public IEnumerable<FamiliaViewModel> GetAll()
         {
@@ -34,7 +33,8 @@ namespace ErpVictorAng.Controllers
 
             return lstFamilias.AsEnumerable();
         }
-        
+
+        [Authorize(Roles = "Admin, Adtivo")]
         [Route("GetFamiliaById")]
         public FamiliaViewModel GetFamiliaById(long id)
         {
@@ -49,6 +49,7 @@ namespace ErpVictorAng.Controllers
             return familiaVm;
         }
 
+        [Authorize(Roles = "Admin, Adtivo")]
         [Route("GetFamiliaByIdDivision/{idDivision:int}")]
         public IEnumerable<FamiliaViewModel> GetFamiliaByIdDivision(long idDivision)
         {
@@ -68,6 +69,7 @@ namespace ErpVictorAng.Controllers
             return lstFamilias.AsEnumerable();
         }
 
+        [Authorize(Roles = "Admin, Adtivo")]
         [Route("Update")]
         [HttpPut]
         public HttpResponseMessage Update(HttpRequestMessage request, FamiliaViewModel familia)
@@ -98,6 +100,7 @@ namespace ErpVictorAng.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin, Adtivo")]
         [Route("Add")]
         [HttpPost]
         public HttpResponseMessage Add(HttpRequestMessage request, FamiliaViewModel familia)
@@ -129,6 +132,7 @@ namespace ErpVictorAng.Controllers
          * 
          * 
          */
+        [Authorize(Roles = "Admin, Adtivo")]
         [Route("Delete")]
         public HttpResponseMessage Delete(HttpRequestMessage request, long id)
         {
