@@ -17,32 +17,32 @@ textarea {
 }
 /*  mis modificaciones */
 
-        .navbar-inverse {
-          background-color: #365A7D;
-          border-color: #4E7CA0;
-        }
-        .navbar-inverse .navbar-brand:hover,
-        .navbar-inverse .navbar-brand:focus {
-          color: #fff;
-          background-color: transparent;
-        }
-        .navbar-inverse .navbar-text {
-          color: #9d9d9d;
-        }
-        .navbar-inverse .navbar-nav > li > a {
-          color: #9d9d9d;
-        }
-        .navbar-inverse .navbar-nav > li > a:hover,
-        .navbar-inverse .navbar-nav > li > a:focus {
-          color: #fff;
-          background-color: transparent;
-        }
-        .navbar-inverse .navbar-nav > .open > a,
-        .navbar-inverse .navbar-nav > .open > a:hover,
-        .navbar-inverse .navbar-nav > .open > a:focus {
-          color: #fff;
-          background-color: #4E7CA0;
-        }
+.navbar-inverse {
+    background-color: #365A7D;
+    border-color: #4E7CA0;
+}
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus {
+    color: #fff;
+    background-color: transparent;
+}
+.navbar-inverse .navbar-text {
+    color: #9d9d9d;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #9d9d9d;
+}
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+    color: #fff;
+    background-color: transparent;
+}
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+    color: #fff;
+    background-color: #4E7CA0;
+}
 
 /*    quitar los botones a los campos numericos   */
 input[type=number]::-webkit-outer-spin-button,
@@ -55,3 +55,10 @@ input[type=number] {
     -moz-appearance:textfield;
 }
 
+/*      pequeña modificacion para mensajes de error        */
+
+.error {
+color: #D8000C;
+background-color: #FFBABA;
+background-image: url('error.png');
+}

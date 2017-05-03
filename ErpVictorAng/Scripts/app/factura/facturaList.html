@@ -1,0 +1,95 @@
+﻿<h2>Facturas</h2>
+
+<div id="divWrapper" ng-show="dataLoaded" style="display:none">
+    <table id="tblFamilias" class="table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Numero Factura
+                </th>
+                <th>
+                    Fecha Creacion
+                </th>
+                <th>
+                    Pedido
+                </th>
+                <th>
+                    Observaciones
+                </th>
+                <th>
+                    Cliente
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="factura in facturas">
+                <th scope="row">
+                    {{$index+1}}
+                </th>
+                <td>
+                    <span ng-show="factura.showEdit">{{factura.NumeroFactura}}</span>
+                    <input ng-show="!factura.showEdit" type="text" ng-model="factura.NumeroFactura" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="factura.showEdit">{{factura.FechaCreacionString}}</span>
+                    <!--<input ng-show="!factura.showEdit" type="text" ng-model="factura.FechaCreacion" class="form-control">-->
+                    <input ng-show="!factura.showEdit" type="date" class="form-control" name="input" ng-model="factura.FechaCreacion" required />
+                </td>
+                <td>
+                    <span ng-show="factura.showEdit">{{factura.NumeroPedido}}</span>
+                    <select ng-show="!factura.showEdit" class="form-control" ng-model="ddlPedidos"
+                            ng-options="pedido.NumeroPedido for pedido in pedidos track by pedido.NumeroPedido" ng-change="changedValue(ddlPedidos,factura)">
+                        <option value="">-- Selecciona un Pedido --</option>
+                    </select>
+                </td>
+                <td>
+                    <span ng-show="factura.showEdit">{{factura.Observaciones}}</span>
+                    <input ng-show="!factura.showEdit" type="text" ng-model="factura.Observaciones" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="factura.showEdit">{{factura.IdCliente}}</span>
+                    <input ng-show="!factura.showEdit" type="text" ng-model="factura.IdCliente" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="factura.showEdit" ng-click="toggleEdit(factura)" class="btn glyphicon glyphicon-pencil" title="Editar"></span>
+                    <span ng-show="factura.showEdit" ng-click="deleteFactura(factura)" class="btn glyphicon glyphicon-trash" title="Borrar"></span>
+                    <span ng-show="!factura.showEdit" ng-click="updateFactura(factura)" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                    <span ng-show="!factura.showEdit" ng-click="toggleEdit(factura)" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                </td>
+            </tr>
+            <tr ng-show="showAdd">
+                <th>
+                    <span>#</span>
+                </th>
+                <td>
+                    <input id="newNumFac" ng-show="showAdd" type="text" ng-model="newNumeroFactura" class="form-control">
+                </td>
+                <td>
+                    <input id="newFechCre" ng-show="showAdd" type="date" class="form-control" name="input" ng-model="newFechaCreacion" required />
+                </td>
+                <td>
+                    <select ng-show="showAdd" class="form-control" ng-model="ddlPedidos"
+                            ng-options="pedido.NumeroPedido for pedido in pedidos track by pedido.NumeroPedido" ng-change="changedValue(ddlPedidos,factura)">
+                        <option value="">-- Selecciona un Pedido --</option>
+                    </select>
+                </td>
+                <td>
+                    <input id="newObs" ng-show="showAdd" type="text" ng-model="newObservaciones" class="form-control">
+                </td>
+                <td>
+                    <input id="newNomCli" ng-show="showAdd" type="text" ng-model="newNombreCliente" class="form-control">
+                </td>
+                <td>
+                    <span ng-show="showAdd" ng-click="addFactura()" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
+                    <span ng-show="showAdd" ng-click="showNew()" class="btn glyphicon glyphicon-remove" title="Cancelar"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button ng-click="showNew()">Nueva Factura</button>
+</div>
+<!--Loading indicator-->
+<img src="Content/images/loading.gif" ng-show="dataLoading" class="center-block" title="Loading..." style="margin-top: 20px" />

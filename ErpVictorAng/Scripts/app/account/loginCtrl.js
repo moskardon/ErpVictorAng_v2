@@ -14,10 +14,10 @@
         }
 
         function loginCompleted(result) {
-            alert("loginCompleted " + result.data.success);
+            //alert("loginCompleted " + result.data.success);
             if (result.data.success) {
                 membershipService.saveCredentials($scope.user);
-                notificationService.displaySuccess('Hello ' + $scope.user.username);
+                notificationService.displaySuccess('Hola ' + $scope.user.username);
                 $scope.userData.displayUserInfo();
                 if ($rootScope.previousState)
                     $location.path($rootScope.previousState);

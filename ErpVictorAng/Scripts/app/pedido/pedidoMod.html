@@ -11,7 +11,7 @@
         <div>            
             <div style="width:15%; float:left;">
                 <label class="control-label" for="numPed">Numero de Pedido</label>
-                <input type="number" class="form-control" ng-model="WorkPedido.NumeroPedido" name="numPed" id="numeroPedido" placeholder="Numero de Pedido"
+                <input type="text" class="form-control" ng-model="WorkPedido.NumeroPedido" name="numPed" id="numeroPedido" placeholder="Numero de Pedido"
                         validate-on="blur" required required-message="'Nunermo es requerido'">
             </div>
             <div style="width:20%; float:left;">
@@ -95,7 +95,7 @@
                     <td>
                         <span ng-show="lineaPedido.showEdit">{{lineaPedido.NombreArticulo}}</span>
                         <select ng-show="!lineaPedido.showEdit" class="form-control" ng-model="ddlArticulos"
-                                ng-options="articulo.Nombre for articulo in articulos track by articulo.Nombre" ng-change="changedArticuloValue(ddlArticulos,lineaPedido)">
+                                ng-options="articulo.Nombre for articulo in articulos track by articulo.Nombre" ng-change="changedArticuloValueEdit(ddlArticulos,lineaPedido)">
                             <option value="">-- Selecciona un Articulo --</option>
                         </select>
                     </td>

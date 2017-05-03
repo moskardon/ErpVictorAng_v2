@@ -133,6 +133,15 @@ var erpApp;
                         controller: "pedidoController"
                     }
                 }
+            })
+            .state('factura', {
+                url: "/factura",
+                views: {
+                    'main': {
+                        templateUrl: "Scripts/app/factura/facturaList.html",
+                        controller: "facturaController"
+                    }
+                }
             });
 
     });

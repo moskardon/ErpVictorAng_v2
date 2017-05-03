@@ -339,6 +339,8 @@
     <Content Include="Scripts\app\division\partials\modalDelete.html" />
     <Content Include="Scripts\app\division\partials\modalView.html" />
     <Content Include="Scripts\app\erpApp.js" />
+    <Content Include="Scripts\app\factura\facturaController.js" />
+    <Content Include="Scripts\app\factura\facturaList.html" />
     <Content Include="Scripts\app\familia\familiaController.js" />
     <Content Include="Scripts\app\familia\familiaList.html" />
     <Content Include="Scripts\app\home\index.html" />

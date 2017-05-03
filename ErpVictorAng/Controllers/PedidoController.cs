@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace ErpVictorAng.Controllers
 {
-    [Authorize(Roles = "Admin,Adtivo")]
+    [Authorize(Roles = "Admin,Adtivo,Cont")]
     [RoutePrefix("api/Pedido")]
     public class PedidoController : APIControllerBase
     {
@@ -25,8 +25,10 @@ namespace ErpVictorAng.Controllers
                 PedidoViewModel pedidoVM = new PedidoViewModel();
                 pedidoVM.IdPedido = ped.IdPedido;
                 pedidoVM.IdCliente = ped.IdCliente;
+                pedidoVM.NombreCliente = ped.Cliente.Nombre;
                 pedidoVM.IdPresupuesto = ped.IdPresupuesto;
                 pedidoVM.FechaCreacion = ped.FechaCreacion;
+                pedidoVM.FechaCreacionString = ped.FechaCreacion.ToString("dd/MM/yyyy");
                 pedidoVM.NumeroPedido = ped.NumeroPedido;
                 pedidoVM.Observaciones = ped.Observaciones;
                 lstPedidos.Add(pedidoVM);
@@ -67,7 +69,7 @@ namespace ErpVictorAng.Controllers
             return pedVm;
         }
 
-
+        [Authorize(Roles = "Admin,Adtivo")]
         [Route("Update")]
         [HttpPut]
         public HttpResponseMessage Update(HttpRequestMessage request, PedidoViewModel pedido)
@@ -98,6 +100,7 @@ namespace ErpVictorAng.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin,Adtivo")]
         [Route("Add")]
         [HttpPost]
         public HttpResponseMessage Add(HttpRequestMessage request, PedidoViewModel pedido)
@@ -129,6 +132,7 @@ namespace ErpVictorAng.Controllers
          * 
          * 
          */
+        [Authorize(Roles = "Admin,Adtivo")]
         [Route("Delete")]
         public HttpResponseMessage Delete(HttpRequestMessage request, long id)
         {
@@ -143,6 +147,7 @@ namespace ErpVictorAng.Controllers
                     }
                     else
                     {
+                        DeleteLineasPedidoById(id);
                         Pedido pedido = _DBErpCris.Pedido.Single(c => c.IdPedido == id);
                         _DBErpCris.Pedido.Remove(pedido);
                         _DBErpCris.SaveChanges();
@@ -159,6 +164,23 @@ namespace ErpVictorAng.Controllers
                 return response;
             }
             //return response;
+        }
+
+        private void DeleteLineasPedidoById(long idPedido)
+        {
+            var lineas = _DBErpCris.LineaPedido.Where(f => f.IdPedido == idPedido);
+
+            List<LineaPedidoViewModel> lstLineas = new List<LineaPedidoViewModel>();
+            foreach (LineaPedido lin in lineas)
+            {
+                DeleteLineaPedido(lin.IdLineaPedido);
+            }
+        }
+
+        private void DeleteLineaPedido(long idLinea)
+        {
+            LineaPedido lineaPedido = _DBErpCris.LineaPedido.Single(c => c.IdLineaPedido == idLinea);
+            _DBErpCris.LineaPedido.Remove(lineaPedido);
         }
 
         private void PedidoMapper(PedidoViewModel source, ref Pedido destino)

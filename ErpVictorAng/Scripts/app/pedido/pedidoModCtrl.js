@@ -43,6 +43,7 @@
         $scope.showNewLinea = showNewLinea;
         $scope.addLineaPedido = addLineaPedido;
         $scope.changedArticuloValue = changedArticuloValue;
+        $scope.changedArticuloValueEdit = changedArticuloValueEdit;
         $scope.toggleEditLinea = toggleEditLinea;
         $scope.deleteLineaPedido = deleteLineaPedido;
         $scope.updateLineaPedido = updateLineaPedido;
@@ -385,6 +386,11 @@
         //Sincroniza valor de SelectList de Articulos
         function changedArticuloValue(item) {
             $scope.newIdArticulo = item.IdArticulo;
+            $scope.newPrecio = item.PrecioBase;
+        }
+
+        function changedArticuloValueEdit(item, linea) {
+            linea.Precio = item.PrecioBase;
         }
     }
 })();

@@ -41,7 +41,7 @@
         $scope.toggleEditLinea = toggleEditLinea;
         $scope.deleteLineaPresupuesto = deleteLineaPresupuesto;
         $scope.updateLineaPresupuesto = updateLineaPresupuesto;
-        $scope.openDatePicker = openDatePicker;
+        //$scope.openDatePicker = openDatePicker;
         
         //apiServiceFailed
         function apiServiceFailed(response) {
@@ -371,8 +371,7 @@
         
         //Sincroniza valor del SelectList 
         function changedArticuloValue(item) {
-            $scope.newIdArticulo = item.IdArticulo;
-            
+            $scope.newIdArticulo = item.IdArticulo;            
             $scope.newPrecio = item.PrecioBase;
             //TODO: elaborar un metodo que recibe el id del cliente y  dl articulo busca el descuento asociado al cliente y lo devuelve
         }
@@ -381,20 +380,20 @@
             linea.Precio = item.PrecioBase;//setArticuloPrecio(item.IdArticulo);
         }
 
-        function openDatePicker($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
+        //function openDatePicker($event) {
+        //    $event.preventDefault();
+        //    $event.stopPropagation();
 
-            $timeout(function () {
-                $scope.datepicker.opened = true;
-            });
+        //    $timeout(function () {
+        //        $scope.datepicker.opened = true;
+        //    });
 
-            $timeout(function () {
-                $('ul[datepicker-popup-wrap]').css('z-index', '10000');
-            }, 100);
+        //    $timeout(function () {
+        //        $('ul[datepicker-popup-wrap]').css('z-index', '10000');
+        //    }, 100);
 
 
-        };
+        //};
 
     }
 })();

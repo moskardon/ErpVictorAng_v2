@@ -27,7 +27,9 @@ namespace ErpVictorAng.Controllers
                 facturaVM.IdPedido = fac.IdPedido;
                 facturaVM.IdAlbaran = fac.IdAlbaran;
                 facturaVM.FechaCreacion = fac.FechaCreacion;
+                facturaVM.FechaCreacionString = fac.FechaCreacion.ToString("dd/MM/yyyy");
                 facturaVM.NumeroFactura = fac.NumeroFactura;
+                facturaVM.NumeroPedido = fac.Pedido.NumeroPedido;
                 facturaVM.Observaciones = fac.Observaciones;
                 facturaVM.IdCliente = fac.IdCliente;
                 lstFacs.Add(facturaVM);

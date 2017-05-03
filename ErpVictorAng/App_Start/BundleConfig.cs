@@ -60,7 +60,8 @@ namespace ErpVictorAng
                 "~/Scripts/app/presupuesto/presupuestoModCtrl.js",
                 "~/Scripts/app/presupuesto/presupuestoController.js",
                 "~/Scripts/app/pedido/pedidoModCtrl.js",
-                "~/Scripts/app/pedido/pedidoController.js"));
+                "~/Scripts/app/pedido/pedidoController.js",
+                "~/Scripts/app/factura/facturaController.js"));
 
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
