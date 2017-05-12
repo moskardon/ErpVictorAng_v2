@@ -48,8 +48,7 @@ namespace ErpVictorAng.Controllers
 
             return lstCli.AsEnumerable();
         }
-
-        //extraido de subfamilias
+        
         [Route("GetClienteById")]
         public ClienteViewModel GetClienteById(long id)
         {

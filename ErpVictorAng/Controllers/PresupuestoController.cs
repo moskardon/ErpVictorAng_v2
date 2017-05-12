@@ -191,7 +191,6 @@ namespace ErpVictorAng.Controllers
                 response = request.CreateResponse(HttpStatusCode.BadRequest, ex);
                 return response;
             }
-            //return response;
         }
         
 
@@ -210,7 +209,6 @@ namespace ErpVictorAng.Controllers
         {
             LineaPresupuesto lineaPresupuesto = _DBErpCris.LineaPresupuesto.Single(c => c.IdLineaPresupuesto == idLinea);
             _DBErpCris.LineaPresupuesto.Remove(lineaPresupuesto);
-            //_DBErpCris.SaveChanges();
         }
         private void PresupuestoMapper(PresupuestoViewModel source, ref Presupuesto destino)
         {

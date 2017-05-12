@@ -45,28 +45,6 @@
             $scope.clientes = result.data;
         };
 
-        //Rellenar descuentos
-        /*function fillDescuentos() {
-            $scope.dataLoading = true;
-            apiService.get('/api/descuento/GetAll', null, getAllDescuentosCompleted, apiServiceFailed);
-        };
-        //getAllDescuentosCompleted
-        function getAllDescuentosCompleted(result) {
-            console.log(JSON.stringify(result))
-            $scope.descuentos = result.data;
-        };
-        
-        //getDescuento
-        function getDescuento(descuento) {
-            return descuento.IdDescuento === $scope.ddlDescuentos;
-        };
-
-        //setDescuentoSelected
-        function setDescuentoSelected(idDescuento) {
-            $scope.ddlDescuentos = idDescuento;
-            var descSelect = $scope.descuentos.find(getDescuento);
-            $scope.ddlDescuentos = descSelect;
-        };*/
 
         //initialize
         function initialize() {

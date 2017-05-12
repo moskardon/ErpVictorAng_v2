@@ -102,7 +102,7 @@
 
         //toggleEdit
         function toggleEdit(factura) {
-            setFacturaSelected(factura.IdPedido);
+            setPedidoSelected(factura.IdPedido);
             angular.forEach($scope.facturas, function (obj) {
                 if (obj["IdFactura"] !== factura.IdFactura && obj["showEdit"] == false) {
                     obj["showEdit"] = true;

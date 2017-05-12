@@ -15,7 +15,7 @@
                         success(result);
                     }, function (error) {
                         if (error.status == '401') {
-                            notificationService.displayError('Authenticación requerida.');
+                            notificationService.displayError('Autenticación requerida.');
                             //establezco la que sera la ruta anterior a la actual
                             $rootScope.previousState = $state.current;
                             //nos movemos a login
@@ -33,7 +33,7 @@
                         success(result);
                     }, function (error) {
                         if (error.status == '401') {
-                            notificationService.displayError('Authenticación requerida.');
+                            notificationService.displayError('Autenticación requerida.');
                             $rootScope.previousState = $state.path();
                             $state.go('login');
                         }
@@ -50,7 +50,7 @@
                 success(data);
             }, function (error) {
                 if (error.status == '401') {
-                    notificationService.displayError('Authenticación requerida.');
+                    notificationService.displayError('Autenticación requerida.');
                     $rootScope.previousState = $state.path();
                     $state.go('login');
                 }
@@ -68,7 +68,7 @@
                 success(result);
             }, function (error) {
                 if (error.status == '401') {
-                    notificationService.displayError('Authenticación requerida.');
+                    notificationService.displayError('Autenticación requerida.');
                     $rootScope.previousState = $state.path();
                     $state.go('login');
                 }

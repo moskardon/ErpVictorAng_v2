@@ -243,15 +243,6 @@
             $scope.dataLoading = false;
             notificationService.displayError("Error: " + response.data);
         };
-
-
-        /*$scope.changedValue = function changedUnidadValue(item, articulo) {
-            //alert(item.Nombre + " - " + item.IdDivision + " ->Fam.IdDiv: " + familia.IdDivision);
-            articulo.IdUnidad = item.IdUnidad;
-            //articulo.IdSubFamilia = item.IdSubFamilia;
-        }*/
-        //Sincroniza valor del SelectList 
-        //$scope.changedUnidadValue =
         function changedUnidadValue(item, articulo) {
             //alert(item.Nombre + " - " + item.IdDivision + " ->Fam.IdDiv: " + familia.IdDivision);
             articulo.IdUnidad = item.IdUnidad;
@@ -261,9 +252,6 @@
 
         //$scope.changedSubFamiliaValue =
         function changedSubFamiliaValue(item, articulo) {
-            //alert(item.Nombre + " - " + item.IdDivision + " ->Fam.IdDiv: " + familia.IdDivision);
-            //articulo.IdUnidad = item.IdUnidad;
-            //alert(item.IdSubFamilia);
             articulo.IdSubFamilia = item.IdSubFamilia;
         }
     }

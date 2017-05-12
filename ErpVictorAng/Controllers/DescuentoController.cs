@@ -44,8 +44,7 @@ namespace ErpVictorAng.Controllers
                     var articuloDb = _DBErpCris.Articulo.Single(a => a.IdArticulo == des.IdArticulo);
                     descuentoVM.ArticuloName = articuloDb.Nombre;
                 }
-
-                //DescuentoViewModel descuentoVM = new DescuentoViewModel();
+                
                 descuentoVM.IdDescuento = des.IdDescuento;
                 descuentoVM.Valor = des.Valor;
                 descuentoVM.IdDivision = des.IdDivision;
@@ -129,12 +128,7 @@ namespace ErpVictorAng.Controllers
                 return response;
             });
         }
-
-        /*recibo una peticion http y un id
-         * devuelvo una respuesta conforme se ha realizado OK o ha habido un error y en tal caso, envio el mismo
-         * 
-         * 
-         */
+        
         [Route("Delete")]
         public HttpResponseMessage Delete(HttpRequestMessage request, long id)
         {
@@ -164,7 +158,6 @@ namespace ErpVictorAng.Controllers
                 response = request.CreateResponse(HttpStatusCode.BadRequest, ex);
                 return response;
             }
-            //return response;
         }
 
         private void DescuentoMapper(DescuentoViewModel source, ref Descuento destino)

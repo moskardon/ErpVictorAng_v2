@@ -62,3 +62,7 @@ color: #D8000C;
 background-color: #FFBABA;
 background-image: url('error.png');
 }
+
+.btn btn-danger btn-sm {
+    margin-top: 20px;
+}

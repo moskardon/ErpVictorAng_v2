@@ -23,7 +23,8 @@
 
         function logout() {
             membershipService.removeCredentials();
-            $state.go('home');
+            //$state.go('home'); 
+            $state.go('login');
             $scope.userData.displayUserInfo();
         }
 

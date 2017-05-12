@@ -29,52 +29,7 @@
             notificationService.displayError('Error: ' + response.data);
         };
 
-        ////Rellenar Clientes
-        //function fillClientes() {
-        //    $scope.dataLoading = true;
-        //    apiService.get('/api/cliente/GetAll', null, getAllClientesCompleted, apiServiceFailed);
-        //};
-        ////getAllClientesCompleted
-        //function getAllClientesCompleted(result) {
-        //    console.log(JSON.stringify(result))
-        //    $scope.dataLoading = false;
-        //    $scope.dataLoaded = true;
-        //    $scope.clientes = result.data;
-        //};
-
-        ////Rellenar divisiones
-        //function fillDivisiones() {
-        //    $scope.dataLoading = true;
-        //    apiService.get('/api/division/GetAll', null, getAllDivisionesCompleted, apiServiceFailed);
-        //};
-        ////getAllDivisionesCompleted
-        //function getAllDivisionesCompleted(result) {
-        //    console.log(JSON.stringify(result))
-        //    $scope.divisiones = result.data;
-        //};
-
-        ////getFamilia
-        //function getFamilia(familia) {
-        //    return familia.IdFamilia === $scope.ddlFamilias;
-        //};
-
-        ////getDivision
-        //function getDivision(division) {
-        //    return division.IdDivision === $scope.ddlDivisiones;
-        //};
-
-        ////setFamiliaSelected
-        //function setFamiliaSelected(idFamilia) {
-        //    $scope.ddlFamilias = idFamilia;
-        //    var divSelect = $scope.familias.find(getFamilia);
-        //    $scope.ddlFamilias = divSelect;
-        //};
-        ////setDivisionSelected
-        //function setDivisionSelected(idDivision) {
-        //    $scope.ddlDivisiones = idDivision;
-        //    var divSelect = $scope.divisiones.find(getDivision);
-        //    $scope.ddlDivisiones = divSelect;
-        //};
+        
 
         //initialize
         function initialize() {

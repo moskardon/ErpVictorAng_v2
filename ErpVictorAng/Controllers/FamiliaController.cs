@@ -162,7 +162,6 @@ namespace ErpVictorAng.Controllers
                 response = request.CreateResponse(HttpStatusCode.BadRequest, ex);
                 return response;
             }
-            //return response;
         }
 
         private void FamiliaMapper(FamiliaViewModel source, ref Familia destino)

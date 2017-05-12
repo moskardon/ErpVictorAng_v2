@@ -59,8 +59,7 @@ namespace ErpVictorAng.Controllers
 
             return lstLineas.AsEnumerable();
         }
-
-        //extraido de subfamilias GetLineasByIdPedido
+        
         [Route("GetLineaPedidoById")]        
         public LineaPedidoViewModel GetLineaPedidoById(long id)
         {

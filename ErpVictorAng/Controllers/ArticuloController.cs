@@ -43,7 +43,6 @@ namespace ErpVictorAng.Controllers
         [Route("Details")]
         public ArticuloViewModel GetArticulo(long id)
         {
-            //REVISAR SI RECOGE CORRECTAMENTE LA SUBFAMILIA
             var articuloDb = _DBErpCris.Articulo.Single(c => c.IdArticulo == id);
             ArticuloViewModel articuloVM = new ArticuloViewModel();
             articuloVM.IdArticulo = articuloDb.IdArticulo;
@@ -114,12 +113,7 @@ namespace ErpVictorAng.Controllers
                 return response;
             });
         }
-
-        /*recibo una peticion http y un id
-         * devuelvo una respuesta conforme se ha realizado OK o ha habido un error y en tal caso, envio el mismo
-         * 
-         * 
-         */
+        
         [Authorize(Roles = "Admin, Adtivo")]
         [Route("Delete")]
         public HttpResponseMessage Delete(HttpRequestMessage request, long id)
@@ -150,7 +144,6 @@ namespace ErpVictorAng.Controllers
                 response = request.CreateResponse(HttpStatusCode.BadRequest, ex);
                 return response;
             }
-            //return response;
         }
 
         private void ArticuloMapper(ArticuloViewModel source, ref Articulo destino)

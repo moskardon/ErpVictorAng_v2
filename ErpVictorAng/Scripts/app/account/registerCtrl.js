@@ -16,12 +16,12 @@
         function registerCompleted(result) {
             if (result.data.success) {
                 membershipService.saveCredentials($scope.user);
-                notificationService.displaySuccess('Hello ' + $scope.user.username);
+                notificationService.displaySuccess('Hola ' + $scope.user.username);
                 $scope.userData.displayUserInfo();
                 $location.path('/');
             }
             else {
-                notificationService.displayError('Registration failed. Try again.');
+                notificationService.displayError('Fallo al registrarse. Vuelva a intentarlo.');
             }
         }
     }

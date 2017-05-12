@@ -28,19 +28,15 @@
         }
 
         function saveCredentials(user) {
-            console.log("save credentials");
             var membershipData = $base64.encode(user.username + ':' + user.password);
-            console.log("membershipData" + membershipData);
             $rootScope.repository = {
                 loggedUser: {
                     username: user.username,
                     authdata: membershipData
                 }
             };
-            alert($rootScope.repository.loggedUser);
             $http.defaults.headers.common['Authorization'] = 'Basic ' + membershipData;
             $cookieStore.put('repository', $rootScope.repository);
-            console.log("cookieStore.put");
         }
 
         function removeCredentials() {
@@ -55,7 +51,7 @@
 
         function registrationFailed(response) {
 
-            notificationService.displayError('Registration failed. Try again.');
+            notificationService.displayError('Fallo al registrarse. Vuelva a intentarlo.');
         }
 
         function isUserLoggedIn() {

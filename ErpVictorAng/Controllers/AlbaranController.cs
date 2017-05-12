@@ -34,8 +34,7 @@ namespace ErpVictorAng.Controllers
 
             return lstAlbaranes.AsEnumerable();
         }
-
-        //extraido de subfamilia y modificado
+        
         [Route("GetAlbaranById")]
         public AlbaranViewModel GetAlbaranById(long id)
         {

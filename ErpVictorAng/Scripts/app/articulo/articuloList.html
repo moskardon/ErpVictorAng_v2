@@ -105,7 +105,7 @@
                     </select><br>
                 </td>
                 <td>
-                    <input id="newPre" ng-show="showAdd" type="number" ng-model="newPrecio" class="form-control">
+                    <input id="newPre" ng-show="showAdd" type="number" ng-model="newPrecioBase" class="form-control">
                 </td>
                 <td>
                     <span ng-show="showAdd" ng-click="addArticulo()" class="btn glyphicon glyphicon-floppy-disk" title="Guardar"></span>
@@ -116,5 +116,4 @@
     </table>
     <button ng-click="showNew()">Nuevo Artículo</button>
 </div>
-<!--Loading indicator-->
 <img src="Content/images/loading.gif" ng-show="dataLoading" class="center-block" title="Loading..." style="margin-top: 20px" />

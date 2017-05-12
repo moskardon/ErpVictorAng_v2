@@ -37,8 +37,7 @@ namespace ErpVictorAng.Controllers
 
             return lstFacs.AsEnumerable();
         }
-
-        //extraido de subfamilias
+        
         [Route("GetFacturaById")]
         public FacturaViewModel GetFacturaById(long id)
         {

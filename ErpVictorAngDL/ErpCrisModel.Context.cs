@@ -20,9 +20,10 @@ namespace ErpVictorAngDL
         {
         }
         public ErpCrisEntities(string connectionString)
-               : base(connectionString)
+            : base(connectionString)
         {
         }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

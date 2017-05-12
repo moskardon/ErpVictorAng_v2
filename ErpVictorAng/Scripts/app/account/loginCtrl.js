@@ -25,7 +25,7 @@
                     $location.path('/');
             }
             else {
-                notificationService.displayError('Login failed. Try again.');
+                notificationService.displayError('Fallo al loguearse. Vuelva a intentarlo.');
             }
         }
     }

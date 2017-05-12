@@ -140,10 +140,6 @@
             notificationService.displaySuccess('Cliente creado.');
         }
 
-        //function sleep(ms) {
-        //    return new Promise(resolve => setTimeout(resolve, ms));
-        //}
-        //confirm
         function confirm() {
             if ($scope.ShowMode != null && $scope.ShowMode == 'edit') {
                 updateCliente()
@@ -155,16 +151,12 @@
 
         //Sincroniza valor del SelectList de descuentos
         function changedDescuentoValue(item) {
-            //alert(item.Nombre + " - " + item.IdDivision + " ->Fam.IdDiv: " + familia.IdDivision);
-            //cliente.IdDescuento = item.IdDescuento;
             $scope.WorkCliente.IdDescuento = item.IdDescuento;
             //alert($scope.WorkCliente.Nombre + " - " + $scope.WorkCliente.IdDescuento + " - " + $scope.WorkCliente.IdUsuario);
         }
 
         //Sincroniza valor del SelectList Usuarios
         function changedUsuarioValue(item) {
-            //alert(item.Nombre + " - " + item.IdDivision + " ->Fam.IdDiv: " + familia.IdDivision);
-            //cliente.IdDescuento = item.IdDescuento;
             $scope.WorkCliente.IdUsuario = item.IdUsuario;
         }
     }
